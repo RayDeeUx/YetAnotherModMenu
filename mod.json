@@ -1,0 +1,125 @@
+{
+	"geode": "4.0.1",
+	"gd": {
+		"win": "2.2074",
+		"mac": "2.2074",
+		"android": "2.2074"
+	},
+	"id": "raydeeux.yetanotherqolmod",
+	"name": "YetAnotherQOLMod",
+	"version": "v1.0.0",
+	"developer": "RayDeeUx",
+	"description": "Time to clean up the mess QOLMod left behind.",
+	"repository": "https://github.com/RayDeeUx/YetAnotherQOLMod",
+	"settings": {
+		"enabled": {
+			"name": "Enabled",
+			"description": "Toggles the mod.",
+			"type": "bool",
+			"default": true
+		},
+		"showBestPercent": {
+			"name": "Show Best Percent",
+			"type": "bool",
+			"default": true
+		},
+		"customSeparator": {
+			"name": "Custom Best Percent Separator",
+			"description": "<cy>Not all options may be available for all fonts seen in the level editor; choose carefully!</c>",
+			"type": "string",
+			"default": "/",
+			"one-of": [
+				"/", "-", "\\", ";"
+			]
+		},
+		"trailLengthModifier": {
+			"name": "Trail Length Modifier",
+			"description": "The higher the number, the longer the trail. Set to 0.0 to disable, or to 1.0 to mimic vanilla behavior when inside a level.",
+			"type": "float",
+			"default": 3.0,
+			"min": 0.0,
+			"max": 6.0,
+			"control": {
+				"slider": false,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 0.1,
+				"big-arrow-step": 1
+			}
+		},
+		"blendingTrailMode": {
+			"name": "Trail Blending Mode",
+			"description": "- <cl>Disabled</c>: Disables this feature.\n- <cl>hiimmoreicons</c>: Emulates the blending style from More Icons by hiimjasmine00.\n- <cl>TheSolidQOLMod</c>: Emulates the blending style from QOLMod by TheSillyDoggo.\n- <cl>Solidmanthus</c>: Similar to the solid trail blending seen in QOLMod, but with a black outline.\n- <cl>Invertmanthus</c>: Invert blending.\n- <cl>Additive</c>: Additive blending.\n\nRequires re-entering a level to apply.",
+			"type": "string",
+			"default": "TheSolidQOLMod",
+			"one-of": [
+				"Disabled", "hiimmoreicons",
+				"TheSolidQOLMod", "Solidmanthus",
+				"Invertmanthus", "Additive"
+			]
+		},
+		"pulseMenuTitle": {
+			"name": "Pulsing Menu Node",
+			"description": "Pulses the title sprite (by default, otherwise a node of your choice) on MenuLayer to the current background music.",
+			"type": "bool",
+			"default": false
+		},
+		"pulseModID": {
+			"name": "Mod ID Prefix for Pulsing Menu Node",
+			"description": "Include the mod ID prefix of the node ID you want to pulse to the menu loop. <cy>Mod IDs are case-sensitive.</c>",
+			"type": "string",
+			"default": "",
+			"filter": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789-."
+		},
+		"pulseNodeID": {
+			"name": "Node ID for Pulsing Menu Node",
+			"description": "Choose a node that will pulse to the menu loop. <cy>Node IDs are case-sensitive.</c>",
+			"type": "string",
+			"default": "main-title",
+			"filter": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789-."
+		},
+		"pulseScaleFactor": {
+			"name": "Pulsing Menu Node Scale Factor",
+			"description": "The higher the number, the larger the pulsing. Adjust as needed depending on the Node ID you chose.",
+			"type": "float",
+			"default": 1.00,
+			"min": 0.00,
+			"max": 1.00,
+			"control": {
+				"slider": false,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 0.01,
+				"big-arrow-step": 0.1
+			}
+		},
+		"garageInPauseMenu": {
+			"name": "Icon Kit In Pause Menu (READ!)",
+			"description": "<c_>Entering The Shop or another menu from an Icon Kit screen from the pause menu will kick you out of the level after exiting the Icon Kit.</c>",
+			"type": "bool",
+			"default": false
+		}
+	},
+	"dependencies": [
+		{
+			"id": "geode.node-ids",
+			"version": ">=1.19.0",
+			"importance": "required"
+		}
+	],
+	"resources": {
+		"sprites": [
+			"resources/*.png"
+		]
+	},
+	"issues": {
+		"url": "https://discord.com/channels/911701438269386882/1205523212444639292",
+		"info": "Ping me <cl>(@erymanthus)</c> in the Geode SDK Discord server's <cl>#help</c> channel if you need help. <cr>DMs are NOT accepted.</c>"
+	},
+	"links": {
+		"community": "https://discord.gg/WqZBYdBWZW",
+		"homepage": "https://discord.com/channels/822510988409831486/1206371881222144020"
+	}
+}
