@@ -13,6 +13,7 @@ public:
 
 	bool calledAlready = false;
 	bool hasLoadedSDI = false;
+	bool isPauseShop = false;
 
 	double trailLengthModifier = 0.0;
 	double pulseScaleFactor = 0.0;
