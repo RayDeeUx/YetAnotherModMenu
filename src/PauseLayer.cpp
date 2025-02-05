@@ -19,11 +19,19 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->updateLayout();
 	}
 	void onYAQOLMODGarage(CCObject*) {
+		#ifndef GEODE_IS_ANDROID64
 		GJGarageLayer* garage = GJGarageLayer::node();
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
+		#else
+		const auto garage = GJGarageLayer::scene();
+		GameManager::get()->m_ropeGarageEnter = true;
+		garage->setUserObject("came-from-pauselayer"_spr, CCBool::create(true));
+		CCDirector::get()->pushScene(garage);
+		this->onResume(nullptr);
+		#endif
 	}
 };
 
@@ -103,3 +111,21 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 		playerToModify->updatePlayerGlow();
 	}
 };
+
+#ifdef GEODE_IS_ANDROID64
+/*
+TL;DR: PlayLayer::onEnter() does not exist.
+This was the most appropriate solution (see above Discord links.)
+-- Erymanthus | RayDeeUx
+*/
+#include <Geode/modify/CCLayer.hpp>
+class $modify(MyCCLayer, CCLayer) {
+	virtual void onEnter() {
+		PlayLayer* pl = PlayLayer::get();
+		if (!pl) return CCLayer::onEnter();
+		if (this != static_cast<CCLayer*>(pl)) return CCLayer::onEnter();
+		if (!pl->m_isPaused) return CCLayer::onEnter();
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return CCLayer::onEnter();
+	}
+};
+#endif
