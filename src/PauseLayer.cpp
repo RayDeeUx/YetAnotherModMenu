@@ -18,20 +18,27 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
+	#ifdef GEODE_IS_ANDROID64
+	static GJGarageLayer* makeGJGarageLayerNode() {
+		auto ret = new GJGarageLayer();
+		if (ret->init()) {
+			ret->autorelease();
+			return ret;
+		}
+		delete ret;
+		return nullptr;
+	}
+	#endif
 	void onYAQOLMODGarage(CCObject*) {
-		#ifndef GEODE_IS_ANDROID64
+		#ifdef GEODE_IS_ANDROID64
+		GJGarageLayer* garage = MyPauseLayer::makeGJGarageLayerNode();
+		#else
 		GJGarageLayer* garage = GJGarageLayer::node();
+		#endif
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
-		#else
-		const auto garage = GJGarageLayer::scene();
-		GameManager::get()->m_ropeGarageEnter = true;
-		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
-		CCDirector::get()->pushScene(garage);
-		this->onResume(nullptr);
-		#endif
 	}
 };
 
