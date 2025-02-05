@@ -13,26 +13,24 @@ class $modify(MyPauseLayer, PauseLayer) {
 		if (!leftButtonMenu) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
 		buttonSprite->setID("garage-button-sprite"_spr);
+		#ifndef GEODE_IS_ANDROID64
 		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyPauseLayer::onYAQOLMODGarage));
+		#else
+		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(LevelInfoLayer::onGarage));
+		#endif
 		button->setID("garage-button"_spr);
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
+	#ifndef GEODE_IS_ANDROID64
 	void onYAQOLMODGarage(CCObject*) {
-		#ifndef GEODE_IS_ANDROID64
 		GJGarageLayer* garage = GJGarageLayer::node();
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
-		#else
-		const auto garage = GJGarageLayer::scene();
-		GameManager::get()->m_ropeGarageEnter = true;
-		garage->setUserObject("came-from-pauselayer"_spr, CCBool::create(true));
-		CCDirector::get()->pushScene(garage);
-		this->onResume(nullptr);
-		#endif
 	}
+	#endif
 };
 
 class $modify(MyGJGarageLayer, GJGarageLayer) {
@@ -115,7 +113,9 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 #ifdef GEODE_IS_ANDROID64
 /*
 TL;DR: PlayLayer::onEnter() does not exist.
-This was the most appropriate solution (see above Discord links.)
+GJGarageLayer::node() also does not exist on Android 64-bit.
+This was the most appropriate solution.
+See https://discord.com/channels/911701438269386882/911702535373475870/1336201672740831333
 -- Erymanthus | RayDeeUx
 */
 #include <Geode/modify/CCLayer.hpp>
