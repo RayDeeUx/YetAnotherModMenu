@@ -21,7 +21,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	#ifdef GEODE_IS_ANDROID64
 	static GJGarageLayer* makeGJGarageLayerNode() {
 		auto ret = new GJGarageLayer();
-		if (ret->init()) {
+		if (ret && ret->init()) {
 			ret->autorelease();
 			return ret;
 		}
