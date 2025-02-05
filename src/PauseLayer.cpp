@@ -53,8 +53,10 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		const auto pl = PlayLayer::get();
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() == pl->getParent()) {
-			// Fake move up transition
-			runAction(CCSequence::createWithTwoActions(CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent))));
+			// fake move up transition
+			runAction(CCSequence::createWithTwoActions(
+				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
+				CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent))));
 		}
 	}
 	void onShop(CCObject *sender) {
@@ -145,8 +147,10 @@ class $modify(MyGJShopLayer, GJShopLayer) {
 	void onBack(CCObject* sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return GJShopLayer::onBack(sender);
 		if (this->getUserObject("from-pauselayer"_spr)) {
-			// Fake move up transition
-			runAction(CCSequence::createWithTwoActions(CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent))));
+			// fake move up transition
+			runAction(CCSequence::createWithTwoActions(
+				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
+				CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent))));
 		}
 	}
 };
