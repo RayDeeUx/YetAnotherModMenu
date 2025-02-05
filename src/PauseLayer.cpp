@@ -18,24 +18,17 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
-	#ifdef GEODE_IS_ANDROID64
-	static GJGarageLayer* makeGJGarageLayerNode() {
-		auto ret = new GJGarageLayer();
-		if (ret && ret->init()) {
-			ret->autorelease();
-			return ret;
-		}
-		delete ret;
-		return nullptr;
-	}
-	#endif
 	void onYAQOLMODGarage(CCObject*) {
 		#ifdef GEODE_IS_ANDROID64
-		GJGarageLayer* garage = MyPauseLayer::makeGJGarageLayerNode();
+		const auto dummyScene = GJGarageLayer::scene();
+		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
+		if (!garage) return FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
+		dummyScene->removeChild(garage);
+		dummyScene->release();
 		#else
 		GJGarageLayer* garage = GJGarageLayer::node();
-		#endif
 		if (!garage) return FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
+		#endif
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
@@ -48,14 +41,18 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		(void) self.setHookPriority("GJGarageLayer::onBack", -3999);
 		(void) self.setHookPriority("GJGarageLayer::onSelect", -3999);
 	}
+	struct Fields {
+		bool attemptedGarage = false;
+	};
 	void onBack(CCObject* sender) {
 		const auto pl = PlayLayer::get();
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(nullptr);
-		#ifndef GEODE_IS_ANDROID64
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() == pl->getParent()) this->removeMeAndCleanup();
-		#else
-		CCDirector::get()->popScene();
-		#endif
+	}
+	void onShop(CCObject* sender) {
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr) || m_fields->attemptedGarage) return GJGarageLayer::onShop(sender);
+		m_fields->attemptedGarage = true;
+		return FLAlertLayer::create("Be careful!", "If you enter The Shop (or another menu) now: \n- you will be kicked out of the level!\n- all audio will be muted until you enter another level!\n\n<cy>Please back out now!</c>", "Close")->show();
 	}
 	void onSelect(CCObject* sender) {
 		GJGarageLayer::onSelect(sender);
