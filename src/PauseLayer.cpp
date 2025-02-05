@@ -35,6 +35,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		#else
 		GJGarageLayer* garage = GJGarageLayer::node();
 		#endif
+		if (!garage) return FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
