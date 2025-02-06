@@ -68,10 +68,8 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() != pl->getParent()) return GJGarageLayer::onBack(sender);
 		// fake move up transition
-		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr)) {
+		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr))
 			pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
-			pause->setUserObject("returned-from-backrooms"_spr, CCBool::create(true));
-		}
 		this->runAction(CCSequence::createWithTwoActions(
 			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
 			CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
