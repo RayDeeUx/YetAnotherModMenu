@@ -40,7 +40,12 @@ class $modify(MyPauseLayer, PauseLayer) {
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
+		setPosition({1000, 1000}); // move it to the backrooms for touch prio
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
+	}
+	// could not figure out disabling the specific keybind for the life of me
+	void onResume(CCObject* sender) {
+		if (!CCScene::get()->getChildByID("garage-block-layer"_spr)) PauseLayer::onResume(sender);
 	}
 };
 
@@ -54,6 +59,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() == pl->getParent()) {
 			// fake move up transition
+			if (auto pause = getParent()->getChildByID("PauseLayer")) pause->setPosition({0, 0});
 			runAction(CCSequence::createWithTwoActions(
 				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
 				CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent))));
