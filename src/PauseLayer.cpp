@@ -9,9 +9,16 @@
 using namespace geode::prelude;
 
 class $modify(MyPauseLayer, PauseLayer) {
+	static void onModify(auto& self) {
+		(void) self.setHookPriority("PauseLayer::onResume", -3999);
+	}
+	struct Fields {
+		CCPoint originalPosition = {0, 0};
+	};
 	void customSetup() {
 		PauseLayer::customSetup();
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
+		m_fields->originalPosition = this->getPosition();
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
@@ -50,9 +57,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr)) return PauseLayer::onResume(sender);
-		if (auto* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer")); garage && garage->getUserObject("from-pauselayer"_spr)) return;
-		PauseLayer::onResume(sender);
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr) || this->getUserObject("returned-from-backrooms"_spr) || this->getPosition() == m_fields->originalPosition) return PauseLayer::onResume(sender);
 	}
 };
 
@@ -65,15 +70,16 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	void onBack(CCObject* sender) {
 		const auto pl = PlayLayer::get();
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
-		if (pl->getParent() && this->getParent() == pl->getParent()) {
-			// fake move up transition
-			if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr))
-				pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
-			this->runAction(CCSequence::createWithTwoActions(
-				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
-				CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
-			);
+		if (pl->getParent() && this->getParent() != pl->getParent()) return GJGarageLayer::onBack(sender);
+		// fake move up transition
+		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr)) {
+			pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
+			pause->setUserObject("returned-from-backrooms"_spr, CCBool::create(true));
 		}
+		this->runAction(CCSequence::createWithTwoActions(
+			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
+			CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
+		);
 	}
 	void onShop(CCObject *sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
