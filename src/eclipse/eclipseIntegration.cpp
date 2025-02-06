@@ -26,7 +26,7 @@ $on_mod(Loaded) {
 
 		createToggleSettingInTab("enabled", tab);
 		createToggleSettingInTab("showBestPercent", tab);
-		createToggleSettingInTab("garageInPauseMenu", tab, "Entering The Shop or another menu from an Icon Kit screen from the pause menu will kick you out of the level after exiting the Icon Kit.");
+		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
 		createToggleSettingInTab("pulseMenuTitle", tab, "USE_MOD_JSON");
 
 
