@@ -1,8 +1,6 @@
 # YetAnotherQOLMod
 A parody/demake of the ***<c-ff0000>unique</c>*** features from [QOLMod by TheSillyDoggo](https://web.archive.org/web/20250114142643/https://github.com/TheSillyDoggo/GeodeMenu), which has been [discontinued](https://web.archive.org/web/20250127100100im_/https://preview.redd.it/another-day-another-stupid-drama-with-the-qolmod-dev-v0-yu5ye34yhvee1.jpeg?width=1080&crop=smart&auto=webp&s=14055703c9f0798bf855fdddefaa885297c60ab6).
 
-Look, *someone* had to clean up the mess QOLMod left behind.
-
 Features re-created and expanded upon from QOLMod:
 - Make your trail longer or shorter [based on `Longer Trail`]
 - Change your trail blending [based on `No Trail Blending`]
