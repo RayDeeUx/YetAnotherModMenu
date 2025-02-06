@@ -187,7 +187,7 @@ class $modify(MyFMODAudioEngine, FMODAudioEngine) {
 		(void) self.setHookPriority("FMODAudioEngine::playMusic", -3999);
 	}
 	void playMusic(gd::string path, bool shouldLoop, float fadeInTime, int channel) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || Manager::getSharedInstance()->isPauseShop)
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || Manager::getSharedInstance()->isPauseShop) return;
 		FMODAudioEngine::playMusic(path, shouldLoop, fadeInTime, channel);
 	}
 };
