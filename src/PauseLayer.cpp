@@ -12,13 +12,9 @@ class $modify(MyPauseLayer, PauseLayer) {
 	static void onModify(auto& self) {
 		(void) self.setHookPriority("PauseLayer::onResume", -3999);
 	}
-	struct Fields {
-		CCPoint originalPosition = {0, 0};
-	};
 	void customSetup() {
 		PauseLayer::customSetup();
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
-		m_fields->originalPosition = this->getPosition();
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
@@ -57,7 +53,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr) || this->getUserObject("returned-from-backrooms"_spr) || this->getPosition() == m_fields->originalPosition) return PauseLayer::onResume(sender);
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || (!CCScene::get()->getChildByType<GJGarageLayer>(0) && !CCScene::get()->getChildByType<GJShopLayer>(0))) return PauseLayer::onResume(sender);
 	}
 };
 
