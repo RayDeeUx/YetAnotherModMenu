@@ -51,7 +51,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr)) return PauseLayer::onResume(sender);
-		if (auto* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer")); !garage || garage->getUserObject("from-pauselayer"_spr))return;
+		if (auto* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer")); garage && garage->getUserObject("from-pauselayer"_spr)) return;
 		PauseLayer::onResume(sender);
 	}
 };
