@@ -96,8 +96,8 @@
 			}
 		},
 		"garageInPauseMenu": {
-			"name": "Icon Kit In Pause Menu (READ!)",
-			"description": "<c_>Entering The Shop or another menu from an Icon Kit screen from the pause menu will kick you out of the level after exiting the Icon Kit.</c>",
+			"name": "Icon Kit In Pause Menu",
+			"description": "<cl>Made with <3 and massive help from km7.</c>",
 			"type": "bool",
 			"default": false
 		}

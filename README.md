@@ -8,8 +8,8 @@ Features re-created and expanded upon from QOLMod:
 - Change your trail blending [based on `No Trail Blending`]
 - Show your highest percentage in the percentage label [based on `Best In Percentage`]
 - Choose a separator when showing your highest percentage of a level [based on `Best In Percentage`]
-- Access the Icon Kit/Garage from the pause menu [based on `Icon Kit in Pause`]
 - Pulse a node of your choice from MenuLayer to the menu loop [based on `Pulse Menu`]
+- Access the Icon Kit/Garage from the pause menu [based on `Icon Kit in Pause`] (with help from [km7](https://github.com/Kingminer7))
 
 <cy>Feature requests for this mod</c> ***<c-ff0000>will NOT</c>*** <cy>be accepted.</c>
 
