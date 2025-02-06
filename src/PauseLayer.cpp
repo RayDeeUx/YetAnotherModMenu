@@ -45,7 +45,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
-		if (!CCScene::get()->getChildByID("garage-block-layer"_spr)) PauseLayer::onResume(sender);
+		if (!CCScene::get()->getChildByID("GJGarageLayer")) PauseLayer::onResume(sender);
 	}
 };
 
@@ -134,11 +134,16 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 		const auto color = GameManager::get()->colorForIdx(sender->getTag());
 		switch (m_colorMode) {
 			default: return;
-			case 0: playerToModify->setColor(color);
-			case 1: playerToModify->setSecondColor(color);
+			case 0:
+				playerToModify->setColor(color);
+				break;
+			case 1:
+				playerToModify->setSecondColor(color);
+				break;
 			case 2: 
 				playerToModify->enableCustomGlowColor(color);
-			        playerToModify->updatePlayerGlow();
+			  playerToModify->updateGlowColor();
+				break;
 		}
 	}
 	void toggleGlow(CCObject* sender) {
