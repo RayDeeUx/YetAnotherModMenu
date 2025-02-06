@@ -43,16 +43,15 @@ class $modify(MyPauseLayer, PauseLayer) {
 		currScene->addChild(garage);
 
 		this->setUserObject("inside-backrooms"_spr, CCBool::create(true));
-		this->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {1000, 1000}))); // move it to the backrooms for hacky touch prio fix
-		// this->setPosition({1000, 1000}); // original function call from km7
+		this->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 1000}))); // move it to the backrooms for hacky touch prio fix
+		// this->setPosition({0, 1000}); // original function call from km7
 
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr)) return PauseLayer::onResume(sender);
-		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer"));
-		if (!garage || garage->getUserObject("from-pauselayer"_spr)) return;
+		if (auto* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer")); !garage || garage->getUserObject("from-pauselayer"_spr))return;
 		PauseLayer::onResume(sender);
 	}
 };
