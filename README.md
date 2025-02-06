@@ -14,7 +14,7 @@ Features re-created and expanded upon from QOLMod:
 <cy>Feature requests for this mod</c> ***<c-ff0000>will NOT</c>*** <cy>be accepted.</c>
 
 Any other presumably "unique" QOLMod features:
-- will benefit in becoming a standalone mod
+- will benefit in becoming (or already exists as) a standalone mod
 - already exists in another mod menu
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2.
