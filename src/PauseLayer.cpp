@@ -136,7 +136,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 			default: return;
 			case 0: playerToModify->setColor(color);
 			case 1: playerToModify->setSecondColor(color);
-			case 2: playerToModify->setGlowColor(color);
+			case 2: playerToModify->enableCustomGlowColor(color);
 		}
 	}
 	void toggleGlow(CCObject* sender) {
