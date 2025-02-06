@@ -76,7 +76,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		}
 	}
 	void onShop(CCObject *sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return GJGarageLayer::onShop(sender);
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
 		Manager* manager = Manager::getSharedInstance();
 		manager->isPauseShop = true;
 		GJShopLayer *shop = GJShopLayer::create(ShopType::Normal);
@@ -96,7 +96,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	void onSelect(CCObject* sender) {
 		GJGarageLayer::onSelect(sender);
 		const auto pl = PlayLayer::get();
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl) return;
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
 		if (!playerToModify) return;
 		const int iconID = sender->getTag();
@@ -146,10 +146,8 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 		const auto color = GameManager::get()->colorForIdx(sender->getTag());
 		switch (m_colorMode) {
 			default: return;
-			case 0:
-				return playerToModify->setColor(color);
-			case 1:
-				return playerToModify->setSecondColor(color);
+			case 0: return playerToModify->setColor(color);
+			case 1: return playerToModify->setSecondColor(color);
 			case 2:
 				playerToModify->enableCustomGlowColor(color);
 				return playerToModify->updateGlowColor();
@@ -170,14 +168,12 @@ class $modify(MyGJShopLayer, GJShopLayer) {
 		(void) self.setHookPriority("GJShopLayer::onBack", -3999);
 	}
 	void onBack(CCObject* sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return GJShopLayer::onBack(sender);
-		if (this->getUserObject("from-pauselayer"_spr)) {
-			// fake move up transition
-			this->runAction(CCSequence::createWithTwoActions(
-				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
-				CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent)))
-			);
-		}
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJShopLayer::onBack(sender);
+		// fake move up transition
+		this->runAction(CCSequence::createWithTwoActions(
+			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
+			CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent)))
+		);
 	}
 };
 
