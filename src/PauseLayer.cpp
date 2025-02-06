@@ -1,8 +1,8 @@
 #include <Geode/modify/CharacterColorPage.hpp>
+#include <Geode/modify/FMODAudioEngine.hpp>
 #include <Geode/modify/GJGarageLayer.hpp>
 #include <Geode/modify/GJShopLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include <Geode/modify/FMODAudioEngine.hpp>
 #include "Utils.hpp"
 #include "Manager.hpp"
 
@@ -22,6 +22,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->updateLayout();
 	}
 	void onYAQOLMODGarage(CCObject*) {
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
 		#ifdef GEODE_IS_ANDROID64
 		const auto dummyScene = GJGarageLayer::scene();
 		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
@@ -40,18 +41,26 @@ class $modify(MyPauseLayer, PauseLayer) {
 		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
-		setPosition({1000, 1000}); // move it to the backrooms for touch prio
+
+		this->setUserObject("inside-backrooms"_spr, CCBool::create(true));
+		this->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {1000, 1000}))); // move it to the backrooms for hacky touch prio fix
+		// this->setPosition({1000, 1000}); // original function call from km7
+
 		garage->setZOrder(currScene->getHighestChildZ() + 2);
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
-		if (!CCScene::get()->getChildByID("GJGarageLayer")) PauseLayer::onResume(sender);
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !this->getUserObject("inside-backrooms"_spr)) return PauseLayer::onResume(sender);
+		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(CCScene::get()->getChildByID("GJGarageLayer"));
+		if (!garage || garage->getUserObject("from-pauselayer"_spr)) return;
+		PauseLayer::onResume(sender);
 	}
 };
 
 class $modify(MyGJGarageLayer, GJGarageLayer) {
 	static void onModify(auto& self) {
 		(void) self.setHookPriority("GJGarageLayer::onBack", -3999);
+		(void) self.setHookPriority("GJGarageLayer::onShop", -3999);
 		(void) self.setHookPriority("GJGarageLayer::onSelect", -3999);
 	}
 	void onBack(CCObject* sender) {
@@ -59,17 +68,20 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() == pl->getParent()) {
 			// fake move up transition
-			if (auto pause = getParent()->getChildByID("PauseLayer")) pause->setPosition({0, 0});
-			runAction(CCSequence::createWithTwoActions(
+			if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr))
+				pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
+			this->runAction(CCSequence::createWithTwoActions(
 				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
-				CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent))));
+				CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
+			);
 		}
 	}
 	void onShop(CCObject *sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return GJGarageLayer::onShop(sender);
-		Manager::getSharedInstance()->isPauseShop = true;
+		Manager* manager = Manager::getSharedInstance();
+		manager->isPauseShop = true;
 		GJShopLayer *shop = GJShopLayer::create(ShopType::Normal);
-		Manager::getSharedInstance()->isPauseShop = false;
+		manager->isPauseShop = false;
 		
 		if (!shop) return FLAlertLayer::create("Oh no!", "You're unable to access the Shop!", "Close")->show();
 		
@@ -116,6 +128,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (playerToModify->m_isShip && pl->m_level->isPlatformer()) playerToModify->updatePlayerJetpackFrame(iconID);
 				return;
 			case IconType::Cube:
+				if (playerToModify->m_isBall || playerToModify->m_isDart || playerToModify->m_isRobot || playerToModify->m_isSpider || playerToModify->m_isSwing) return;
 				return playerToModify->updatePlayerFrame(iconID);
 		}
 	}
@@ -135,15 +148,12 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 		switch (m_colorMode) {
 			default: return;
 			case 0:
-				playerToModify->setColor(color);
-				break;
+				return playerToModify->setColor(color);
 			case 1:
-				playerToModify->setSecondColor(color);
-				break;
-			case 2: 
+				return playerToModify->setSecondColor(color);
+			case 2:
 				playerToModify->enableCustomGlowColor(color);
-			  playerToModify->updateGlowColor();
-				break;
+				return playerToModify->updateGlowColor();
 		}
 	}
 	void toggleGlow(CCObject* sender) {
@@ -157,21 +167,27 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 };
 
 class $modify(MyGJShopLayer, GJShopLayer) {
+	static void onModify(auto& self) {
+		(void) self.setHookPriority("GJShopLayer::onBack", -3999);
+	}
 	void onBack(CCObject* sender) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return GJShopLayer::onBack(sender);
 		if (this->getUserObject("from-pauselayer"_spr)) {
 			// fake move up transition
-			runAction(CCSequence::createWithTwoActions(
+			this->runAction(CCSequence::createWithTwoActions(
 				CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}), 
-				CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent))));
+				CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent)))
+			);
 		}
 	}
 };
 
 class $modify(MyFMODAudioEngine, FMODAudioEngine) {
+	static void onModify(auto& self) {
+		(void) self.setHookPriority("FMODAudioEngine::playMusic", -3999);
+	}
 	void playMusic(gd::string path, bool shouldLoop, float fadeInTime, int channel) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
-		
-		if (!Manager::getSharedInstance()->isPauseShop) FMODAudioEngine::playMusic(path, shouldLoop, fadeInTime, channel);
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || Manager::getSharedInstance()->isPauseShop)
+		FMODAudioEngine::playMusic(path, shouldLoop, fadeInTime, channel);
 	}
 };
