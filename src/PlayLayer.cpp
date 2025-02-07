@@ -105,7 +105,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void postUpdate(float dt) {
 		PlayLayer::postUpdate(dt);
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_fields->coinLines || m_fields->coins.empty()) return;
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_fields->coinLines || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
 		m_fields->coinLines->clear();
 		CCPoint positionPlayer = m_player1->getPosition();
 		int i = -1;
