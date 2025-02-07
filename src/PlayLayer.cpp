@@ -115,7 +115,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			if (i > m_fields->coinCollected.size()) break;
 			if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
 			const CCRect coinRect = coin->getObjectRect();
-			if (const bool touchedCoin = playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
+			if (playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
 			bool passedCoin = false;
 			CCPoint positionCoin = coin->getPosition();
 			if (positionCoin.x < positionPlayer.x) {
