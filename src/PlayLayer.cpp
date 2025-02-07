@@ -112,11 +112,9 @@ class $modify(MyPlayLayer, PlayLayer) {
 		int i = -1;
 		for (GameObject* coin : m_fields->coins) {
 			i++;
-			if (!m_isPracticeMode) {
-				const CCRect coinRect = coin->getObjectRect();
-				if (const bool touchedCoin = playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
-				if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
-			}
+			const CCRect coinRect = coin->getObjectRect();
+			if (const bool touchedCoin = playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
+			if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
 			bool passedCoin = false;
 			CCPoint positionCoin = coin->getPosition();
 			if (positionCoin.x < positionPlayer.x) {
