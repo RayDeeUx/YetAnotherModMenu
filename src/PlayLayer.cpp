@@ -40,14 +40,16 @@ class $modify(MyPlayLayer, PlayLayer) {
 		};
 		ColorMode currentColorMode = ColorMode::Unknown;
 		CoinsStatus coinStatus = CoinsStatus::Unknown;
-		ccColor3B coinColorToUse;
+		ccColor3B coinColorToUse = {255, 0, 0};
+		bool playerCanProbablyRecoverCoin = false;
 	};
-	ccColor4F determineSegmentColor(bool collected) {
+	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin) {
 		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
 		Manager* manager = Manager::getSharedInstance();
 		ccColor4B destinationColor = {255, 0, 0, manager->coinTraceOpacity};
 		if (collected) destinationColor.a /= 2;
+		if (passedCoin) destinationColor.a /= 2;
 		const ColorMode currentMode = fields->currentColorMode;
 		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown)
 			return ccc4FFromccc4B(destinationColor);
@@ -82,7 +84,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 	void addObject(GameObject* object) {
 		PlayLayer::addObject(object);
 		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return;
-		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) return;
+		if (!m_fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) m_fields->playerCanProbablyRecoverCoin = true;
+		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
+			if (m_fields->playerCanProbablyRecoverCoin) return;
+			if (const auto ego = typeinfo_cast<EffectGameObject*>(object)) m_fields->playerCanProbablyRecoverCoin = ego->m_isReverse;
+			if (!m_fields->playerCanProbablyRecoverCoin) m_fields->playerCanProbablyRecoverCoin = object->m_objectID == 2900 || object->m_objectID == 1917;
+			return;
+		}
 		m_fields->coins.push_back(object);
 		const auto gsm = GameStatsManager::get();
 		const char* coinKey = m_level->getCoinKey(static_cast<int>(m_fields->coins.size()));
@@ -100,9 +108,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 		int i = -1;
 		for (GameObject* coin : m_fields->coins) {
 			i++;
+			bool passedCoin = false;
 			CCPoint positionCoin = coin->getPosition();
-			if (positionCoin.x < positionPlayer.x && !m_level->isPlatformer()) continue;
-			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, 1, determineSegmentColor(m_fields->coinCollected.at(i)));
+			if (positionCoin.x < positionPlayer.x) {
+				if (m_fields->playerCanProbablyRecoverCoin) passedCoin = true;
+				else continue; // cant get the coin anymore lol
+			}
+			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, 1, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin));
 		}
 	}
 	void updateProgressbar() {
