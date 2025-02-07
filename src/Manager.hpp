@@ -20,6 +20,10 @@ public:
 
 	char customSeparator = '/';
 
+	std::string colorMode = "";
+	ccColor4B colorFromSettings;
+	GLubyte coinTraceOpacity;
+
 	static Manager* getSharedInstance() {
 		if (!instance) instance = new Manager();
 		return instance;

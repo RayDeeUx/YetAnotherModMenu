@@ -1,4 +1,5 @@
 #include <Geode/modify/MenuLayer.hpp>
+#include <utility>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
@@ -12,7 +13,16 @@ $on_mod(Loaded) {
 		Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
 	});
 	listenForSettingChanges("customSeparator", [](std::string customSeparator) {
-		Manager::getSharedInstance()->customSeparator = customSeparator.at(0);
+		Manager::getSharedInstance()->customSeparator = std::move(customSeparator).at(0);
+	});
+	listenForSettingChanges("colorMode", [](std::string colorMode) {
+		Manager::getSharedInstance()->colorMode = std::move(colorMode);
+	});
+	listenForSettingChanges("colorFromSettings", [](ccColor4B colorFromSettings) {
+		Manager::getSharedInstance()->colorFromSettings = colorFromSettings;
+	});
+	listenForSettingChanges("coinTraceOpacity", [](int64_t coinTraceOpacity) {
+		Manager::getSharedInstance()->coinTraceOpacity = coinTraceOpacity;
 	});
 }
 
@@ -80,9 +90,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->calledAlready = true;
 
 		manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
+		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
 		manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
+		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+		manager->colorMode = Utils::getString("colorMode");
 
 		return true;
 	}

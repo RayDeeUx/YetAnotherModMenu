@@ -4,9 +4,103 @@
 
 using namespace geode::prelude;
 
+enum class ColorMode {
+	MatchCoin,
+	Custom,
+	Unknown
+};
+
+enum class CoinsStatus {
+	RobTop,
+	Editor,
+	CustomVerified,
+	CustomUnverified,
+	Unknown
+};
+
 class $modify(MyPlayLayer, PlayLayer) {
 	static void onModify(auto& self) {
+		(void) self.setHookPriority("PlayLayer::setupHasCompleted", -3999);
 		(void) self.setHookPriority("PlayLayer::updateProgressbar", -3999);
+	}
+	struct Fields {
+		std::vector<GameObject*> coins;
+		std::vector<bool> coinCollected;
+		cocos2d::CCDrawNode* coinLines = nullptr;
+		const std::unordered_map<std::string, ColorMode> colorModeSettingToEnum = {
+			{"Match Coin Status", ColorMode::MatchCoin},
+			{"Custom", ColorMode::Custom}
+		};
+		const std::unordered_map<CoinsStatus, ccColor3B> coinStatusToCocosColor = {
+			{CoinsStatus::RobTop, {255, 215, 0}},
+			{CoinsStatus::Editor, {255, 255, 255}},
+			{CoinsStatus::CustomVerified, {255, 255, 255}},
+			{CoinsStatus::CustomUnverified, {255, 175, 75}},
+			{CoinsStatus::Unknown, {255, 255, 255}}
+		};
+		ColorMode currentColorMode = ColorMode::Unknown;
+		CoinsStatus coinStatus = CoinsStatus::Unknown;
+		ccColor3B coinColorToUse;
+	};
+	ccColor4F determineSegmentColor(bool collected) {
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return {0, 0, 0, 255};
+		const auto fields = m_fields.self();
+		Manager* manager = Manager::getSharedInstance();
+		ccColor4B destinationColor = {255, 0, 0, manager->coinTraceOpacity};
+		if (collected) destinationColor.a /= 2;
+		const ColorMode currentMode = fields->currentColorMode;
+		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown)
+			return ccc4FFromccc4B(destinationColor);
+		if (currentMode == ColorMode::MatchCoin) {
+			destinationColor.r = m_fields->coinColorToUse.r;
+			destinationColor.g = m_fields->coinColorToUse.g;
+			destinationColor.b = m_fields->coinColorToUse.b;
+			return ccc4FFromccc4B(destinationColor);
+		}
+		return ccc4FFromccc4B(manager->colorFromSettings);
+	}
+	void setupHasCompleted() {
+		PlayLayer::setupHasCompleted();
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_objectLayer || !m_level) return;
+		m_fields->coinLines = CCDrawNode::create();
+		m_fields->coinLines->setID("coin-tracing-node"_spr);
+		m_fields->coinLines->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
+		m_objectLayer->addChild(m_fields->coinLines);
+
+		const std::unordered_map<std::string, ColorMode>& mapToFind = m_fields->colorModeSettingToEnum;
+		const std::string& colorModeFromSettings = Manager::getSharedInstance()->colorMode;
+		if (!mapToFind.contains(colorModeFromSettings)) m_fields->currentColorMode = ColorMode::Unknown;
+		else m_fields->currentColorMode = mapToFind.find(colorModeFromSettings)->second;
+
+		if (m_level->m_levelType == GJLevelType::Local) m_fields->coinStatus = CoinsStatus::RobTop;
+		else if (m_level->m_levelID.value() == 0) m_fields->coinStatus = CoinsStatus::Editor;
+		else if (m_level->m_coinsVerified.value() == 0) m_fields->coinStatus = CoinsStatus::CustomUnverified;
+		else m_fields->coinStatus = CoinsStatus::CustomVerified;
+
+		m_fields->coinColorToUse = m_fields->coinStatusToCocosColor.find(m_fields->coinStatus)->second;
+	}
+	void addObject(GameObject* object) {
+		PlayLayer::addObject(object);
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return;
+		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) return;
+		m_fields->coins.push_back(object);
+		const auto gsm = GameStatsManager::get();
+		const char* coinKey = m_level->getCoinKey(static_cast<int>(m_fields->coins.size()));
+		if (object->m_objectType == GameObjectType::UserCoin) m_fields->coinCollected.push_back(gsm->hasUserCoin(coinKey));
+		else if (m_level->m_coinsVerified.value() != 0) m_fields->coinCollected.push_back(gsm->hasSecretCoin(coinKey));
+	}
+	void postUpdate(float dt) {
+		PlayLayer::postUpdate(dt);
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_fields->coinLines || m_fields->coins.empty()) return;
+		m_fields->coinLines->clear();
+		CCPoint positionPlayer = m_player1->getPosition();
+		int i = -1;
+		for (GameObject* coin : m_fields->coins) {
+			i++;
+			CCPoint positionCoin = coin->getPosition();
+			if (positionCoin.x < positionPlayer.x && !m_level->isPlatformer()) continue;
+			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, 1, determineSegmentColor(m_fields->coinCollected.at(i)));
+		}
 	}
 	void updateProgressbar() {
 		PlayLayer::updateProgressbar();

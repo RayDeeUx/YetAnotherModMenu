@@ -9,8 +9,9 @@
 	"name": "YetAnotherQOLMod",
 	"version": "v1.0.0",
 	"developer": "RayDeeUx",
-	"description": "Cleaning up what QOLMod left behind.",
+	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherQOLMod",
+	"tags": ["cheat", "gameplay", "utility", "customization", "universal"],
 	"settings": {
 		"enabled": {
 			"name": "Enabled",
@@ -58,6 +59,41 @@
 				"TheSolidQOLMod", "Solidmanthus",
 				"Invertmanthus", "Additive"
 			]
+		},
+		"traceCoins": {
+			"name": "Trace Direct Path to Coin",
+			"type": "bool",
+			"default": false
+		},
+		"colorMode": {
+			"name": "Coin Path Color Mode",
+			"type": "string",
+			"default": "Match Coin Status",
+			"one-of": [
+				"Match Coin Status",
+				"Custom"
+			]
+		},
+		"colorFromSettings": {
+			"name": "Color (for \"Custom\" Color Mode)",
+			"type": "rgba",
+			"default": [0, 255, 0, 255]
+		},
+		"coinTraceOpacity": {
+			"name": "Coin Path Opacity (for \"Match Coin Status\" Color Modes)",
+			"description": "Collected coins (regardless of type) will use half of the opacity you set here.",
+			"type": "int",
+			"default": 255,
+			"min": 0,
+			"max": 255,
+			"control": {
+				"slider": true,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 1,
+				"big-arrow-step": 5
+			}
 		},
 		"pulseMenuTitle": {
 			"name": "Pulsing Menu Node",
@@ -113,13 +149,5 @@
 		"sprites": [
 			"resources/*.png"
 		]
-	},
-	"issues": {
-		"url": "https://discord.com/channels/911701438269386882/1205523212444639292",
-		"info": "Ping me <cl>(@erymanthus)</c> in the Geode SDK Discord server's <cl>#help</c> channel if you need help. <cr>DMs are NOT accepted.</c>"
-	},
-	"links": {
-		"community": "https://discord.gg/WqZBYdBWZW",
-		"homepage": "https://discord.com/channels/822510988409831486/1206371881222144020"
 	}
 }
