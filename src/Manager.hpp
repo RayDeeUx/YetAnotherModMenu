@@ -11,6 +11,7 @@ protected:
 	static Manager* instance;
 public:
 
+	bool coinTracingOpacityModifiers = false;
 	bool calledAlready = false;
 	bool hasLoadedSDI = false;
 	bool isPauseShop = false;

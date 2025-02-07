@@ -89,14 +89,14 @@
 				"Custom"
 			]
 		},
-		"colorFromSettings": {
-			"name": "Color (for \"Custom\" Color Mode)",
-			"type": "rgba",
-			"default": [0, 255, 0, 255]
+		"coinTracingOpacityModifiers": {
+			"name": "Conditional Coin Path Opacity Modifiers (READ!)",
+			"description": "If <cg>enabled</c>:\n\nPaths for previously collected coins will be half of the opacity you set here.\nPaths to coins that you missed in levels with directional changes will also be half of the opacity you set here.\n\n<cy>Opacity modifiers stack.</c>",
+			"type": "bool",
+			"default": true
 		},
 		"coinTraceOpacity": {
-			"name": "Coin Path Opacity (for \"Match Coin Status\" Color Modes)",
-			"description": "Collected coins (regardless of type) will use half of the opacity you set here.",
+			"name": "Coin Path Opacity (For \"Match Coin Status\" Color Mode)",
 			"type": "int",
 			"default": 255,
 			"min": 0,
@@ -109,6 +109,11 @@
 				"arrow-step": 1,
 				"big-arrow-step": 5
 			}
+		},
+		"colorFromSettings": {
+			"name": "Color (For \"Custom\" Color Mode)",
+			"type": "rgba",
+			"default": [0, 255, 0, 255]
 		},
 		"pulseMenuTitle": {
 			"name": "Pulsing Menu Node",

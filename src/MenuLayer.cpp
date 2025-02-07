@@ -46,12 +46,15 @@ $on_mod(Loaded) {
 	listenForSettingChanges("coinTraceOpacity", [](int64_t coinTraceOpacity) {
 		Manager::getSharedInstance()->coinTraceOpacity = coinTraceOpacity;
 	});
+	listenForSettingChanges("coinTracingOpacityModifiers", [](bool coinTracingOpacityModifiers) {
+		Manager::getSharedInstance()->coinTracingOpacityModifiers = coinTracingOpacityModifiers;
+	});
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
 		"Open Settings",
 		"Opens the YetAnotherQOLMod settings.",
 		{ Keybind::create(KEY_Tab, Modifier::Shift) },
-		"Global/YetAnotherQOLMod"
+		"Global/YetAnotherQOLMod", false
 	});
 	new EventListener([=](InvokeBindEvent* event) {
 		if (!event->isDown()) return ListenerResult::Propagate;
@@ -60,6 +63,8 @@ $on_mod(Loaded) {
 		for (const auto node : CCArrayExt<CCNode*>(CCScene::get()->getChildren())) {
 			if (getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
 		}
+		const auto pl = PlayLayer::get();
+		if (pl && pl->getParent() && (!pl->getParent()->getChildByType<PauseLayer>(0) || !pl->m_isPaused)) return ListenerResult::Propagate;
 		openSettingsPopup(Mod::get());
 		return ListenerResult::Propagate;
 	}, InvokeBindFilter(nullptr, "open-settings"_spr));
@@ -125,6 +130,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
 
+		manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
 		manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
 		manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
 		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");

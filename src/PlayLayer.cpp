@@ -49,20 +49,27 @@ class $modify(MyPlayLayer, PlayLayer) {
 	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin) {
 		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
-		Manager* manager = Manager::getSharedInstance();
-		ccColor4B destinationColor = {255, 0, 0, manager->coinTraceOpacity};
-		if (collected) destinationColor.a /= 2;
-		if (passedCoin) destinationColor.a /= 2;
 		const ColorMode currentMode = fields->currentColorMode;
+		Manager* manager = Manager::getSharedInstance();
+		GLubyte opacity = manager->coinTraceOpacity;
+		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
+		ccColor4B destinationColor = {255, 0, 0, opacity};
+		if (manager->coinTracingOpacityModifiers) {
+			if (collected) destinationColor.a /= 2;
+			if (passedCoin) destinationColor.a /= 2;
+		}
 		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown)
 			return ccc4FFromccc4B(destinationColor);
 		if (currentMode == ColorMode::MatchCoin) {
 			destinationColor.r = m_fields->coinColorToUse.r;
 			destinationColor.g = m_fields->coinColorToUse.g;
 			destinationColor.b = m_fields->coinColorToUse.b;
-			return ccc4FFromccc4B(destinationColor);
+		} else {
+			destinationColor.r = manager->colorFromSettings.r;
+			destinationColor.g = manager->colorFromSettings.g;
+			destinationColor.b = manager->colorFromSettings.b;
 		}
-		return ccc4FFromccc4B(manager->colorFromSettings);
+		return ccc4FFromccc4B(destinationColor);
 	}
 	void setupHasCompleted() {
 		PlayLayer::setupHasCompleted();
