@@ -26,26 +26,9 @@ $on_mod(Loaded) {
 
 		createToggleSettingInTab("enabled", tab);
 		createToggleSettingInTab("showBestPercent", tab);
-		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
+		createToggleSettingInTab("traceCoins", tab);
+
 		createToggleSettingInTab("pulseMenuTitle", tab, "USE_MOD_JSON");
-
-
-		tab.addInputFloat(
-			"trailLengthModifier"_spr, "Trail Length Modifier",
-			[](float trailLengthModifier) {
-				Mod::get()->setSettingValue<double>("trailLengthModifier", trailLengthModifier);
-				Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
-			}
-		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f").setDescription("The higher the number, the longer the trail. Set to 0.0 to disable, or to 1.0 to mimic vanilla behavior when inside a level.");
-
-		eclipse::config::setInternal<float>("trailLengthModifier"_spr, Mod::get()->getSettingValue<double>("trailLengthModifier"));
-
-		listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
-			log::info("trying to sync trailLengthModifier with eclipse menu");
-			Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
-			eclipse::config::setInternal<float>("trailLengthModifier"_spr, trailLengthModifier);
-		});
-
 		tab.addInputFloat(
 			"pulseScaleFactor"_spr, "Pulsing Menu Node Scale Factor",
 			[](float pulseScaleFactor) {
@@ -60,6 +43,23 @@ $on_mod(Loaded) {
 			log::info("trying to sync pulseScaleFactor with eclipse menu");
 			Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 			eclipse::config::setInternal<float>("pulseScaleFactor"_spr, pulseScaleFactor);
+		});
+
+		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
+		tab.addInputFloat(
+			"trailLengthModifier"_spr, "Trail Length Modifier",
+			[](float trailLengthModifier) {
+				Mod::get()->setSettingValue<double>("trailLengthModifier", trailLengthModifier);
+				Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
+			}
+		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f").setDescription("The higher the number, the longer the trail. Set to 0.0 to disable, or to 1.0 to mimic vanilla behavior when inside a level.");
+
+		eclipse::config::setInternal<float>("trailLengthModifier"_spr, Mod::get()->getSettingValue<double>("trailLengthModifier"));
+
+		listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
+			log::info("trying to sync trailLengthModifier with eclipse menu");
+			Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
+			eclipse::config::setInternal<float>("trailLengthModifier"_spr, trailLengthModifier);
 		});
 	});
 
