@@ -12,6 +12,7 @@ protected:
 public:
 
 	bool coinTracingOpacityModifiers = false;
+	bool coinTracingDisabledCoin = false;
 	bool calledAlready = false;
 	bool hasLoadedSDI = false;
 	bool isPauseShop = false;
@@ -19,6 +20,7 @@ public:
 	double trailLengthModifier = 0.0;
 	double pulseScaleFactor = 0.0;
 	double coinTracingThickness = 0.0;
+	double coinOpacityModifier = 0.0;
 
 	char customSeparator = '/';
 

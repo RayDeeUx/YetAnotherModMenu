@@ -80,6 +80,12 @@
 				"big-arrow-step": 1
 			}
 		},
+		"coinTracingDisabledCoin": {
+			"name": "Red Coin Path if Coin is Toggled Off (READ!)",
+			"description": "If <cg>enabled</c>:\n\nPaths for currently disabled coins will be colored <c_>red</c>, overriding your preferences.",
+			"type": "bool",
+			"default": true
+		},
 		"colorMode": {
 			"name": "Coin Path Color Mode",
 			"type": "string",
@@ -91,9 +97,24 @@
 		},
 		"coinTracingOpacityModifiers": {
 			"name": "Conditional Coin Path Opacity Modifiers (READ!)",
-			"description": "If <cg>enabled</c>:\n\nPaths for previously collected coins will be half of the opacity you set here.\nPaths to coins that you missed in levels with directional changes will also be half of the opacity you set here.\n\n<cy>Opacity modifiers stack.</c>",
+			"description": "If <cg>enabled</c>, paths to the following kinds of coins are reduced:\n\n- previously collected coins\n- coins you missed in levels with directional changes.\n\n<cy>Opacity modifiers stack.</c>",
 			"type": "bool",
 			"default": true
+		},
+		"coinOpacityModifier": {
+			"name": "Coin Path Opacity Modifiers",
+			"type": "float",
+			"default": 1.0,
+			"min": 0.12,
+			"max": 0.5,
+			"control": {
+				"slider": false,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 0.01,
+				"big-arrow-step": 0.25
+			}
 		},
 		"coinTraceOpacity": {
 			"name": "Coin Path Opacity (For \"Match Coin Status\" Color Mode)",

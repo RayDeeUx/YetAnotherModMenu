@@ -46,7 +46,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		ccColor3B coinColorToUse = {255, 0, 0};
 		bool playerCanProbablyRecoverCoin = false;
 	};
-	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin) {
+	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin, const bool coinIsDisabled) {
 		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
 		const ColorMode currentMode = fields->currentColorMode;
@@ -55,10 +55,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
 		ccColor4B destinationColor = {255, 0, 0, opacity};
 		if (manager->coinTracingOpacityModifiers) {
-			if (collected) destinationColor.a /= 2;
-			if (passedCoin) destinationColor.a /= 2;
+			if (collected) destinationColor.a *= manager->coinOpacityModifier;
+			if (passedCoin) destinationColor.a *= manager->coinOpacityModifier;
 		}
-		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown)
+		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown || (coinIsDisabled && currentMode == ColorMode::MatchCoin && manager->coinTracingDisabledCoin))
 			return ccc4FFromccc4B(destinationColor);
 		if (currentMode == ColorMode::MatchCoin) {
 			destinationColor.r = m_fields->coinColorToUse.r;
@@ -122,14 +122,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			if (i > m_fields->coinCollected.size()) break;
 			if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
 			const CCRect coinRect = coin->getObjectRect();
-			if (playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
+			if (playerRect.intersectsRect(coinRect) && !coin->m_isGroupDisabled) m_fields->coinActivatedDuringAttempt.at(i) = true;
 			bool passedCoin = false;
 			CCPoint positionCoin = coin->getPosition();
 			if (positionCoin.x < positionPlayer.x) {
 				if (m_fields->playerCanProbablyRecoverCoin) passedCoin = true;
 				else continue; // cant get the coin anymore lol
 			}
-			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, Manager::getSharedInstance()->coinTracingThickness, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin));
+			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, Manager::getSharedInstance()->coinTracingThickness, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin, coin->m_isGroupDisabled));
 		}
 	}
 	void resetLevel() {

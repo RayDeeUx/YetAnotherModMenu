@@ -34,6 +34,9 @@ $on_mod(Loaded) {
 	listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
 		Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
 	});
+	listenForSettingChanges("coinOpacityModifier", [](double coinOpacityModifier) {
+		Manager::getSharedInstance()->coinOpacityModifier = coinOpacityModifier;
+	});
 	listenForSettingChanges("customSeparator", [](std::string customSeparator) {
 		Manager::getSharedInstance()->customSeparator = std::move(customSeparator).at(0);
 	});
@@ -48,6 +51,9 @@ $on_mod(Loaded) {
 	});
 	listenForSettingChanges("coinTracingOpacityModifiers", [](bool coinTracingOpacityModifiers) {
 		Manager::getSharedInstance()->coinTracingOpacityModifiers = coinTracingOpacityModifiers;
+	});
+	listenForSettingChanges("coinTracingDisabledCoin", [](bool coinTracingDisabledCoin) {
+		Manager::getSharedInstance()->coinTracingDisabledCoin = coinTracingDisabledCoin;
 	});
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
@@ -131,7 +137,9 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->calledAlready = true;
 
 		manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
+		manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
 		manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
+		manager->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");
 		manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
 		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
 		manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
