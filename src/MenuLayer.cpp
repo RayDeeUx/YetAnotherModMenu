@@ -57,14 +57,11 @@ protected:
 		if (!this->engine->m_metering) this->engine->enableMetering();
 		if (GameManager::sharedState()->getGameVariable("0122")) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
-		this->forSTDLerp = lerpingAround(this->forSTDLerp, this->engine->m_pulse2, dt);
+		this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
 		const auto finalScale = static_cast<float>(Manager::getSharedInstance()->pulseScaleFactor * lerpCalculation);
 		this->nodeToModify->setScale(finalScale);
-	}
-	static double lerpingAround(const double originalValue, const double currentPulse, const double dt) {
-		return currentPulse + (currentPulse - originalValue) * dt;
 	}
 };
 
