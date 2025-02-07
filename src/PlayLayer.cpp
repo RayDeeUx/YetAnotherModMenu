@@ -107,12 +107,12 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::postUpdate(dt);
 		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_fields->coinLines || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
 		m_fields->coinLines->clear();
-		CCPoint positionPlayer = m_player1->getPosition();
+		const CCPoint positionPlayer = m_player1->getPosition();
+		const CCRect playerRect = m_player1->getObjectRect();
 		int i = -1;
 		for (GameObject* coin : m_fields->coins) {
 			i++;
 			if (!m_isPracticeMode) {
-				const CCRect playerRect = m_player1->getObjectRect();
 				const CCRect coinRect = coin->getObjectRect();
 				if (const bool touchedCoin = playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
 				if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
