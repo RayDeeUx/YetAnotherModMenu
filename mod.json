@@ -158,6 +158,11 @@
 			"id": "geode.node-ids",
 			"version": ">=1.19.0",
 			"importance": "required"
+		},
+		{
+			"id": "geode.custom-keybinds",
+			"version": ">=1.10.2",
+			"importance": "required"
 		}
 	],
 	"resources": {

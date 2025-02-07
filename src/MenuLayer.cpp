@@ -1,9 +1,28 @@
+#include <geode.custom-keybinds/include/Keybinds.hpp>
+#include <Geode/ui/GeodeUI.hpp>
 #include <Geode/modify/MenuLayer.hpp>
-#include <utility>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
 using namespace geode::prelude;
+using namespace keybinds;
+
+std::string getNodeName(CCObject* node) {
+#ifdef GEODE_IS_WINDOWS
+	return typeid(*node).name() + 6;
+#else
+	std::string ret;
+
+	int status = 0;
+	auto demangle = abi::__cxa_demangle(typeid(*node).name(), 0, 0, &status);
+	if (status == 0) {
+		ret = demangle;
+	}
+	free(demangle);
+
+	return ret;
+#endif
+}
 
 $on_mod(Loaded) {
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
@@ -27,6 +46,23 @@ $on_mod(Loaded) {
 	listenForSettingChanges("coinTraceOpacity", [](int64_t coinTraceOpacity) {
 		Manager::getSharedInstance()->coinTraceOpacity = coinTraceOpacity;
 	});
+	BindManager::get()->registerBindable({
+		"open-settings"_spr,
+		"Open Settings",
+		"Opens the YetAnotherQOLMod settings.",
+		{ Keybind::create(KEY_Tab, Modifier::Shift) },
+		"Global/YetAnotherQOLMod"
+	});
+	new EventListener([=](InvokeBindEvent* event) {
+		if (!event->isDown()) return ListenerResult::Propagate;
+		// permission granted by dankmeme01 to run the superscary code:
+		// https://discord.com/channels/911701438269386882/911702535373475870/1337522714205753426
+		for (const auto node : CCArrayExt<CCNode*>(CCScene::get()->getChildren())) {
+			if (getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
+		}
+		openSettingsPopup(Mod::get());
+		return ListenerResult::Propagate;
+	}, InvokeBindFilter(nullptr, "open-settings"_spr));
 }
 
 class PulsingNode final : public CCNode {
