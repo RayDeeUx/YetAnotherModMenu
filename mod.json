@@ -104,9 +104,9 @@
 		"coinOpacityModifier": {
 			"name": "Coin Path Opacity Modifiers",
 			"type": "float",
-			"default": 1.0,
+			"default": 0.9,
 			"min": 0.12,
-			"max": 0.5,
+			"max": 0.9,
 			"control": {
 				"slider": false,
 				"input": true,
