@@ -17,6 +17,7 @@ public:
 
 	double trailLengthModifier = 0.0;
 	double pulseScaleFactor = 0.0;
+	double coinTracingThickness = 0.0;
 
 	char customSeparator = '/';
 

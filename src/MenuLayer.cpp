@@ -9,6 +9,9 @@ $on_mod(Loaded) {
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
 		Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 	});
+	listenForSettingChanges("coinTracingThickness", [](double coinTracingThickness) {
+		Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
+	});
 	listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
 		Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
 	});
@@ -54,7 +57,7 @@ protected:
 		if (!this->engine->m_metering) this->engine->enableMetering();
 		if (GameManager::sharedState()->getGameVariable("0122")) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
-		this->forSTDLerp = lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt);
+		this->forSTDLerp = lerpingAround(this->forSTDLerp, this->engine->m_pulse2, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
 		const auto finalScale = static_cast<float>(Manager::getSharedInstance()->pulseScaleFactor * lerpCalculation);
@@ -89,6 +92,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
 
+		manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
 		manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
 		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
 		manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");

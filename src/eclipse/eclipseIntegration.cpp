@@ -26,7 +26,22 @@ $on_mod(Loaded) {
 
 		createToggleSettingInTab("enabled", tab);
 		createToggleSettingInTab("showBestPercent", tab);
+
 		createToggleSettingInTab("traceCoins", tab);
+		tab.addInputFloat(
+			"coinTracingThickness"_spr, "Coin Path Thickness",
+			[](float coinTracingThickness) {
+				Mod::get()->setSettingValue<double>("coinTracingThickness", coinTracingThickness);
+				Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
+			}
+		).setMinValue(0.f).setMaxValue(3.f).setFormat("%.2f");
+
+		eclipse::config::setInternal<float>("coinTracingThickness"_spr, Mod::get()->getSettingValue<double>("coinTracingThickness"));
+
+		listenForSettingChanges("coinTracingThickness", [](double coinTracingThickness) {
+			Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
+			eclipse::config::setInternal<float>("coinTracingThickness"_spr, coinTracingThickness);
+		});
 
 		createToggleSettingInTab("pulseMenuTitle", tab, "USE_MOD_JSON");
 		tab.addInputFloat(
@@ -46,6 +61,7 @@ $on_mod(Loaded) {
 		});
 
 		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
+
 		tab.addInputFloat(
 			"trailLengthModifier"_spr, "Trail Length Modifier",
 			[](float trailLengthModifier) {

@@ -105,8 +105,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void postUpdate(float dt) {
 		PlayLayer::postUpdate(dt);
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_fields->coinLines || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
-		m_fields->coinLines->clear();
+		if (m_fields->coinLines) m_fields->coinLines->clear();
+		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
 		const CCPoint positionPlayer = m_player1->getPosition();
 		const CCRect playerRect = m_player1->getObjectRect();
 		int i = -1;
@@ -122,7 +122,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 				if (m_fields->playerCanProbablyRecoverCoin) passedCoin = true;
 				else continue; // cant get the coin anymore lol
 			}
-			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, 1, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin));
+			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, Manager::getSharedInstance()->coinTracingThickness, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin));
 		}
 	}
 	void resetLevel() {

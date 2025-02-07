@@ -65,6 +65,21 @@
 			"type": "bool",
 			"default": false
 		},
+		"coinTracingThickness": {
+			"name": "Coin Path Thickness",
+			"type": "float",
+			"default": 1.0,
+			"min": 0.0,
+			"max": 3.0,
+			"control": {
+				"slider": false,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 0.1,
+				"big-arrow-step": 1
+			}
+		},
 		"colorMode": {
 			"name": "Coin Path Color Mode",
 			"type": "string",
