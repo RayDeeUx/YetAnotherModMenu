@@ -22,10 +22,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 	static void onModify(auto& self) {
 		(void) self.setHookPriority("PlayLayer::setupHasCompleted", -3999);
 		(void) self.setHookPriority("PlayLayer::updateProgressbar", -3999);
+		(void) self.setHookPriority("PlayLayer::resetLevel", -3999);
+		(void) self.setHookPriority("PlayLayer::resetLevelFromStart", -3999);
 	}
 	struct Fields {
 		std::vector<GameObject*> coins;
 		std::vector<bool> coinCollected;
+		std::vector<bool> coinActivatedDuringAttempt = {false, false, false};
 		cocos2d::CCDrawNode* coinLines = nullptr;
 		const std::unordered_map<std::string, ColorMode> colorModeSettingToEnum = {
 			{"Match Coin Status", ColorMode::MatchCoin},
@@ -108,6 +111,12 @@ class $modify(MyPlayLayer, PlayLayer) {
 		int i = -1;
 		for (GameObject* coin : m_fields->coins) {
 			i++;
+			if (!m_isPracticeMode) {
+				const CCRect playerRect = m_player1->getObjectRect();
+				const CCRect coinRect = coin->getObjectRect();
+				if (const bool touchedCoin = playerRect.intersectsRect(coinRect)) m_fields->coinActivatedDuringAttempt.at(i) = true;
+				if (m_fields->coinActivatedDuringAttempt.at(i)) continue;
+			}
 			bool passedCoin = false;
 			CCPoint positionCoin = coin->getPosition();
 			if (positionCoin.x < positionPlayer.x) {
@@ -116,6 +125,14 @@ class $modify(MyPlayLayer, PlayLayer) {
 			}
 			m_fields->coinLines->drawSegment(positionPlayer, positionCoin, 1, determineSegmentColor(m_fields->coinCollected.at(i), passedCoin));
 		}
+	}
+	void resetLevel() {
+		m_fields->coinActivatedDuringAttempt = {false, false, false};
+		PlayLayer::resetLevel();
+	}
+	void resetLevelFromStart() {
+		m_fields->coinActivatedDuringAttempt = {false, false, false};
+		PlayLayer::resetLevelFromStart();
 	}
 	void updateProgressbar() {
 		PlayLayer::updateProgressbar();
