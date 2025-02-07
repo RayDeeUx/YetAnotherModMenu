@@ -97,7 +97,7 @@
 		},
 		"coinTracingOpacityModifiers": {
 			"name": "Conditional Coin Path Opacity Modifiers (READ!)",
-			"description": "If <cg>enabled</c>, paths to the following kinds of coins are reduced:\n\n- previously collected coins\n- coins you missed in levels with directional changes.\n\n<cy>Opacity modifiers stack.</c>",
+			"description": "If <cg>enabled</c>, paths to the following kinds of coins are reduced:\n\n- previously collected coins\n- coins you missed in levels with directional changes.\n<cy>Unfortunately, this does not apply to</c> <co>bronze/unverified</c> <cy>coins.</c>\n<cy>Opacity modifiers stack.</c>",
 			"type": "bool",
 			"default": true
 		},

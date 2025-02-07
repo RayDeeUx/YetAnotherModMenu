@@ -38,7 +38,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			{CoinsStatus::RobTop, {255, 215, 0}},
 			{CoinsStatus::Editor, {255, 255, 255}},
 			{CoinsStatus::CustomVerified, {255, 255, 255}},
-			{CoinsStatus::CustomUnverified, {255, 175, 75}},
+			{CoinsStatus::CustomUnverified, {165, 110, 50}},
 			{CoinsStatus::Unknown, {255, 255, 255}}
 		};
 		ColorMode currentColorMode = ColorMode::Unknown;
