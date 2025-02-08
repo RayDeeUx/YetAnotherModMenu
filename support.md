@@ -11,6 +11,7 @@ Go support these awesome people who made YetAnotherQOLMod possible!
 - [Capeling](https://github.com/Capeling)
 - [catgirldev](https://github.com/AnhNguyenlost13)
 - [dankmeme01](https://github.com/dankmeme01) ([Globed](https://globed.dev/))
+- [Prevter](https://github.com/Prevter)
 - [Prometheus](https://github.com/Prometheus-03)
 
 Also check out [Eclipse Menu](https://eclipse.menu)!
