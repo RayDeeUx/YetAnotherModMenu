@@ -17,6 +17,6 @@ Any other presumably "unique" QOLMod features:
 - will benefit in becoming (or already exists as) a standalone mod
 - already exists in another mod menu
 
-<c-888888>*For those looking for a mod that uses 2.1 percentage, see [Percentage Toggle by ZSA](mod:zsa.percentage-toggle).*</c>
+<c-888888>*For those looking for a mod that uses GD 2.1 percentage calculation, see [Percentage Toggle by ZSA](mod:zsa.percentage-toggle).*</c>
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2. To report bugs or get help with using my mods, press the Discord button in the lower left corner.
