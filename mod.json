@@ -160,7 +160,7 @@
 			"name": "Pulsing Menu Node Scale Factor",
 			"description": "The higher the number, the larger the pulsing. Adjust as needed depending on the Node ID you chose.",
 			"type": "float",
-			"default": 1.00,
+			"default": 0.75,
 			"min": 0.00,
 			"max": 1.00,
 			"control": {
