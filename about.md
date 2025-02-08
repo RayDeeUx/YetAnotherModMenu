@@ -4,12 +4,10 @@ A reinterpretation of the ***<c-ff0000>unique</c>*** features from [QOLMod by Th
 Features re-created and expanded upon from QOLMod:
 - Make your trail longer or shorter [based on `Longer Trail`]
 - Change your trail blending [based on `No Trail Blending`]
-- Show your highest percentage in the percentage label [based on `Best In Percentage`]
-- Choose a separator when showing your highest percentage of a level [based on `Best In Percentage`]
+- Show your highest percentage in the percentage label (and choose a separator) [based on `Best In Percentage`]
 - Pulse a node of your choice from MenuLayer to the menu loop [based on `Pulse Menu`]
 - Access the Icon Kit/Garage from the pause menu [based on `Icon Kit in Pause`] (with help from [km7](https://github.com/Kingminer7))
-- Trace a direct path to the secret/user coins of a level [based on `Coin Finder`]
-- Color the direct path to the secret/user coins based on its status [based on `Coin Finder`]
+- Trace a direct path to the secret/user coins of a level, and color it based on its status [based on `Coin Finder`]
 
 <cy>Feature requests for this mod</c> ***<c-ff0000>will NOT</c>*** <cy>be accepted.</c>
 
