@@ -1,4 +1,4 @@
-YetAnotherQOLMod is free software, and I do not take donations. (Or feature requests, for that matter.)
+YetAnotherQOLMod is free software, and I do not take donations. (Or feature requests, for unrelated reasons.)
 
 Go support these awesome people who made YetAnotherQOLMod possible!
 
