@@ -99,6 +99,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
 		if (!playerToModify) return;
+		playerToModify->updateGlowColor();
 		const int iconID = sender->getTag();
 		switch (m_selectedIconType) {
 			default: return;
@@ -115,16 +116,11 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (playerToModify->m_isDart) playerToModify->updatePlayerDartFrame(iconID);
 				return;
 			case IconType::Robot:
-				if (playerToModify->m_isRobot) {
-					playerToModify->updatePlayerRobotFrame(iconID);
-					playerToModify->updateGlowColor();
-				}
+				if (playerToModify->m_isRobot) playerToModify->updatePlayerRobotFrame(iconID);
 				return;
 			case IconType::Spider:
-				if (playerToModify->m_isSpider) {
-					playerToModify->updatePlayerSpiderFrame(iconID);
-					playerToModify->updateGlowColor();
-				}
+				if (playerToModify->m_isSpider) playerToModify->updatePlayerSpiderFrame(iconID);
+
 				return;
 			case IconType::Swing:
 				if (playerToModify->m_isSwing) playerToModify->updatePlayerSwingFrame(iconID);
