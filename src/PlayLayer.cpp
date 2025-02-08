@@ -58,7 +58,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 			if (collected) destinationColor.a *= manager->coinOpacityModifier;
 			if (passedCoin) destinationColor.a *= manager->coinOpacityModifier;
 		}
-		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown || (coinIsDisabled && currentMode == ColorMode::MatchCoin && manager->coinTracingDisabledCoin))
+		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown || (coinIsDisabled && manager->coinTracingDisabledCoin))
 			return ccc4FFromccc4B(destinationColor);
 		if (currentMode == ColorMode::MatchCoin) {
 			destinationColor.r = m_fields->coinColorToUse.r;

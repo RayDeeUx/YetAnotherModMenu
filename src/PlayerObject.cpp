@@ -47,6 +47,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 	}
 	void setupStreak() {
 		PlayerObject::setupStreak();
+		if (!Utils::modEnabled()) return;
 
 		if (Manager::getSharedInstance()->trailLengthModifier > 0.0f)
 			m_regularTrail->setUserObject("qualified-for-elongation"_spr, CCBool::create(true));

@@ -115,10 +115,16 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (playerToModify->m_isDart) playerToModify->updatePlayerDartFrame(iconID);
 				return;
 			case IconType::Robot:
-				if (playerToModify->m_isRobot) playerToModify->updatePlayerRobotFrame(iconID);
+				if (playerToModify->m_isRobot) {
+					playerToModify->updatePlayerRobotFrame(iconID);
+					playerToModify->updateGlowColor();
+				}
 				return;
 			case IconType::Spider:
-				if (playerToModify->m_isSpider) playerToModify->updatePlayerSpiderFrame(iconID);
+				if (playerToModify->m_isSpider) {
+					playerToModify->updatePlayerSpiderFrame(iconID);
+					playerToModify->updateGlowColor();
+				}
 				return;
 			case IconType::Swing:
 				if (playerToModify->m_isSwing) playerToModify->updatePlayerSwingFrame(iconID);
