@@ -13,6 +13,6 @@ Go support these awesome people who made YetAnotherQOLMod possible!
 - [dankmeme01](https://github.com/dankmeme01) ([Globed](https://globed.dev/))
 - [Prevter](https://github.com/Prevter)
 - [Prometheus](https://github.com/Prometheus-03)
-- [cdc](https://github.com/Prometheus-cdc-sys)
+- [cdc](https://github.com/cdc-sys)
 
 Also check out [Eclipse Menu](https://eclipse.menu)!
