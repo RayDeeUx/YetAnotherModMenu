@@ -1,5 +1,5 @@
 # YetAnotherQOLMod
-A parody/demake of the ***<c-ff0000>unique</c>*** features from [QOLMod by TheSillyDoggo](https://web.archive.org/web/20250114142643/https://github.com/TheSillyDoggo/GeodeMenu), which has been [discontinued](https://web.archive.org/web/20250127100100im_/https://preview.redd.it/another-day-another-stupid-drama-with-the-qolmod-dev-v0-yu5ye34yhvee1.jpeg?width=1080&crop=smart&auto=webp&s=14055703c9f0798bf855fdddefaa885297c60ab6).
+A reinterpretation of the ***<c-ff0000>unique</c>*** features from [QOLMod by TheSillyDoggo](https://web.archive.org/web/20250114142643/https://github.com/TheSillyDoggo/GeodeMenu), which has been [discontinued](https://web.archive.org/web/20250127100100im_/https://preview.redd.it/another-day-another-stupid-drama-with-the-qolmod-dev-v0-yu5ye34yhvee1.jpeg?width=1080&crop=smart&auto=webp&s=14055703c9f0798bf855fdddefaa885297c60ab6).
 
 Features re-created and expanded upon from QOLMod:
 - Make your trail longer or shorter [based on `Longer Trail`]
@@ -16,5 +16,7 @@ Features re-created and expanded upon from QOLMod:
 Any other presumably "unique" QOLMod features:
 - will benefit in becoming (or already exists as) a standalone mod
 - already exists in another mod menu
+
+<c-888888>*For those looking for a mod that uses 2.1 percentage, see [Percentage Toggle by ZSA](mod:zsa.percentage-toggle).*</c>
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2. To report bugs or get help with using my mods, press the Discord button in the lower left corner.
