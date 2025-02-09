@@ -101,6 +101,12 @@
 			"type": "bool",
 			"default": true
 		},
+		"previouslyCollectedModifier": {
+			"name": "Modifier for Previously Collected Coins",
+			"description": "Since this detection is only 95% accurate, this modifier is disabled by default.",
+			"type": "bool",
+			"default": false
+		},
 		"coinOpacityModifier": {
 			"name": "Coin Path Opacity Modifiers",
 			"type": "float",

@@ -1,6 +1,6 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
-#include <Geode/ui/GeodeUI.hpp>
 #include <Geode/modify/MenuLayer.hpp>
+#include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
@@ -54,6 +54,9 @@ $on_mod(Loaded) {
 	});
 	listenForSettingChanges("coinTracingDisabledCoin", [](bool coinTracingDisabledCoin) {
 		Manager::getSharedInstance()->coinTracingDisabledCoin = coinTracingDisabledCoin;
+	});
+	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
+		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
@@ -137,6 +140,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->calledAlready = true;
 
 		manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
+		manager->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
 		manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
 		manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
 		manager->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");

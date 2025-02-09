@@ -12,6 +12,7 @@ protected:
 public:
 
 	bool coinTracingOpacityModifiers = false;
+	bool previouslyCollectedModifier = false;
 	bool coinTracingDisabledCoin = false;
 	bool calledAlready = false;
 	bool hasLoadedSDI = false;

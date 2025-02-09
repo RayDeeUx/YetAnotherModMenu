@@ -55,7 +55,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
 		ccColor4B destinationColor = {255, 0, 0, opacity};
 		if (manager->coinTracingOpacityModifiers) {
-			if (collected) destinationColor.a *= manager->coinOpacityModifier;
+			if (collected && manager->previouslyCollectedModifier) destinationColor.a *= manager->coinOpacityModifier;
 			if (passedCoin) destinationColor.a *= manager->coinOpacityModifier;
 		}
 		if (currentMode == ColorMode::Unknown || m_fields->coinStatus == CoinsStatus::Unknown || (coinIsDisabled && manager->coinTracingDisabledCoin))
@@ -97,7 +97,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!m_fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) m_fields->playerCanProbablyRecoverCoin = true;
 		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
 			if (m_fields->playerCanProbablyRecoverCoin) return;
-			if (const auto ego = typeinfo_cast<EffectGameObject*>(object)) m_fields->playerCanProbablyRecoverCoin = ego->m_isReverse;
+			if (const auto ego = typeinfo_cast<EffectGameObject*>(object)) m_fields->playerCanProbablyRecoverCoin = ego->m_isReverse && !ego->m_isNoTouch && ego->m_objectType != GameObjectType::Decoration;
 			if (!m_fields->playerCanProbablyRecoverCoin) m_fields->playerCanProbablyRecoverCoin = object->m_objectID == 2900 || object->m_objectID == 1917;
 			return;
 		}
