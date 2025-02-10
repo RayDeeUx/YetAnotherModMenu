@@ -19,4 +19,8 @@ namespace Utils {
 	std::string getModVersion(Mod* mod);
 
 	PlayerObject* getSelectedPlayerObjectToModfy(const PlayLayer* pl = PlayLayer::get());
+
+	std::string getNodeName(CCObject* node);
+	void openSettings(CCObject* sender = nullptr);
+	void addButtonToNode(CCNode* node, CCLayer* layer, cocos2d::SEL_MenuHandler callback);
 }

@@ -3,8 +3,8 @@
 #include <Geode/modify/GJGarageLayer.hpp>
 #include <Geode/modify/GJShopLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include "Utils.hpp"
 #include "Manager.hpp"
+#include "Utils.hpp"
 
 using namespace geode::prelude;
 
@@ -14,9 +14,10 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	void customSetup() {
 		PauseLayer::customSetup();
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
+		Utils::addButtonToNode(leftButtonMenu, this, menu_selector(MyPauseLayer::onYAQOLMODSettings));
+		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
 		buttonSprite->setID("garage-button-sprite"_spr);
 		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyPauseLayer::onYAQOLMODGarage));
@@ -24,6 +25,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
 	void onYAQOLMODGarage(CCObject*) {
 		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
 		#ifdef GEODE_IS_ANDROID64

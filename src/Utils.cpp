@@ -1,6 +1,6 @@
-#include "Utils.hpp"
-
+#include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
+#include "Utils.hpp"
 
 using namespace geode::cocos;
 
@@ -31,6 +31,37 @@ namespace Utils {
 		if (!pl) return nullptr;
 		if (Manager::getSharedInstance()->hasLoadedSDI && Utils::getMod(SDI)->getSavedValue<bool>("2pselected")) return pl->m_player2;
 		return pl->m_player1;
+	}
+
+	std::string getNodeName(CCObject* node) {
+		#ifdef GEODE_IS_WINDOWS
+		return typeid(*node).name() + 6;
+		#else
+		std::string ret;
+
+		int status = 0;
+		auto demangle = abi::__cxa_demangle(typeid(*node).name(), 0, 0, &status);
+		if (status == 0) {
+			ret = demangle;
+		}
+		free(demangle);
+
+		return ret;
+		#endif
+	}
+
+	void openSettings(CCObject*) {
+		openSettingsPopup(Mod::get());
+	}
+
+	void addButtonToNode(CCNode* node, CCLayer* layer, cocos2d::SEL_MenuHandler callback) {
+		if (!node) return;
+		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("logoForShortcutButton.png"_spr, 1, CircleBaseColor::Pink, CircleBaseSize::SmallAlt);
+		buttonSprite->setID("settings-shortcut-sprite"_spr);
+		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, layer, callback);
+		button->setID("settings-shortcut"_spr);
+		node->addChild(button);
+		node->updateLayout();
 	}
 
 }

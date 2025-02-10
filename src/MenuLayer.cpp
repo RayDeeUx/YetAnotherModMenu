@@ -1,4 +1,8 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
+#include <Geode/modify/EditorPauseLayer.hpp>
+#include <Geode/modify/EditLevelLayer.hpp>
+#include <Geode/modify/LevelInfoLayer.hpp>
+#include <Geode/modify/CreatorLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
@@ -6,23 +10,6 @@
 
 using namespace geode::prelude;
 using namespace keybinds;
-
-std::string getNodeName(CCObject* node) {
-#ifdef GEODE_IS_WINDOWS
-	return typeid(*node).name() + 6;
-#else
-	std::string ret;
-
-	int status = 0;
-	auto demangle = abi::__cxa_demangle(typeid(*node).name(), 0, 0, &status);
-	if (status == 0) {
-		ret = demangle;
-	}
-	free(demangle);
-
-	return ret;
-#endif
-}
 
 $on_mod(Loaded) {
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
@@ -70,7 +57,7 @@ $on_mod(Loaded) {
 		// permission granted by dankmeme01 to run the superscary code:
 		// https://discord.com/channels/911701438269386882/911702535373475870/1337522714205753426
 		for (const auto node : CCArrayExt<CCNode*>(CCScene::get()->getChildren())) {
-			if (getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
+			if (Utils::getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
 		}
 		const auto pl = PlayLayer::get();
 		if (pl && pl->getParent() && (!pl->getParent()->getChildByType<PauseLayer>(0) || !pl->m_isPaused)) return ListenerResult::Propagate;
@@ -123,6 +110,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 	bool init() {
 		if (!MenuLayer::init()) return false;
 
+		if (CCNode* bottomMenu = this->getChildByID("bottom-menu")) Utils::addButtonToNode(bottomMenu, this, menu_selector(MyMenuLayer::onYAQOLMODSettings));
+
 		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
 		std::string nodeID = Utils::getString("pulseNodeID");
 		const std::string& modID = Utils::getString("pulseModID");
@@ -154,4 +143,43 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		return true;
 	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+};
+
+
+
+class $modify(MyEditLevelLayer, EditLevelLayer) {
+	bool init(GJGameLevel* p0) {
+		if (!EditLevelLayer::init(p0)) return false;
+		if (CCNode* node = getChildByIDRecursive("level-actions-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditLevelLayer::onYAQOLMODSettings));
+		return true;
+	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+};
+
+class $modify(MyCreatorLayer, CreatorLayer) {
+	bool init() {
+		if (!CreatorLayer::init()) return false;
+		if (CCNode* node = getChildByIDRecursive("bottom-left-menu")) Utils::addButtonToNode(node, this, menu_selector(MyCreatorLayer::onYAQOLMODSettings));
+		return true;
+	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+};
+
+class $modify(MyEditorPauseLayer, EditorPauseLayer) {
+	bool init(LevelEditorLayer* lel) {
+		if (!EditorPauseLayer::init(lel)) return false;
+		if (CCNode* node = getChildByIDRecursive("settings-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditorPauseLayer::onYAQOLMODSettings));
+		return true;
+	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+};
+
+class $modify(MyLevelInfoLayer, LevelInfoLayer) {
+	bool init(GJGameLevel* p0, bool p1) {
+		if (!LevelInfoLayer::init(p0, p1)) return false;
+		if (CCNode* node = getChildByIDRecursive("left-side-menu")) Utils::addButtonToNode(node, this, menu_selector(MyLevelInfoLayer::onYAQOLMODSettings));
+		return true;
+	}
+	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
 };
