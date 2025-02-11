@@ -21,6 +21,8 @@ namespace Utils {
 	PlayerObject* getSelectedPlayerObjectToModfy(const PlayLayer* pl = PlayLayer::get());
 
 	std::string getNodeName(CCObject* node);
+	#ifdef GEODE_IS_ANDROID
 	void openSettings(CCObject* sender = nullptr);
 	void addButtonToNode(CCNode* node, CCLayer* layer, cocos2d::SEL_MenuHandler callback);
+	#endif
 }

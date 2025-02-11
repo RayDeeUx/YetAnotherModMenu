@@ -50,6 +50,7 @@ namespace Utils {
 		#endif
 	}
 
+	#ifdef GEODE_IS_ANDROID
 	void openSettings(CCObject*) {
 		openSettingsPopup(Mod::get());
 	}
@@ -63,5 +64,6 @@ namespace Utils {
 		node->addChild(button);
 		node->updateLayout();
 	}
+	#endif
 
 }
