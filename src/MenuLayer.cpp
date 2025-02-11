@@ -1,8 +1,4 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
-#include <Geode/modify/EditorPauseLayer.hpp>
-#include <Geode/modify/EditLevelLayer.hpp>
-#include <Geode/modify/LevelInfoLayer.hpp>
-#include <Geode/modify/CreatorLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
@@ -110,7 +106,9 @@ class $modify(MyMenuLayer, MenuLayer) {
 	bool init() {
 		if (!MenuLayer::init()) return false;
 
+		#ifdef GEODE_IS_ANDROID
 		if (CCNode* bottomMenu = this->getChildByID("bottom-menu")) Utils::addButtonToNode(bottomMenu, this, menu_selector(MyMenuLayer::onYAQOLMODSettings));
+		#endif
 
 		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
 		std::string nodeID = Utils::getString("pulseNodeID");
@@ -143,11 +141,16 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		return true;
 	}
+	#ifdef GEODE_IS_ANDROID
 	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	#endif
 };
 
-
-
+#ifdef GEODE_IS_ANDROID
+#include <Geode/modify/EditorPauseLayer.hpp>
+#include <Geode/modify/EditLevelLayer.hpp>
+#include <Geode/modify/LevelInfoLayer.hpp>
+#include <Geode/modify/CreatorLayer.hpp>
 class $modify(MyEditLevelLayer, EditLevelLayer) {
 	bool init(GJGameLevel* p0) {
 		if (!EditLevelLayer::init(p0)) return false;
@@ -183,3 +186,4 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
 	}
 	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
 };
+#endif
