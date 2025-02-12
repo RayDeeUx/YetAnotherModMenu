@@ -15,7 +15,6 @@ public:
 	bool previouslyCollectedModifier = false;
 	bool coinTracingDisabledCoin = false;
 	bool addMinumumWidth = false;
-	bool pulseUseSTDLerp = false;
 	bool pulseMenuTitle = false;
 	bool filthyGameplay = false;
 	bool calledAlready = false;

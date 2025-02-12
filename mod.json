@@ -199,12 +199,6 @@
 			"default": "main-title",
 			"filter": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789-."
 		},
-		"pulseUseSTDLerp": {
-			"name": "Smooth Node Pulsing",
-			"description": "Smoothly pulses the node of your choice, like QOLMod. If disabled, switch to a more \"impactful\" pulsing/scaling effect.",
-			"type": "bool",
-			"default": true
-		},
 		"pulseScaleFactor": {
 			"name": "Pulsing Menu Node Scale Factor",
 			"description": "The higher the number, the larger the pulsing. Adjust as needed depending on the Node ID you chose.",

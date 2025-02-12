@@ -54,9 +54,6 @@ $on_mod(Loaded) {
 	listenForSettingChanges("addMinumumWidth", [](bool addMinumumWidth) {
 		Manager::getSharedInstance()->addMinumumWidth = addMinumumWidth;
 	});
-	listenForSettingChanges("pulseUseSTDLerp", [](bool pulseUseSTDLerp) {
-		Manager::getSharedInstance()->pulseUseSTDLerp = pulseUseSTDLerp;
-	});
 	listenForSettingChanges("trailLength", [](bool trailLength) {
 		Manager::getSharedInstance()->trailLength = trailLength;
 	});
@@ -119,15 +116,11 @@ protected:
 		Manager* manager = Manager::getSharedInstance();
 		if (GameManager::sharedState()->getGameVariable("0122") || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
-		if (manager->pulseUseSTDLerp) this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
-		else this->forSTDLerp = PulsingNode::lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt);
+		this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
 		const auto finalScale = static_cast<float>(manager->pulseScaleFactor * lerpCalculation);
 		this->nodeToModify->setScale(finalScale);
-	}
-	static double lerpingAround(const double originalValue, const double currentPulse, const double dt) {
-		return currentPulse + (currentPulse - originalValue) * dt;
 	}
 };
 
@@ -170,7 +163,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
-		manager->pulseUseSTDLerp = Utils::getBool("pulseUseSTDLerp");
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
