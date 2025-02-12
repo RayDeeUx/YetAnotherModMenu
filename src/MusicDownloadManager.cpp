@@ -13,6 +13,9 @@ class $modify (MyMusicDownloadManager, MusicDownloadManager) {
 		const std::string& originalPath = MusicDownloadManager::pathForSFX(p0);
 		if (!Utils::modEnabled() || !manager->filth) return originalPath;
 		const std::string& desiredPath = manager->filthyPath.string();
+		#ifdef GEODE_IS_ANDROID
+		if (desiredPath == "file:///android_asset/sfx/s4451.ogg") return "sfx/s4451.ogg";
+		#endif
 		if (!Utils::isSupportedFMODExtension(desiredPath)) return originalPath;
 		return desiredPath;
 		// return "sfx/s4451.ogg";
