@@ -70,7 +70,7 @@ namespace Utils {
 	#endif
 
 	bool isSupportedFMODExtension(const std::string &path) {
-		return !path.empty() && (path.ends_with(".mp3") || path.ends_with(".wav") || path.ends_with(".ogg") || path.ends_with(".oga") || path.ends_with(".flac"));
+		return std::filesystem::exists(path) && !path.empty() && (path.ends_with(".mp3") || path.ends_with(".wav") || path.ends_with(".ogg") || path.ends_with(".oga") || path.ends_with(".flac"));
 	}
 
 

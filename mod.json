@@ -265,7 +265,7 @@
 			"default": {
 				"win": "{gd_dir}/resources/sfx/s4451.ogg",
 				"mac": "{gd_dir}/Resources/sfx/s4451.ogg",
-				"android": ""
+				"android": "file:///android_asset/sfx/s4451.ogg"
 			},
 			"filters": [
 				{

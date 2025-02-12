@@ -12,21 +12,8 @@ class $modify (MyFMODAudioEngine, FMODAudioEngine) {
 		Manager* manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->filth) return FMODAudioEngine::playEffect(p0, p1, p2, p3);
 		std::string desiredPath = manager->filthyPath.string();
-		if (!manager->filthyGameplay && GJBaseGameLayer::get()) {
-			if (PlayLayer::get() && !CCScene::get()->getChildByType<PauseLayer>(0)) desiredPath = p0;
-			if (LevelEditorLayer::get() && !CCScene::get()->getChildByType<EditorPauseLayer>(0)) desiredPath = p0;
-		}
-		if (!manager->filthyPath.string().empty()) {
-			if (!std::filesystem::exists(manager->filthyPath)) desiredPath = p0;
-			if (!Utils::isSupportedFMODExtension(manager->filthyPath.string())) desiredPath = p0;
-		}
-		if (manager->filthyPath.string().empty()) {
-			#ifdef GEODE_IS_ANDROID
-			desiredPath = "sfx/s4451.ogg";
-			#else
-			desiredPath = p0;
-			#endif
-		}
+		if (!manager->filthyGameplay && GJBaseGameLayer::get()) desiredPath = p0;
+		else if (!Utils::isSupportedFMODExtension(manager->filthyPath.string())) desiredPath = p0;
 		return FMODAudioEngine::playEffect(desiredPath, p1, p2, p3);
 	}
 };
