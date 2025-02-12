@@ -119,7 +119,7 @@ protected:
 		Manager* manager = Manager::getSharedInstance();
 		if (GameManager::sharedState()->getGameVariable("0122") || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
-		if (manager->pulseUseSTDLerp || !manager->calledAlready) this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
+		if (manager->pulseUseSTDLerp) this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		else this->forSTDLerp = PulsingNode::lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
@@ -170,6 +170,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
+		manager->pulseUseSTDLerp = Utils::getBool("pulseUseSTDLerp");
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
