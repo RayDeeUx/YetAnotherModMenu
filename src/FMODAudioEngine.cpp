@@ -14,6 +14,7 @@ class $modify (MyFMODAudioEngine, FMODAudioEngine) {
 		if (!manager->filthyGameplay && GJBaseGameLayer::get()) desiredPath = p0;
 		if (!std::filesystem::exists(manager->filthyPath)) desiredPath = p0;
 		if (manager->filthyPath.string().empty()) desiredPath = p0;
+		if (!Utils::isSupportedFMODExtension(manager->filthyPath.string())) desiredPath = p0;
 		if (!Utils::modEnabled() || !manager->filth) desiredPath = p0;
 		return FMODAudioEngine::playEffect(desiredPath, p1, p2, p3);
 	}
