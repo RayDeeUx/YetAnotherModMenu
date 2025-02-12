@@ -223,8 +223,14 @@
 		},
 		"filth": {
 			"name": "Fire in Lava/the Hole (FiL/tH)",
+			"description": "Replaces all SFX with (by default) that \"Fire in the HoIe\" SFX that totally won't age poorly 10 years from now. (Or any SFX of your choice.)",
 			"type": "bool",
 			"default": false
+		},
+		"filthyGameplay": {
+			"name": "FiL/tH During Gameplay",
+			"type": "bool",
+			"default": true
 		},
 		"filthyPath": {
 			"name": "FiL/tH File",

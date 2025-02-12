@@ -93,6 +93,6 @@ $on_mod(Loaded) {
 			eclipse::config::setInternal<float>("pulseScaleFactor"_spr, pulseScaleFactor);
 		});
 
-		createToggleSettingInTab("filth", tab);
+		createToggleSettingInTab("filth", tab, "USE_MOD_JSON");
 	});
 }

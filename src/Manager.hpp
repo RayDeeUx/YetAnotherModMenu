@@ -16,6 +16,7 @@ public:
 	bool coinTracingDisabledCoin = false;
 	bool addMinumumWidth = false;
 	bool pulseUseSTDLerp = false;
+	bool filthyGameplay = false;
 	bool calledAlready = false;
 	bool noWavePulse = false;
 	bool hasLoadedSDI = false;

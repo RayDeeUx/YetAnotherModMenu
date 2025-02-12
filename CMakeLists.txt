@@ -20,6 +20,7 @@ add_library(${PROJECT_NAME} SHARED
     src/eclipse/components.hpp
     src/eclipse/eclipseIntegration.cpp
 
+    src/MusicDownloadManager.cpp
     src/FMODAudioEngine.cpp
     src/CCMotionStreak.cpp
     src/PlayerObject.cpp

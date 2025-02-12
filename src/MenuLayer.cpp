@@ -45,6 +45,9 @@ $on_mod(Loaded) {
 	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
+	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
+		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
+	})
 	listenForSettingChanges("addMinumumWidth", [](bool addMinumumWidth) {
 		Manager::getSharedInstance()->addMinumumWidth = addMinumumWidth;
 	});
@@ -164,6 +167,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
+		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
 		manager->wavePulseSize = Utils::getDouble("wavePulseSize");
 		manager->noWavePulse = Utils::getBool("noWavePulse");
