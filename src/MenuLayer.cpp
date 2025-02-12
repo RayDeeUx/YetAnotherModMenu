@@ -45,9 +45,6 @@ $on_mod(Loaded) {
 	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
-	listenForSettingChanges("pulseMenuTitle", [](bool pulseMenuTitle) {
-		Manager::getSharedInstance()->pulseMenuTitle = pulseMenuTitle;
-	});
 	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
 	});
@@ -114,7 +111,7 @@ protected:
 		if (!this->nodeToModify) return;
 		if (!this->engine->m_metering) this->engine->enableMetering();
 		Manager* manager = Manager::getSharedInstance();
-		if (GameManager::sharedState()->getGameVariable("0122") || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
+		if (GameManager::sharedState()->getGameVariable("0122")) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
 		this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
