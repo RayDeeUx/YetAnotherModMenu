@@ -161,9 +161,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
-		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
-		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->wavePulseSize = Utils::getDouble("wavePulseSize");
+		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
 		manager->noWavePulse = Utils::getBool("noWavePulse");
 		manager->trailLength = Utils::getBool("trailLength");
 		manager->filthyPath = Utils::getString("filthyPath", true);
