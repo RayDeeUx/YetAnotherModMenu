@@ -11,7 +11,10 @@ class $modify (MyMusicDownloadManager, MusicDownloadManager) {
 	gd::string pathForSFX(int p0) {
 		Manager* manager = Manager::getSharedInstance();
 		const std::string& originalPath = MusicDownloadManager::pathForSFX(p0);
-		if (!manager->filthyGameplay && GJBaseGameLayer::get()) return originalPath;
+		if (!manager->filthyGameplay && GJBaseGameLayer::get()) {
+			if (PlayLayer::get() && !CCScene::get()->getChildByType<PauseLayer>(0)) return originalPath;
+			if (LevelEditorLayer::get() && !CCScene::get()->getChildByType<EditorPauseLayer>(0)) return originalPath;
+		}
 		if (!std::filesystem::exists(manager->filthyPath)) return originalPath;
 		if (manager->filthyPath.string().empty()) return originalPath;
 		if (!Utils::isSupportedFMODExtension(manager->filthyPath.string())) return originalPath;

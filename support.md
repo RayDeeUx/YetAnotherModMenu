@@ -10,6 +10,7 @@ Go support these awesome people who made YetAnotherQOLMod possible!
 - [Jaid](https://bsky.app/profile/itsjaid.bsky.social)
 - [Capeling](https://github.com/Capeling)
 - [catgirldev](https://github.com/AnhNguyenlost13)
+- [MysticAxolotl](https://github.com/MysticAx0lotl)
 - [dankmeme01](https://github.com/dankmeme01) ([Globed](https://globed.dev/))
 - [Prevter](https://github.com/Prevter)
 - [Prometheus](https://github.com/Prometheus-03)

@@ -12,8 +12,8 @@ class $modify (MyFMODAudioEngine, FMODAudioEngine) {
 		Manager* manager = Manager::getSharedInstance();
 		std::string desiredPath = manager->filthyPath.string();
 		if (!manager->filthyGameplay && GJBaseGameLayer::get()) {
-			if (PlayLayer::get() && !CCScene::get()->getChildByType<PauseLayer*>(0)) desiredPath = p0;
-			if (LevelEditorLayer::get() && !CCScene::get()->getChildByType<EditorPauseLayer*>(0)) desiredPath = p0;
+			if (PlayLayer::get() && !CCScene::get()->getChildByType<PauseLayer>(0)) desiredPath = p0;
+			if (LevelEditorLayer::get() && !CCScene::get()->getChildByType<EditorPauseLayer>(0)) desiredPath = p0;
 		}
 		if (!std::filesystem::exists(manager->filthyPath)) desiredPath = p0;
 		if (manager->filthyPath.string().empty()) desiredPath = p0;
