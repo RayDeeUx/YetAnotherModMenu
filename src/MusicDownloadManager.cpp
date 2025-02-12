@@ -15,8 +15,12 @@ class $modify (MyMusicDownloadManager, MusicDownloadManager) {
 			if (PlayLayer::get() && !CCScene::get()->getChildByType<PauseLayer>(0)) return originalPath;
 			if (LevelEditorLayer::get() && !CCScene::get()->getChildByType<EditorPauseLayer>(0)) return originalPath;
 		}
-		if (!std::filesystem::exists(manager->filthyPath)) return originalPath;
+		#ifndef GEODE_IS_ANDROID
 		if (manager->filthyPath.string().empty()) return originalPath;
+		#else
+		if (manager->filthyPath.string().empty()) return "sfx/s4451.ogg";
+		#endif
+		if (!std::filesystem::exists(manager->filthyPath)) return originalPath;
 		if (!Utils::isSupportedFMODExtension(manager->filthyPath.string())) return originalPath;
 		if (!Utils::modEnabled() || !manager->filth) return originalPath;
 		return manager->filthyPath.string();

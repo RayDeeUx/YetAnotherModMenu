@@ -260,11 +260,12 @@
 		},
 		"filthyPath": {
 			"name": "FiL/tH File",
+			"description": "Due to technical constraints, this setting is blank on Android; YAQOLMod will try to play <cl>s4451.ogg</c> (the original FitH SFX file) if this setting is blank.",
 			"type": "file",
 			"default": {
 				"win": "{gd_dir}/resources/sfx/s4451.ogg",
 				"mac": "{gd_dir}/Resources/sfx/s4451.ogg",
-				"android": "{gd_dir}/resources/sfx/s4451.ogg"
+				"android": ""
 			},
 			"filters": [
 				{
