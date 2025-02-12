@@ -13,11 +13,19 @@
 	"repository": "https://github.com/RayDeeUx/YetAnotherQOLMod",
 	"tags": ["cheat", "gameplay", "utility", "customization", "universal"],
 	"settings": {
+		"enabled-header": {
+			"name": "YetAnotherQOLMod Master Switch",
+			"type": "title"
+		},
 		"enabled": {
 			"name": "Enabled",
 			"description": "Toggles the mod.",
 			"type": "bool",
 			"default": true
+		},
+		"best-percent-header": {
+			"name": "Best Percent in Percentage Label",
+			"type": "title"
 		},
 		"showBestPercent": {
 			"name": "Show Best Percent",
@@ -32,6 +40,10 @@
 			"one-of": [
 				"/", "-", "\\", ";"
 			]
+		},
+		"wave-pulse-header": {
+			"name": "Wave Pulse",
+			"type": "title"
 		},
 		"noWavePulse": {
 			"name": "No Wave Trail Pulse",
@@ -58,6 +70,10 @@
 			"name": "Add Minimum Width to Wave Width",
 			"type": "bool",
 			"default": true
+		},
+		"player-trail-header": {
+			"name": "Player Trail",
+			"type": "title"
 		},
 		"trailLength": {
 			"name": "Change Trail Length",
@@ -91,11 +107,19 @@
 				"Invertmanthus", "Additive"
 			]
 		},
+		"garage-header": {
+			"name": "Icon Kit/Garage in Pause Menu",
+			"type": "title"
+		},
 		"garageInPauseMenu": {
 			"name": "Icon Kit In Pause Menu",
 			"description": "<cl>Made with <3 and massive help from km7.</c>",
 			"type": "bool",
 			"default": false
+		},
+		"coin-tracing-header": {
+			"name": "Coin Tracing",
+			"type": "title"
 		},
 		"traceCoins": {
 			"name": "Trace Direct Path to Coin",
@@ -179,6 +203,10 @@
 			"type": "rgba",
 			"default": [0, 255, 0, 255]
 		},
+		"menu-pulsing-header": {
+			"name": "Pulsing Node in Main Menu",
+			"type": "title"
+		},
 		"pulseMenuTitle": {
 			"name": "Pulsing Menu Node",
 			"description": "Pulses the title sprite (by default, otherwise a node of your choice) on MenuLayer to the current background music.",
@@ -214,6 +242,10 @@
 				"arrow-step": 0.01,
 				"big-arrow-step": 0.1
 			}
+		},
+		"filthy-header": {
+			"name": "Fire in the HoIe",
+			"type": "title"
 		},
 		"filth": {
 			"name": "Fire in Lava/the Hole (FiL/tH)",
