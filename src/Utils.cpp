@@ -57,7 +57,7 @@ namespace Utils {
 
 	void addButtonToNode(CCNode* node, CCLayer* layer, cocos2d::SEL_MenuHandler callback) {
 		if (!node) return;
-		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("logoForShortcutButton.png"_spr, 1, CircleBaseColor::Pink, CircleBaseSize::SmallAlt);
+		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("logoForShortcutButton.png"_spr, 1, CircleBaseColor::DarkAqua, CircleBaseSize::SmallAlt);
 		buttonSprite->setID("settings-shortcut-sprite"_spr);
 		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, layer, callback);
 		button->setID("settings-shortcut"_spr);
