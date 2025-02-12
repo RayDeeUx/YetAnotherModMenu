@@ -13,7 +13,10 @@ namespace Utils {
 	
 	double getDouble(const std::string& setting) { return getSetting<double>(setting); }
 
-	std::string getString(const std::string& setting) { return getSetting<std::string>(setting); }
+	std::string getString(const std::string& setting, bool isPath) {
+		if (!isPath) return getSetting<std::string>(setting);
+		return getSetting<std::filesystem::path>(setting).string();
+	}
 
 	ccColor3B getColor(const std::string& setting) { return getSetting<ccColor3B>(setting); }
 

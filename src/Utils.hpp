@@ -9,7 +9,7 @@ namespace Utils {
 	bool getBool(const std::string& setting);
 	int64_t getInt(const std::string& setting);
 	double getDouble(const std::string& setting);
-	std::string getString(const std::string& setting);
+	std::string getString(const std::string& setting, bool isPath = false);
 	ccColor3B getColor(const std::string& setting);
 	ccColor4B getColorAlpha(const std::string& setting);
 	bool modEnabled();

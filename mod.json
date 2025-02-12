@@ -22,7 +22,7 @@
 		"showBestPercent": {
 			"name": "Show Best Percent",
 			"type": "bool",
-			"default": true
+			"default": false
 		},
 		"customSeparator": {
 			"name": "Custom Best Percent Separator",
@@ -32,6 +32,37 @@
 			"one-of": [
 				"/", "-", "\\", ";"
 			]
+		},
+		"noWavePulse": {
+			"name": "No Wave Trail Pulse",
+			"type": "bool",
+			"default": false
+		},
+		"wavePulseSize": {
+			"name": "Wave Trail Width",
+			"description": "The higher the number, the thicker the trail.",
+			"type": "float",
+			"default": 0.5,
+			"min": 0.0,
+			"max": 6.0,
+			"control": {
+				"slider": false,
+				"input": true,
+				"arrows": true,
+				"big-arrows": true,
+				"arrow-step": 0.1,
+				"big-arrow-step": 1
+			}
+		},
+		"addMinumumWidth": {
+			"name": "Add Minimum Width to Wave Width",
+			"type": "bool",
+			"default": true
+		},
+		"trailLength": {
+			"name": "Change Trail Length",
+			"type": "bool",
+			"default": false
 		},
 		"trailLengthModifier": {
 			"name": "Trail Length Modifier",
@@ -53,12 +84,18 @@
 			"name": "Trail Blending Mode",
 			"description": "- <cl>Disabled</c>: Disables this feature.\n- <cl>hiimmoreicons</c>: Emulates the blending style from More Icons by hiimjasmine00.\n- <cl>TheSolidQOLMod</c>: Emulates the blending style from QOLMod by TheSillyDoggo.\n- <cl>Solidmanthus</c>: Similar to the solid trail blending seen in QOLMod, but with a black outline.\n- <cl>Invertmanthus</c>: Invert blending.\n- <cl>Additive</c>: Additive blending.\n\nRequires re-entering a level to apply.",
 			"type": "string",
-			"default": "TheSolidQOLMod",
+			"default": "Disabled",
 			"one-of": [
 				"Disabled", "hiimmoreicons",
 				"TheSolidQOLMod", "Solidmanthus",
 				"Invertmanthus", "Additive"
 			]
+		},
+		"garageInPauseMenu": {
+			"name": "Icon Kit In Pause Menu",
+			"description": "<cl>Made with <3 and massive help from km7.</c>",
+			"type": "bool",
+			"default": false
 		},
 		"traceCoins": {
 			"name": "Trace Direct Path to Coin",
@@ -184,11 +221,21 @@
 				"big-arrow-step": 0.1
 			}
 		},
-		"garageInPauseMenu": {
-			"name": "Icon Kit In Pause Menu",
-			"description": "<cl>Made with <3 and massive help from km7.</c>",
+		"filth": {
+			"name": "Fire in Lava/the Hole (FiL/tH)",
 			"type": "bool",
 			"default": false
+		},
+		"filthyPath": {
+			"name": "FiL/tH File",
+			"type": "file",
+			"default": "{gd_dir}/resources/sfx/sfx/s4451.ogg",
+			"filters": [
+				{
+					"files": [ "*.mp3", "*.ogg", "*.oga", "*.wav", "*.flac" ],
+					"description": "Audio files"
+				}
+			]
 		}
 	},
 	"dependencies": [

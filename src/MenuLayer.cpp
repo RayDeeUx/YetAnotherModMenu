@@ -1,6 +1,7 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
+#include <utility>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
@@ -19,6 +20,9 @@ $on_mod(Loaded) {
 	});
 	listenForSettingChanges("coinOpacityModifier", [](double coinOpacityModifier) {
 		Manager::getSharedInstance()->coinOpacityModifier = coinOpacityModifier;
+	});
+	listenForSettingChanges("wavePulseSize", [](double wavePulseSize) {
+		Manager::getSharedInstance()->wavePulseSize = wavePulseSize;
 	});
 	listenForSettingChanges("customSeparator", [](std::string customSeparator) {
 		Manager::getSharedInstance()->customSeparator = std::move(customSeparator).at(0);
@@ -41,8 +45,23 @@ $on_mod(Loaded) {
 	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
+	listenForSettingChanges("addMinumumWidth", [](bool addMinumumWidth) {
+		Manager::getSharedInstance()->addMinumumWidth = addMinumumWidth;
+	});
 	listenForSettingChanges("pulseUseSTDLerp", [](bool pulseUseSTDLerp) {
 		Manager::getSharedInstance()->pulseUseSTDLerp = pulseUseSTDLerp;
+	});
+	listenForSettingChanges("trailLength", [](bool trailLength) {
+		Manager::getSharedInstance()->trailLength = trailLength;
+	});
+	listenForSettingChanges("noWavePulse", [](bool noWavePulse) {
+		Manager::getSharedInstance()->noWavePulse = noWavePulse;
+	});
+	listenForSettingChanges("filth", [](bool filth) {
+		Manager::getSharedInstance()->filth = filth;
+	});
+	listenForSettingChanges("filthyPath", [](std::filesystem::path filthyPath) {
+		Manager::getSharedInstance()->filthyPath = std::move(filthyPath);
 	});
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
@@ -143,8 +162,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
 		manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
 		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
+		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+		manager->wavePulseSize = Utils::getDouble("wavePulseSize");
+		manager->noWavePulse = Utils::getBool("noWavePulse");
+		manager->trailLength = Utils::getBool("trailLength");
 		manager->colorMode = Utils::getString("colorMode");
 
 		return true;

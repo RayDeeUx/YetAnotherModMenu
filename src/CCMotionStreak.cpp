@@ -6,7 +6,8 @@ using namespace geode::prelude;
 
 class $modify(MyCCMotionStreak, CCMotionStreak) {
 	virtual void update(float delta) {
-		if (!Utils::modEnabled() || !this->getUserObject("qualified-for-elongation"_spr) || !PlayLayer::get()) return CCMotionStreak::update(delta);
-		CCMotionStreak::update(delta / static_cast<float>(Manager::getSharedInstance()->trailLengthModifier));
+		Manager* manager = Manager::getSharedInstance();
+		if (!Utils::modEnabled() || !this->getUserObject("qualified-for-elongation"_spr) || !PlayLayer::get() || !manager->trailLength) return CCMotionStreak::update(delta);
+		CCMotionStreak::update(delta / static_cast<float>(manager->trailLengthModifier));
 	}
 };

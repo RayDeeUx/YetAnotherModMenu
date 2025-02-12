@@ -13,17 +13,19 @@ add_library(${PROJECT_NAME} SHARED
     src/Utils.cpp
     src/Utils.hpp
 
-    src/eclipse/components.hpp
     src/eclipse/config.hpp
     src/eclipse/eclipse.hpp
     src/eclipse/labels.hpp
     src/eclipse/modules.hpp
+    src/eclipse/components.hpp
     src/eclipse/eclipseIntegration.cpp
 
+    src/FMODAudioEngine.cpp
     src/CCMotionStreak.cpp
+    src/PlayerObject.cpp
+    src/HardStreak.cpp
     src/PauseLayer.cpp
     src/PlayLayer.cpp
-    src/PlayerObject.cpp
     src/MenuLayer.cpp
     # Add any extra C++ source files here
 )

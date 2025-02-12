@@ -27,6 +27,40 @@ $on_mod(Loaded) {
 		createToggleSettingInTab("enabled", tab);
 		createToggleSettingInTab("showBestPercent", tab);
 
+		createToggleSettingInTab("noWavePulse", tab);
+		tab.addInputFloat(
+			"wavePulseSize"_spr, "Wave Trail Width",
+			[](float wavePulseSize) {
+				Mod::get()->setSettingValue<double>("wavePulseSize", wavePulseSize);
+				Manager::getSharedInstance()->wavePulseSize = wavePulseSize;
+			}
+		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f");
+
+		eclipse::config::setInternal<float>("wavePulseSize"_spr, Mod::get()->getSettingValue<double>("wavePulseSize"));
+
+		listenForSettingChanges("wavePulseSize", [](double wavePulseSize) {
+			Manager::getSharedInstance()->wavePulseSize = wavePulseSize;
+			eclipse::config::setInternal<float>("wavePulseSize"_spr, wavePulseSize);
+		});
+
+		createToggleSettingInTab("trailLength", tab);
+		tab.addInputFloat(
+			"trailLengthModifier"_spr, "Trail Length Modifier",
+			[](float trailLengthModifier) {
+				Mod::get()->setSettingValue<double>("trailLengthModifier", trailLengthModifier);
+				Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
+			}
+		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f").setDescription("The higher the number, the longer the trail. Set to 0.0 to disable, or to 1.0 to mimic vanilla behavior when inside a level.");
+
+		eclipse::config::setInternal<float>("trailLengthModifier"_spr, Mod::get()->getSettingValue<double>("trailLengthModifier"));
+
+		listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
+			Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
+			eclipse::config::setInternal<float>("trailLengthModifier"_spr, trailLengthModifier);
+		});
+
+		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
+
 		createToggleSettingInTab("traceCoins", tab);
 		tab.addInputFloat(
 			"coinTracingThickness"_spr, "Coin Path Thickness",
@@ -55,28 +89,10 @@ $on_mod(Loaded) {
 		eclipse::config::setInternal<float>("pulseScaleFactor"_spr, Mod::get()->getSettingValue<double>("pulseScaleFactor"));
 
 		listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
-			log::info("trying to sync pulseScaleFactor with eclipse menu");
 			Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 			eclipse::config::setInternal<float>("pulseScaleFactor"_spr, pulseScaleFactor);
 		});
 
-		createToggleSettingInTab("garageInPauseMenu", tab, "Made with <3 and massive help from km7.");
-
-		tab.addInputFloat(
-			"trailLengthModifier"_spr, "Trail Length Modifier",
-			[](float trailLengthModifier) {
-				Mod::get()->setSettingValue<double>("trailLengthModifier", trailLengthModifier);
-				Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
-			}
-		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f").setDescription("The higher the number, the longer the trail. Set to 0.0 to disable, or to 1.0 to mimic vanilla behavior when inside a level.");
-
-		eclipse::config::setInternal<float>("trailLengthModifier"_spr, Mod::get()->getSettingValue<double>("trailLengthModifier"));
-
-		listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
-			log::info("trying to sync trailLengthModifier with eclipse menu");
-			Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
-			eclipse::config::setInternal<float>("trailLengthModifier"_spr, trailLengthModifier);
-		});
+		createToggleSettingInTab("filth", tab);
 	});
-
 }
