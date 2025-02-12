@@ -47,7 +47,7 @@ $on_mod(Loaded) {
 	});
 	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
-	})
+	});
 	listenForSettingChanges("addMinumumWidth", [](bool addMinumumWidth) {
 		Manager::getSharedInstance()->addMinumumWidth = addMinumumWidth;
 	});
