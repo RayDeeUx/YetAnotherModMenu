@@ -235,7 +235,11 @@
 		"filthyPath": {
 			"name": "FiL/tH File",
 			"type": "file",
-			"default": "{gd_dir}/resources/sfx/sfx/s4451.ogg",
+			"default": {
+				"win": "{gd_dir}/resources/sfx/s4451.ogg",
+				"mac": "{gd_dir}/Resources/sfx/s4451.ogg",
+				"android": "{gd_dir}/resources/sfx/s4451.ogg"
+			},
 			"filters": [
 				{
 					"files": [ "*.mp3", "*.ogg", "*.oga", "*.wav", "*.flac" ],

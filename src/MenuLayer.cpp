@@ -45,6 +45,9 @@ $on_mod(Loaded) {
 	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
+	listenForSettingChanges("pulseMenuTitle", [](bool pulseMenuTitle) {
+		Manager::getSharedInstance()->pulseMenuTitle = pulseMenuTitle;
+	});
 	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
 	});
@@ -116,7 +119,7 @@ protected:
 		if (GameManager::sharedState()->getGameVariable("0122")) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
 		Manager* manager = Manager::getSharedInstance();
-		if (manager->pulseUseSTDLerp) this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
+		if (manager->pulseUseSTDLerp || !manager->calledAlready) this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		else this->forSTDLerp = PulsingNode::lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
@@ -169,10 +172,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 		manager->customSeparator = Utils::getString("customSeparator").at(0);
 		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+		manager->filthyGameplay = Utils::getBool("filthyGameplay");
 		manager->wavePulseSize = Utils::getDouble("wavePulseSize");
 		manager->noWavePulse = Utils::getBool("noWavePulse");
 		manager->trailLength = Utils::getBool("trailLength");
+		manager->filthyPath = Utils::getString("filthyPath", true);
 		manager->colorMode = Utils::getString("colorMode");
+		manager->filth = Utils::getBool("filth");
 
 		return true;
 	}
