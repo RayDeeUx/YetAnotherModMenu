@@ -68,7 +68,7 @@ $on_mod(Loaded) {
 				Mod::get()->setSettingValue<double>("coinTracingThickness", coinTracingThickness);
 				Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
 			}
-		).setMinValue(0.f).setMaxValue(3.f).setFormat("%.2f");
+		).setMinValue(0.f).setMaxValue(6.f).setFormat("%.2f");
 
 		eclipse::config::setInternal<float>("coinTracingThickness"_spr, Mod::get()->getSettingValue<double>("coinTracingThickness"));
 
