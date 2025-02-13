@@ -44,6 +44,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		#endif
 		
 		// fake bounce in transition
+		garage->stopAllActions();
 		garage->setPosition({0, CCDirector::get()->getWinSize().height});
 		garage->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 0})));
 
@@ -51,6 +52,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(garage);
 
+		this->stopAllActions();
 		this->setUserObject("inside-backrooms"_spr, CCBool::create(true));
 		this->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 1000}))); // move it to the backrooms for hacky touch prio fix
 		// this->setPosition({0, 1000}); // original function call from km7
@@ -74,8 +76,11 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() != pl->getParent()) return GJGarageLayer::onBack(sender);
 		// fake move up transition
-		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr))
+		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr)) {
+			pause->stopAllActions();
 			pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
+		}
+		this->stopAllActions();
 		this->runAction(CCSequence::createWithTwoActions(
 			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
 			CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
@@ -91,6 +96,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!shop) return FLAlertLayer::create("Oh no!", "You're unable to access the Shop!", "Close")->show();
 		
 		// fake bounce in transition
+		shop->stopAllActions();
 		shop->setPosition({0, CCDirector::get()->getWinSize().height});
 		shop->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 0})));
 
@@ -178,6 +184,7 @@ class $modify(MyGJShopLayer, GJShopLayer) {
 	void onBack(CCObject* sender) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJShopLayer::onBack(sender);
 		// fake move up transition
+		this->stopAllActions();
 		this->runAction(CCSequence::createWithTwoActions(
 			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
 			CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent)))
