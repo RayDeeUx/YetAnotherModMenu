@@ -108,7 +108,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (m_level->m_levelID.value() != 0) {
 			const auto gsm = GameStatsManager::get();
 			const char* coinKey = m_level->getCoinKey(static_cast<int>(fields->coins.size()));
-			if (object->m_objectType == GameObjectType::UserCoin) collected = gsm->hasUserCoin(coinKey);
+			if (object->m_objectType == GameObjectType::UserCoin && m_level->m_coinsVerified.value() == 0) collected = gsm->hasUserCoin(coinKey);
 			else if (object->m_objectType == GameObjectType::SecretCoin) collected = gsm->hasSecretCoin(coinKey);
 		}
 		fields->coinCollected.push_back(collected);
