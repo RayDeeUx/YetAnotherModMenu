@@ -83,7 +83,7 @@ $on_mod(Loaded) {
 		"open-settings"_spr,
 		"Open Settings",
 		"Opens the YetAnotherQOLMod settings.",
-		{ Keybind::create(KEY_Tab, Modifier::Shift) },
+		{ Keybind::create(KEY_Tab, Modifier::Shift), Keybind::create(KEY_F9, Modifier::None) },
 		"Global/YetAnotherQOLMod", false
 	});
 	new EventListener([=](InvokeBindEvent* event) {
