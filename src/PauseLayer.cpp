@@ -88,7 +88,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	}
 	void onShop(CCObject *sender) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		manager->isPauseShop = true;
 		GJShopLayer *shop = GJShopLayer::create(ShopType::Normal);
 		manager->isPauseShop = false;

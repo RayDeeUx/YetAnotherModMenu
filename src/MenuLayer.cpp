@@ -9,7 +9,7 @@ using namespace geode::prelude;
 using namespace keybinds;
 
 $on_mod(Loaded) {
-	Manager* manager = Manager::getSharedInstance();
+	const auto manager = Manager::getSharedInstance();
 	manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
 	manager->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
 	manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
@@ -150,7 +150,7 @@ protected:
 	void update(float dt) {
 		if (!this->nodeToModify) return;
 		if (!this->engine->m_metering) this->engine->enableMetering();
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		if (GameManager::sharedState()->getGameVariable("0122") || !Utils::modEnabled() || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
 		this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
@@ -185,7 +185,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 			this->addChild(pulsingNode);
 		}
 
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
 

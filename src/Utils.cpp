@@ -23,7 +23,7 @@ namespace Utils {
 	ccColor4B getColorAlpha(const std::string_view setting) { return getSetting<ccColor4B>(setting); }
 
 	bool modEnabled() {
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		if (!manager->calledAlready) return Utils::getBool("enabled");
 		return manager->enabled;
 	}

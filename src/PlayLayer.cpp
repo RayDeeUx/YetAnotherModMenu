@@ -47,7 +47,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		bool playerCanProbablyRecoverCoin = false;
 	};
 	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin, const bool coinIsDisabled) {
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->traceCoins) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
 		const ColorMode currentMode = fields->currentColorMode;
@@ -104,12 +104,13 @@ class $modify(MyPlayLayer, PlayLayer) {
 			return;
 		}
 		fields->coins.push_back(object);
-		const auto gsm = GameStatsManager::get();
-		const char* coinKey = m_level->getCoinKey(static_cast<int>(fields->coins.size()));
-		bool collected = true;
-		if (m_level->m_levelID.value() == 0) collected = false;
-		else if (object->m_objectType == GameObjectType::UserCoin) collected = gsm->hasUserCoin(coinKey);
-		else if (m_level->m_coinsVerified.value() != 0) collected = gsm->hasSecretCoin(coinKey);
+		bool collected = false;
+		if (m_level->m_levelID.value() != 0) {
+			const auto gsm = GameStatsManager::get();
+			const char* coinKey = m_level->getCoinKey(static_cast<int>(fields->coins.size()));
+			if (object->m_objectType == GameObjectType::UserCoin) collected = gsm->hasUserCoin(coinKey);
+			else if (object->m_objectType == GameObjectType::SecretCoin) collected = gsm->hasSecretCoin(coinKey);
+		}
 		fields->coinCollected.push_back(collected);
 	}
 	void postUpdate(float dt) {

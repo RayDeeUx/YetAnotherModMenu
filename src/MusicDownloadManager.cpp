@@ -9,7 +9,7 @@ class $modify (MyMusicDownloadManager, MusicDownloadManager) {
 		(void) self.setHookPriority("MusicDownloadManager::pathForSFX", -1999);
 	}
 	gd::string pathForSFX(int p0) {
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 		const std::string& originalPath = MusicDownloadManager::pathForSFX(p0);
 		if (!Utils::modEnabled() || !manager->filth) return originalPath;
 		const std::string& desiredPath = manager->filthyPath.string();

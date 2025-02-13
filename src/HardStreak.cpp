@@ -9,7 +9,7 @@ class $modify(MyHardStreak, HardStreak) {
 		(void) self.setHookPriority("HardStreak::updateStroke", 3999);
 	}
 	void updateStroke(float delta) {
-		Manager* manager = Manager::getSharedInstance();
+		const auto manager = Manager::getSharedInstance();
 
 		if (Utils::modEnabled() && manager->noWavePulse && PlayLayer::get()) {
 			double minimum = manager->addMinumumWidth ? .5 : .0;
