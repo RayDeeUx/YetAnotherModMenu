@@ -14,6 +14,7 @@ Go support these awesome people who made YetAnotherQOLMod possible!
 - [dankmeme01](https://github.com/dankmeme01) ([Globed](https://globed.dev/))
 - [Prevter](https://github.com/Prevter)
 - [acaruso](https://github.com/acaruso-xx)
+- [sleepyut](https://github.com/sleepyut)
 - [Prometheus](https://github.com/Prometheus-03)
 - [cdc](https://github.com/cdc-sys)
 

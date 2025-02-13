@@ -99,7 +99,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) fields->playerCanProbablyRecoverCoin = true;
 		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
 			if (fields->playerCanProbablyRecoverCoin) return;
-			if (const auto ego = typeinfo_cast<EffectGameObject*>(object)) fields->playerCanProbablyRecoverCoin = ego->m_isReverse && !ego->m_isNoTouch && ego->m_objectType != GameObjectType::Decoration;
+			if (object->m_unk4D0 == 1) { // T0D0: MIGHT BECOME AN ENUM AFTER FEBRUARY 13, 2025. EDIT ACCORDINGLY!!!
+				const EffectGameObject* ego = static_cast<EffectGameObject*>(object);
+				fields->playerCanProbablyRecoverCoin = ego->m_isReverse && !ego->m_isNoTouch && ego->m_objectType != GameObjectType::Decoration;
+			}
 			if (!fields->playerCanProbablyRecoverCoin) fields->playerCanProbablyRecoverCoin = object->m_objectID == 2900 || object->m_objectID == 1917;
 			return;
 		}
