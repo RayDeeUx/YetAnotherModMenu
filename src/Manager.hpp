@@ -1,4 +1,5 @@
 #pragma once
+#include "Utils.hpp"
 
 // Manager.hpp structure by acaruso
 // reused with explicit permission and strong encouragement
@@ -47,6 +48,34 @@ public:
 	static Manager* getSharedInstance() {
 		if (!instance) instance = new Manager();
 		return instance;
+	}
+
+	static void load() {
+		if (!instance) instance = new Manager();
+		instance->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
+		instance->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
+		instance->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
+		instance->coinTracingThickness = Utils::getDouble("coinTracingThickness");
+		instance->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");
+		instance->trailLengthModifier = Utils::getDouble("trailLengthModifier");
+		instance->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
+		instance->garageInPauseMenu = Utils::getBool("garageInPauseMenu");
+		instance->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
+		instance->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
+		instance->addMinumumWidth = Utils::getBool("addMinumumWidth");
+		instance->showBestPercent = Utils::getBool("showBestPercent");
+		instance->customSeparator = Utils::getString("customSeparator").at(0);
+		instance->pulseMenuTitle = Utils::getBool("pulseMenuTitle");
+		instance->filthyGameplay = Utils::getBool("filthyGameplay");
+		instance->wavePulseSize = Utils::getDouble("wavePulseSize");
+		instance->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+		instance->noWavePulse = Utils::getBool("noWavePulse");
+		instance->trailLength = Utils::getBool("trailLength");
+		instance->filthyPath = Utils::getString("filthyPath", true);
+		instance->traceCoins = Utils::getBool("traceCoins");
+		instance->colorMode = Utils::getString("colorMode");
+		instance->enabled = Utils::getBool("enabled");
+		instance->filth = Utils::getBool("filth");
 	}
 
 };

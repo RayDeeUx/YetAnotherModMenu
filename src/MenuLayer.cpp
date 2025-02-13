@@ -9,31 +9,7 @@ using namespace geode::prelude;
 using namespace keybinds;
 
 $on_mod(Loaded) {
-	const auto manager = Manager::getSharedInstance();
-	manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
-	manager->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
-	manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
-	manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
-	manager->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");
-	manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
-	manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
-	manager->garageInPauseMenu = Utils::getBool("garageInPauseMenu");
-	manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
-	manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
-	manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
-	manager->showBestPercent = Utils::getBool("showBestPercent");
-	manager->customSeparator = Utils::getString("customSeparator").at(0);
-	manager->pulseMenuTitle = Utils::getBool("pulseMenuTitle");
-	manager->filthyGameplay = Utils::getBool("filthyGameplay");
-	manager->wavePulseSize = Utils::getDouble("wavePulseSize");
-	manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
-	manager->noWavePulse = Utils::getBool("noWavePulse");
-	manager->trailLength = Utils::getBool("trailLength");
-	manager->filthyPath = Utils::getString("filthyPath", true);
-	manager->traceCoins = Utils::getBool("traceCoins");
-	manager->colorMode = Utils::getString("colorMode");
-	manager->enabled = Utils::getBool("enabled");
-	manager->filth = Utils::getBool("filth");
+	Manager::load();
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
 		Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 	});
