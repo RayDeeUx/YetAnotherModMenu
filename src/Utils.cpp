@@ -5,24 +5,28 @@
 using namespace geode::cocos;
 
 namespace Utils {
-	template<class T> T getSetting(const std::string& setting) { return Mod::get()->getSettingValue<T>(setting); }
+	template<class T> T getSetting(const std::string_view setting) { return Mod::get()->getSettingValue<T>(setting); }
 
-	bool getBool(const std::string& setting) { return getSetting<bool>(setting); }
+	bool getBool(const std::string_view setting) { return getSetting<bool>(setting); }
 	
-	int64_t getInt(const std::string& setting) { return getSetting<int64_t>(setting); }
+	int64_t getInt(const std::string_view setting) { return getSetting<int64_t>(setting); }
 	
-	double getDouble(const std::string& setting) { return getSetting<double>(setting); }
+	double getDouble(const std::string_view setting) { return getSetting<double>(setting); }
 
-	std::string getString(const std::string& setting, bool isPath) {
+	std::string getString(const std::string_view setting, bool isPath) {
 		if (!isPath) return getSetting<std::string>(setting);
 		return getSetting<std::filesystem::path>(setting).string();
 	}
 
-	ccColor3B getColor(const std::string& setting) { return getSetting<ccColor3B>(setting); }
+	ccColor3B getColor(const std::string_view setting) { return getSetting<ccColor3B>(setting); }
 
-	ccColor4B getColorAlpha(const std::string& setting) { return getSetting<ccColor4B>(setting); }
+	ccColor4B getColorAlpha(const std::string_view setting) { return getSetting<ccColor4B>(setting); }
 
-	bool modEnabled() { return getBool("enabled"); }
+	bool modEnabled() {
+		Manager* manager = Manager::getSharedInstance();
+		if (!manager->calledAlready) return Utils::getBool("enabled");
+		return manager->enabled;
+	}
 	
 	bool isModLoaded(const std::string& modID) { return Loader::get()->isModLoaded(modID); }
 

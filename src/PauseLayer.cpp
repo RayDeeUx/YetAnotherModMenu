@@ -19,7 +19,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		#ifdef GEODE_IS_ANDROID
 		Utils::addButtonToNode(leftButtonMenu, this, menu_selector(MyPauseLayer::onYAQOLMODSettings));
 		#endif
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
 		buttonSprite->setID("garage-button-sprite"_spr);
 		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyPauseLayer::onYAQOLMODGarage));
@@ -31,7 +31,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
 	#endif
 	void onYAQOLMODGarage(CCObject*) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu")) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
 		#ifdef GEODE_IS_ANDROID64
 		const auto dummyScene = GJGarageLayer::scene();
 		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
@@ -59,7 +59,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	// could not figure out disabling the specific keybind for the life of me
 	void onResume(CCObject* sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || (!CCScene::get()->getChildByType<GJGarageLayer>(0) && !CCScene::get()->getChildByType<GJShopLayer>(0))) return PauseLayer::onResume(sender);
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || (!CCScene::get()->getChildByType<GJGarageLayer>(0) && !CCScene::get()->getChildByType<GJShopLayer>(0))) return PauseLayer::onResume(sender);
 	}
 };
 
@@ -71,7 +71,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	}
 	void onBack(CCObject* sender) {
 		const auto pl = PlayLayer::get();
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
 		if (pl->getParent() && this->getParent() != pl->getParent()) return GJGarageLayer::onBack(sender);
 		// fake move up transition
 		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr))
@@ -82,7 +82,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		);
 	}
 	void onShop(CCObject *sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
 		Manager* manager = Manager::getSharedInstance();
 		manager->isPauseShop = true;
 		GJShopLayer *shop = GJShopLayer::create(ShopType::Normal);
@@ -102,7 +102,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	void onSelect(CCObject* sender) {
 		GJGarageLayer::onSelect(sender);
 		const auto pl = PlayLayer::get();
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
 		if (!playerToModify) return;
 		playerToModify->updateGlowColor();
@@ -148,7 +148,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 	}
 	void onPlayerColor(CCObject* sender) {
 		CharacterColorPage::onPlayerColor(sender);
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get()) return;
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
 		if (!playerToModify) return;
 		const auto color = GameManager::get()->colorForIdx(sender->getTag());
@@ -163,7 +163,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 	}
 	void toggleGlow(CCObject* sender) {
 		CharacterColorPage::toggleGlow(sender);
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get()) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get()) return;
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
 		if (!playerToModify) return;
 		playerToModify->m_hasGlow = static_cast<CCMenuItemToggler*>(sender)->isToggled();
@@ -176,7 +176,7 @@ class $modify(MyGJShopLayer, GJShopLayer) {
 		(void) self.setHookPriority("GJShopLayer::onBack", -3999);
 	}
 	void onBack(CCObject* sender) {
-		if (!Utils::modEnabled() || !Utils::getBool("garageInPauseMenu") || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJShopLayer::onBack(sender);
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJShopLayer::onBack(sender);
 		// fake move up transition
 		this->runAction(CCSequence::createWithTwoActions(
 			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
@@ -190,7 +190,7 @@ class $modify(MyFMODAudioEngine, FMODAudioEngine) {
 		(void) self.setHookPriority("FMODAudioEngine::playMusic", -3999);
 	}
 	void playMusic(gd::string path, bool shouldLoop, float fadeInTime, int channel) {
-		if (Utils::modEnabled() && Utils::getBool("garageInPauseMenu") && Manager::getSharedInstance()->isPauseShop) return;
+		if (Utils::modEnabled() && Manager::getSharedInstance()->garageInPauseMenu && Manager::getSharedInstance()->isPauseShop) return;
 		FMODAudioEngine::playMusic(path, shouldLoop, fadeInTime, channel);
 	}
 };

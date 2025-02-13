@@ -5,13 +5,13 @@
 using namespace geode::prelude;
 
 namespace Utils {
-	template<class T> T getSetting(const std::string& setting);
-	bool getBool(const std::string& setting);
-	int64_t getInt(const std::string& setting);
-	double getDouble(const std::string& setting);
-	std::string getString(const std::string& setting, bool isPath = false);
-	ccColor3B getColor(const std::string& setting);
-	ccColor4B getColorAlpha(const std::string& setting);
+	template<class T> T getSetting(const std::string_view setting);
+	bool getBool(const std::string_view setting);
+	int64_t getInt(const std::string_view setting);
+	double getDouble(const std::string_view setting);
+	std::string getString(const std::string_view setting, bool isPath = false);
+	ccColor3B getColor(const std::string_view setting);
+	ccColor4B getColorAlpha(const std::string_view setting);
 	bool modEnabled();
 	
 	bool isModLoaded(const std::string& modID);

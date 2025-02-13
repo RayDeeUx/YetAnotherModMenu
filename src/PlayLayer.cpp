@@ -47,10 +47,10 @@ class $modify(MyPlayLayer, PlayLayer) {
 		bool playerCanProbablyRecoverCoin = false;
 	};
 	ccColor4F determineSegmentColor(const bool collected, const bool passedCoin, const bool coinIsDisabled) {
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return {0, 0, 0, 255};
+		Manager* manager = Manager::getSharedInstance();
+		if (!Utils::modEnabled() || !manager->traceCoins) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
 		const ColorMode currentMode = fields->currentColorMode;
-		Manager* manager = Manager::getSharedInstance();
 		GLubyte opacity = manager->coinTraceOpacity;
 		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
 		ccColor4B destinationColor = {255, 0, 0, opacity};
@@ -73,7 +73,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void setupHasCompleted() {
 		PlayLayer::setupHasCompleted();
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || !m_objectLayer || !m_level) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins || !m_objectLayer || !m_level) return;
 		m_fields->coinLines = CCDrawNode::create();
 		m_fields->coinLines->setID("coin-tracing-node"_spr);
 		m_fields->coinLines->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
@@ -93,7 +93,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void addObject(GameObject* object) {
 		PlayLayer::addObject(object);
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins")) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins) return;
 		if (!m_fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) m_fields->playerCanProbablyRecoverCoin = true;
 		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
 			if (m_fields->playerCanProbablyRecoverCoin) return;
@@ -113,7 +113,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	void postUpdate(float dt) {
 		PlayLayer::postUpdate(dt);
 		if (m_fields->coinLines) m_fields->coinLines->clear();
-		if (!Utils::modEnabled() || !Utils::getBool("traceCoins") || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins || m_fields->coins.empty() || m_fields->coinCollected.empty() || m_fields->coinActivatedDuringAttempt.empty()) return;
 		const CCPoint positionPlayer = m_player1->getPosition();
 		const CCRect playerRect = m_player1->getObjectRect();
 		int i = -1;
@@ -142,7 +142,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	}
 	void updateProgressbar() {
 		PlayLayer::updateProgressbar();
-		if (!Utils::modEnabled() || !Utils::getBool("showBestPercent") || !m_level || m_level->isPlatformer() || !m_percentageLabel) return;
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->showBestPercent || !m_level || m_level->isPlatformer() || !m_percentageLabel) return;
 		m_percentageLabel->setString(fmt::format("{} {} {}%", m_percentageLabel->getString(), Manager::getSharedInstance()->customSeparator, m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value()).c_str());
 	}
 };

@@ -9,6 +9,31 @@ using namespace geode::prelude;
 using namespace keybinds;
 
 $on_mod(Loaded) {
+	Manager* manager = Manager::getSharedInstance();
+	manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
+	manager->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
+	manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
+	manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
+	manager->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");
+	manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
+	manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
+	manager->garageInPauseMenu = Utils::getBool("garageInPauseMenu");
+	manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
+	manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
+	manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
+	manager->showBestPercent = Utils::getBool("showBestPercent");
+	manager->customSeparator = Utils::getString("customSeparator").at(0);
+	manager->pulseMenuTitle = Utils::getBool("pulseMenuTitle");
+	manager->filthyGameplay = Utils::getBool("filthyGameplay");
+	manager->wavePulseSize = Utils::getDouble("wavePulseSize");
+	manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+	manager->noWavePulse = Utils::getBool("noWavePulse");
+	manager->trailLength = Utils::getBool("trailLength");
+	manager->filthyPath = Utils::getString("filthyPath", true);
+	manager->traceCoins = Utils::getBool("traceCoins");
+	manager->colorMode = Utils::getString("colorMode");
+	manager->enabled = Utils::getBool("enabled");
+	manager->filth = Utils::getBool("filth");
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
 		Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 	});
@@ -45,6 +70,15 @@ $on_mod(Loaded) {
 	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
+	listenForSettingChanges("garageInPauseMenu", [](bool garageInPauseMenu) {
+		Manager::getSharedInstance()->garageInPauseMenu = garageInPauseMenu;
+	});
+	listenForSettingChanges("pulseMenuTitle", [](bool pulseMenuTitle) {
+		Manager::getSharedInstance()->pulseMenuTitle = pulseMenuTitle;
+	});
+	listenForSettingChanges("showBestPercent", [](bool showBestPercent) {
+		Manager::getSharedInstance()->showBestPercent = showBestPercent;
+	});
 	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
 	});
@@ -56,6 +90,12 @@ $on_mod(Loaded) {
 	});
 	listenForSettingChanges("noWavePulse", [](bool noWavePulse) {
 		Manager::getSharedInstance()->noWavePulse = noWavePulse;
+	});
+	listenForSettingChanges("traceCoins", [](bool traceCoins) {
+		Manager::getSharedInstance()->traceCoins = traceCoins;
+	});
+	listenForSettingChanges("enabled", [](bool enabled) {
+		Manager::getSharedInstance()->enabled = enabled;
 	});
 	listenForSettingChanges("filth", [](bool filth) {
 		Manager::getSharedInstance()->filth = filth;
@@ -111,7 +151,7 @@ protected:
 		if (!this->nodeToModify) return;
 		if (!this->engine->m_metering) this->engine->enableMetering();
 		Manager* manager = Manager::getSharedInstance();
-		if (GameManager::sharedState()->getGameVariable("0122")) return this->nodeToModify->setScale(this->originalScale);
+		if (GameManager::sharedState()->getGameVariable("0122") || !Utils::modEnabled() || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
 		this->forSTDLerp = std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt);
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
@@ -138,7 +178,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		const std::string& modID = Utils::getString("pulseModID");
 		if (!modID.empty() && Utils::isModLoaded(modID)) nodeID = fmt::format("{}/{}", modID, nodeID);
 		CCNode* toModify = this->getChildByIDRecursive(nodeID);
-		if (PulsingNode* pulsingNode = PulsingNode::create(); engine && pulsingNode && toModify && Utils::modEnabled() && Utils::getBool("pulseMenuTitle")) {
+		if (PulsingNode* pulsingNode = PulsingNode::create(); engine && pulsingNode && toModify) {
 			if (!engine->m_metering) engine->enableMetering();
 			pulsingNode->nodeToModify = toModify;
 			pulsingNode->originalScale = toModify->getScale();
@@ -148,26 +188,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		Manager* manager = Manager::getSharedInstance();
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
-
-		manager->coinTracingOpacityModifiers = Utils::getBool("coinTracingOpacityModifiers");
-		manager->previouslyCollectedModifier = Utils::getBool("previouslyCollectedModifier");
-		manager->coinTracingDisabledCoin = Utils::getBool("coinTracingDisabledCoin");
-		manager->coinTracingThickness = Utils::getDouble("coinTracingThickness");
-		manager->coinOpacityModifier = Utils::getDouble("coinOpacityModifier");
-		manager->trailLengthModifier = Utils::getDouble("trailLengthModifier");
-		manager->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
-		manager->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
-		manager->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
-		manager->addMinumumWidth = Utils::getBool("addMinumumWidth");
-		manager->customSeparator = Utils::getString("customSeparator").at(0);
-		manager->filthyGameplay = Utils::getBool("filthyGameplay");
-		manager->wavePulseSize = Utils::getDouble("wavePulseSize");
-		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
-		manager->noWavePulse = Utils::getBool("noWavePulse");
-		manager->trailLength = Utils::getBool("trailLength");
-		manager->filthyPath = Utils::getString("filthyPath", true);
-		manager->colorMode = Utils::getString("colorMode");
-		manager->filth = Utils::getBool("filth");
 
 		return true;
 	}

@@ -14,13 +14,18 @@ public:
 	bool coinTracingOpacityModifiers = false;
 	bool previouslyCollectedModifier = false;
 	bool coinTracingDisabledCoin = false;
+	bool garageInPauseMenu = false;
+	bool showBestPercent = false;
 	bool addMinumumWidth = false;
 	bool filthyGameplay = false;
+	bool pulseMenuTitle = false;
 	bool calledAlready = false;
-	bool noWavePulse = false;
 	bool hasLoadedSDI = false;
+	bool noWavePulse = false;
 	bool isPauseShop = false;
 	bool trailLength = false;
+	bool traceCoins = false;
+	bool enabled = false;
 	bool filth = false;
 
 	double coinTracingThickness = 0.0;
