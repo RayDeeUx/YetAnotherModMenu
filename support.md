@@ -13,6 +13,7 @@ Go support these awesome people who made YetAnotherQOLMod possible!
 - [MysticAxolotl](https://github.com/MysticAx0lotl)
 - [dankmeme01](https://github.com/dankmeme01) ([Globed](https://globed.dev/))
 - [Prevter](https://github.com/Prevter)
+- [acaruso](https://github.com/acaruso-xx)
 - [Prometheus](https://github.com/Prometheus-03)
 - [cdc](https://github.com/cdc-sys)
 
