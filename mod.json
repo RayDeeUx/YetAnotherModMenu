@@ -118,11 +118,11 @@
 			"default": false
 		},
 		"coin-tracing-header": {
-			"name": "Coin Tracing",
+			"name": "Coin Path Tracing",
 			"type": "title"
 		},
 		"traceCoins": {
-			"name": "Trace Direct Path to Coin",
+			"name": "Coin Pathfinder",
 			"type": "bool",
 			"default": false
 		},
