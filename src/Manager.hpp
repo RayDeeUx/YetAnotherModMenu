@@ -14,6 +14,7 @@ public:
 
 	bool coinTracingOpacityModifiers = false;
 	bool previouslyCollectedModifier = false;
+	bool hasQOLModCommunityEdition = false;
 	bool coinTracingDisabledCoin = false;
 	bool garageInPauseMenu = false;
 	bool showBestPercent = false;
@@ -26,6 +27,7 @@ public:
 	bool isPauseShop = false;
 	bool trailLength = false;
 	bool traceCoins = false;
+	bool hasQOLMod = false;
 	bool enabled = false;
 	bool filth = false;
 
@@ -44,6 +46,9 @@ public:
 	ccColor4B colorFromSettings;
 
 	GLubyte coinTraceOpacity;
+
+	geode::Mod* qolMod = nullptr;
+	geode::Mod* qolModCommunity = nullptr;
 
 	static Manager* getSharedInstance() {
 		if (!instance) instance = new Manager();
@@ -68,7 +73,6 @@ public:
 		instance->pulseMenuTitle = Utils::getBool("pulseMenuTitle");
 		instance->filthyGameplay = Utils::getBool("filthyGameplay");
 		instance->wavePulseSize = Utils::getDouble("wavePulseSize");
-		instance->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
 		instance->noWavePulse = Utils::getBool("noWavePulse");
 		instance->trailLength = Utils::getBool("trailLength");
 		instance->filthyPath = Utils::getString("filthyPath", true);

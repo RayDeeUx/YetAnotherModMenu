@@ -53,7 +53,16 @@ $on_mod(Loaded) {
 		Manager::getSharedInstance()->pulseMenuTitle = pulseMenuTitle;
 	});
 	listenForSettingChanges("showBestPercent", [](bool showBestPercent) {
-		Manager::getSharedInstance()->showBestPercent = showBestPercent;
+		const auto manager = Manager::getSharedInstance();
+		manager->showBestPercent = showBestPercent;
+		if (manager->hasQOLMod && manager->qolMod)
+			if (manager->qolMod->getSavedValue<bool>("best-in-percentage_enabled"))
+				return FLAlertLayer::create("Heads up!", "You already have a similar feature enabled from QOLMod, which will take priority.", "Close")->show();
+		/*
+		if (manager->hasQOLModCommunityEdition && manager->qolModCommunity && !showAlert)
+			if (manager->qolModCommunity->getSavedValue<bool>("best-in-percentage_enabled"))
+				return FLAlertLayer::create("Heads up!", "You already have a similar feature enabled from QOLMod, which will take priority.", "Close")->show();
+		*/
 	});
 	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
@@ -164,6 +173,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 		const auto manager = Manager::getSharedInstance();
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
+
+		manager->hasLoadedSDI = Utils::isModLoaded("weebify.separate_dual_icons");
+		manager->hasQOLMod = Utils::isModLoaded("thesillydoggo.qolmod");
+		// T0D0: manager->hasQOLModCommunityEdition = Utils::isModLoaded("<QOLMOD COMMUNITY EDITION MOD ID GOES HERE>");
+
+		if (!manager->qolMod && manager->hasQOLMod) manager->qolMod = Utils::getMod("thesillydoggo.qolmod");
+		// T0D0: if (!manager->qolModCommunity && manager->hasQOLModCommunityEdition) manager->qolModCommunity = Utils::getMod("<QOLMOD COMMUNITY EDITION MOD ID GOES HERE>");
 
 		return true;
 	}
