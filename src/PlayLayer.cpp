@@ -151,12 +151,6 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::updateProgressbar();
 		const auto manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->showBestPercent || !m_level || m_level->isPlatformer() || !m_percentageLabel) return;
-		if (manager->hasQOLMod && manager->qolMod)
-			if (manager->qolMod->getSavedValue<bool>(BEST_IN_PERCENTAGE)) return;
-		/*
-		if (manager->hasQOLModCommunityEdition && manager->qolModCommunity)
-			if (manager->qolModCommunity->getSavedValue<bool>(BEST_IN_PERCENTAGE)) return;
-		*/
 		m_percentageLabel->setString(fmt::format("{} {} {}%", m_percentageLabel->getString(), Manager::getSharedInstance()->customSeparator, m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value()).c_str());
 	}
 };

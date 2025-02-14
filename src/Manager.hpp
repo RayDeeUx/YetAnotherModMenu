@@ -14,7 +14,6 @@ public:
 
 	bool coinTracingOpacityModifiers = false;
 	bool previouslyCollectedModifier = false;
-	bool hasQOLModCommunityEdition = false;
 	bool coinTracingDisabledCoin = false;
 	bool garageInPauseMenu = false;
 	bool showBestPercent = false;
@@ -27,7 +26,6 @@ public:
 	bool isPauseShop = false;
 	bool trailLength = false;
 	bool traceCoins = false;
-	bool hasQOLMod = false;
 	bool enabled = false;
 	bool filth = false;
 
@@ -46,9 +44,6 @@ public:
 	ccColor4B colorFromSettings;
 
 	GLubyte coinTraceOpacity;
-
-	geode::Mod* qolMod = nullptr;
-	geode::Mod* qolModCommunity = nullptr;
 
 	static Manager* getSharedInstance() {
 		if (!instance) instance = new Manager();
