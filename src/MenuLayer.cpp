@@ -1,7 +1,6 @@
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
-#include <utility>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
@@ -57,11 +56,11 @@ $on_mod(Loaded) {
 		manager->showBestPercent = showBestPercent;
 		if (!showBestPercent) return;
 		if (manager->hasQOLMod && manager->qolMod)
-			if (manager->qolMod->getSavedValue<bool>("best-in-percentage_enabled"))
+			if (manager->qolMod->getSavedValue<bool>(BEST_IN_PERCENTAGE))
 				return FLAlertLayer::create("Heads up!", "You already have a similar feature enabled from QOLMod, which will take priority.", "Close")->show();
 		/*
 		if (manager->hasQOLModCommunityEdition && manager->qolModCommunity && !showAlert)
-			if (manager->qolModCommunity->getSavedValue<bool>("best-in-percentage_enabled"))
+			if (manager->qolModCommunity->getSavedValue<bool>(BEST_IN_PERCENTAGE))
 				return FLAlertLayer::create("Heads up!", "You already have a similar feature enabled from QOLMod, which will take priority.", "Close")->show();
 		*/
 	});
