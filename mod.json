@@ -74,7 +74,7 @@
 			"default": true
 		},
 		"player-trail-header": {
-			"name": "Player Trail (Trail Length + Trail Blending)",
+			"name": "Player Trail (Length + Blending)",
 			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
