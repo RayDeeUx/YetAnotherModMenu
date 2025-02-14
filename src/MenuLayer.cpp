@@ -55,6 +55,7 @@ $on_mod(Loaded) {
 	listenForSettingChanges("showBestPercent", [](bool showBestPercent) {
 		const auto manager = Manager::getSharedInstance();
 		manager->showBestPercent = showBestPercent;
+		if (!showBestPercent) return;
 		if (manager->hasQOLMod && manager->qolMod)
 			if (manager->qolMod->getSavedValue<bool>("best-in-percentage_enabled"))
 				return FLAlertLayer::create("Heads up!", "You already have a similar feature enabled from QOLMod, which will take priority.", "Close")->show();
