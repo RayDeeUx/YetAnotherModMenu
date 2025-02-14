@@ -22,7 +22,7 @@ class $modify(MyPlayerObject, PlayerObject) {
 			{"Disabled", BlendMode::Disabled},
 			{"hiimmoreicons", BlendMode::MoreIcons},
 			{"TheSolidQOLMod", BlendMode::SolidQOLMod},
-			{"Solidmanthus", BlendMode::Solid},
+			{"Outlinemanthus", BlendMode::Solid},
 			{"Invertmanthus", BlendMode::Invert},
 			{"Additive", BlendMode::Additive},
 		};

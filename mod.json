@@ -25,6 +25,7 @@
 		},
 		"best-percent-header": {
 			"name": "Best Percent in Percentage Label",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"showBestPercent": {
@@ -42,7 +43,8 @@
 			]
 		},
 		"wave-pulse-header": {
-			"name": "Wave Pulse",
+			"name": "Wave Trail Pulse",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"noWavePulse": {
@@ -72,7 +74,8 @@
 			"default": true
 		},
 		"player-trail-header": {
-			"name": "Player Trail",
+			"name": "Player Trail (Trail Length + Trail Blending)",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"trailLength": {
@@ -97,13 +100,13 @@
 			}
 		},
 		"blendingTrailMode": {
-			"name": "Trail Blending Mode",
-			"description": "- <cl>Disabled</c>: Disables this feature.\n- <cl>hiimmoreicons</c>: Emulates the blending style from More Icons by hiimjasmine00.\n- <cl>TheSolidQOLMod</c>: Emulates the blending style from QOLMod by TheSillyDoggo.\n- <cl>Solidmanthus</c>: Similar to the solid trail blending seen in QOLMod, but with a black outline.\n- <cl>Invertmanthus</c>: Invert blending.\n- <cl>Additive</c>: Additive blending.\n\nRequires re-entering a level to apply.",
+			"name": "Trail Blending Mode (READ!)",
+			"description": "- <cl>Disabled</c>: Disables this feature.\n- <cl>hiimmoreicons</c>: Emulates the blending style from More Icons by hiimjasmine00.\n- <cl>TheSolidQOLMod</c>: Emulates the blending style from QOLMod by TheSillyDoggo.\n- <cl>Outlinemanthus</c>: Adds a black outline to the player trail.\n- <cl>Invertmanthus</c>: Invert blending.\n- <cl>Additive</c>: Additive blending.\n\nRequires re-entering a level to apply.",
 			"type": "string",
 			"default": "Disabled",
 			"one-of": [
 				"Disabled", "hiimmoreicons",
-				"TheSolidQOLMod", "Solidmanthus",
+				"TheSolidQOLMod", "Outlinemanthus",
 				"Invertmanthus", "Additive"
 			]
 		},
@@ -119,6 +122,7 @@
 		},
 		"coin-tracing-header": {
 			"name": "Coin Path Tracing",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"traceCoins": {
@@ -205,6 +209,7 @@
 		},
 		"menu-pulsing-header": {
 			"name": "Pulsing Node in Main Menu",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"pulseMenuTitle": {
@@ -245,6 +250,7 @@
 		},
 		"filthy-header": {
 			"name": "Fire in the Hoie",
+			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
 			"type": "title"
 		},
 		"filth": {
