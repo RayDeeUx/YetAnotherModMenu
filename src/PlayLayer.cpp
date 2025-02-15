@@ -20,7 +20,7 @@ enum class CoinsStatus {
 
 class $modify(MyPlayLayer, PlayLayer) {
 	static void onModify(auto& self) {
-		(void) self.setHookPriority("PlayLayer::updateProgressbar", -3998);
+		(void) self.setHookPriority("PlayLayer::updateProgressbar", -3998); // DO NOT CHANGE TO -3999 PRIO!!!!!!!! decimal percentages
 		(void) self.setHookPriority("PlayLayer::resetLevelFromStart", -3999);
 		(void) self.setHookPriority("PlayLayer::setupHasCompleted", -3999);
 		(void) self.setHookPriority("PlayLayer::resetLevel", -3999);

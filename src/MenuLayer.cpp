@@ -162,7 +162,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		if (manager->calledAlready) return true;
 		manager->calledAlready = true;
 
-		manager->hasDecimalPercentages = Utils::isModLoaded(DECIMAL_PERCENTAGES);
 		manager->hasLoadedSDI = Utils::isModLoaded(SDI);
 
 		return true;
