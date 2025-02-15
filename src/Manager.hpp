@@ -15,6 +15,7 @@ public:
 	bool coinTracingOpacityModifiers = false;
 	bool previouslyCollectedModifier = false;
 	bool coinTracingDisabledCoin = false;
+	bool hasDecimalPercentages = false;
 	bool garageInPauseMenu = false;
 	bool showBestPercent = false;
 	bool addMinumumWidth = false;

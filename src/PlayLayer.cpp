@@ -20,9 +20,10 @@ enum class CoinsStatus {
 
 class $modify(MyPlayLayer, PlayLayer) {
 	static void onModify(auto& self) {
+		if (!Manager::getSharedInstance()->hasDecimalPercentages) (void) self.setHookPriority("PlayLayer::updateProgressbar", -3999);
+		else (void) self.setHookPriorityBeforePost("PlayLayer::updateProgressbar", DECIMAL_PERCENTAGES);
 		(void) self.setHookPriority("PlayLayer::resetLevelFromStart", -3999);
 		(void) self.setHookPriority("PlayLayer::setupHasCompleted", -3999);
-		(void) self.setHookPriority("PlayLayer::updateProgressbar", -3999);
 		(void) self.setHookPriority("PlayLayer::resetLevel", -3999);
 	}
 	struct Fields {

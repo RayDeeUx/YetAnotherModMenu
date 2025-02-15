@@ -1,7 +1,7 @@
 #pragma once
 
 #define SDI "weebify.separate_dual_icons"
-#define BEST_IN_PERCENTAGE "best-in-percentage_enabled"
+#define DECIMAL_PERCENTAGES "raydeeux_thesillydoggo.decimalpercentages"
 
 using namespace geode::prelude;
 
