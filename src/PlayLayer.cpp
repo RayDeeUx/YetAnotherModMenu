@@ -99,7 +99,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) fields->playerCanProbablyRecoverCoin = true;
 		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
 			if (fields->playerCanProbablyRecoverCoin) return;
-			if (object->m_unk4D0 == 1) { // T0D0: MIGHT BECOME AN ENUM AFTER FEBRUARY 13, 2025. EDIT ACCORDINGLY!!!
+			if (object->m_classType == 1) { // T0D0: MIGHT BECOME AN ENUM AFTER FEBRUARY 18, 2025. EDIT ACCORDINGLY!!!
 				const EffectGameObject* ego = static_cast<EffectGameObject*>(object);
 				fields->playerCanProbablyRecoverCoin = ego->m_isReverse && !ego->m_isNoTouch && ego->m_objectType != GameObjectType::Decoration;
 			}
