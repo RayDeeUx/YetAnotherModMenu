@@ -22,7 +22,7 @@ void createToggleSettingInTab(const char* settingID, MenuTab& tab, std::string d
 
 $on_mod(Loaded) {
 	Loader::get()->queueInMainThread([] {
-		auto tab = MenuTab::find("YetAnotherQOLMod");
+		auto tab = MenuTab::find("YetAnotherModMenu");
 
 		createToggleSettingInTab("enabled", tab);
 		createToggleSettingInTab("showBestPercent", tab);

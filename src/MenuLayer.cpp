@@ -81,9 +81,9 @@ $on_mod(Loaded) {
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
 		"Open Settings",
-		"Opens the YetAnotherQOLMod settings.",
+		"Opens the YetAnotherModMenu settings.",
 		{ Keybind::create(KEY_Tab, Modifier::Shift), Keybind::create(KEY_F9, Modifier::None) },
-		"Global/YetAnotherQOLMod", false
+		"Global/YetAnotherModMenu", false
 	});
 	new EventListener([=](InvokeBindEvent* event) {
 		if (!event->isDown()) return ListenerResult::Propagate;

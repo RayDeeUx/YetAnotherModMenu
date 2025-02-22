@@ -1,6 +1,6 @@
-YetAnotherQOLMod is free software, and donations are not accepted. (Or feature requests, for unrelated reasons.)
+YetAnotherModMenu is free software, and donations are not accepted. (Or feature requests, for unrelated reasons.)
 
-Go support these awesome people who made YetAnotherQOLMod possible!
+Go support these awesome people who made YetAnotherModMenu possible!
 
 - [ninXout](https://github.com/ninXout)
 - [hiimjasmine00](https://github.com/hiimjasmine00)

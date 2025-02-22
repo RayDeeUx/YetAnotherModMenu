@@ -6,15 +6,15 @@
 		"android": "2.2074"
 	},
 	"id": "raydeeux.yetanotherqolmod",
-	"name": "YetAnotherQOLMod",
+	"name": "YetAnotherModMenu",
 	"version": "v1.0.0",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
-	"repository": "https://github.com/RayDeeUx/YetAnotherQOLMod",
+	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
 	"tags": ["cheat", "gameplay", "utility", "customization", "universal"],
 	"settings": {
 		"enabled-header": {
-			"name": "YetAnotherQOLMod Master Switch",
+			"name": "YetAnotherModMenu Master Switch",
 			"type": "title"
 		},
 		"enabled": {
