@@ -25,7 +25,7 @@
 		},
 		"best-percent-header": {
 			"name": "Best Percent in Percentage Label",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"showBestPercent": {
@@ -44,7 +44,7 @@
 		},
 		"wave-pulse-header": {
 			"name": "Wave Trail Pulse",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"noWavePulse": {
@@ -75,7 +75,7 @@
 		},
 		"player-trail-header": {
 			"name": "Player Trail (Length + Blending)",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"trailLength": {
@@ -122,7 +122,7 @@
 		},
 		"coin-tracing-header": {
 			"name": "Coin Path Tracing",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"traceCoins": {
@@ -209,7 +209,7 @@
 		},
 		"menu-pulsing-header": {
 			"name": "Pulsing Node in Main Menu",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"pulseMenuTitle": {
@@ -250,7 +250,7 @@
 		},
 		"filthy-header": {
 			"name": "Fire in the Hoie",
-			"description": "You are responsible for all problems if you enable this while the original feature from QOLMod is enabled.",
+			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
 			"type": "title"
 		},
 		"filth": {
