@@ -143,7 +143,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		if (!MenuLayer::init()) return false;
 
 		#ifdef GEODE_IS_ANDROID
-		if (CCNode* bottomMenu = this->getChildByID("bottom-menu")) Utils::addButtonToNode(bottomMenu, this, menu_selector(MyMenuLayer::onYAQOLMODSettings));
+		if (CCNode* bottomMenu = this->getChildByID("bottom-menu")) Utils::addButtonToNode(bottomMenu, this, menu_selector(MyMenuLayer::onYAMMSettings));
 		#endif
 
 		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
@@ -167,7 +167,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		return true;
 	}
 	#ifdef GEODE_IS_ANDROID
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 	#endif
 };
 
@@ -179,36 +179,36 @@ class $modify(MyMenuLayer, MenuLayer) {
 class $modify(MyEditLevelLayer, EditLevelLayer) {
 	bool init(GJGameLevel* p0) {
 		if (!EditLevelLayer::init(p0)) return false;
-		if (CCNode* node = getChildByIDRecursive("level-actions-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditLevelLayer::onYAQOLMODSettings));
+		if (CCNode* node = getChildByIDRecursive("level-actions-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditLevelLayer::onYAMMSettings));
 		return true;
 	}
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 };
 
 class $modify(MyCreatorLayer, CreatorLayer) {
 	bool init() {
 		if (!CreatorLayer::init()) return false;
-		if (CCNode* node = getChildByIDRecursive("bottom-left-menu")) Utils::addButtonToNode(node, this, menu_selector(MyCreatorLayer::onYAQOLMODSettings));
+		if (CCNode* node = getChildByIDRecursive("bottom-left-menu")) Utils::addButtonToNode(node, this, menu_selector(MyCreatorLayer::onYAMMSettings));
 		return true;
 	}
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 };
 
 class $modify(MyEditorPauseLayer, EditorPauseLayer) {
 	bool init(LevelEditorLayer* lel) {
 		if (!EditorPauseLayer::init(lel)) return false;
-		if (CCNode* node = getChildByIDRecursive("settings-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditorPauseLayer::onYAQOLMODSettings));
+		if (CCNode* node = getChildByIDRecursive("settings-menu")) Utils::addButtonToNode(node, this, menu_selector(MyEditorPauseLayer::onYAMMSettings));
 		return true;
 	}
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 };
 
 class $modify(MyLevelInfoLayer, LevelInfoLayer) {
 	bool init(GJGameLevel* p0, bool p1) {
 		if (!LevelInfoLayer::init(p0, p1)) return false;
-		if (CCNode* node = getChildByIDRecursive("left-side-menu")) Utils::addButtonToNode(node, this, menu_selector(MyLevelInfoLayer::onYAQOLMODSettings));
+		if (CCNode* node = getChildByIDRecursive("left-side-menu")) Utils::addButtonToNode(node, this, menu_selector(MyLevelInfoLayer::onYAMMSettings));
 		return true;
 	}
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 };
 #endif

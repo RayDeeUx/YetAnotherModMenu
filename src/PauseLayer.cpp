@@ -17,20 +17,20 @@ class $modify(MyPauseLayer, PauseLayer) {
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
 		#ifdef GEODE_IS_ANDROID
-		Utils::addButtonToNode(leftButtonMenu, this, menu_selector(MyPauseLayer::onYAQOLMODSettings));
+		Utils::addButtonToNode(leftButtonMenu, this, menu_selector(MyPauseLayer::onYAMMSettings));
 		#endif
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
 		CircleButtonSprite* buttonSprite = CircleButtonSprite::createWithSprite("iconKitBase.png"_spr, 1, CircleBaseColor::Cyan, CircleBaseSize::SmallAlt);
 		buttonSprite->setID("garage-button-sprite"_spr);
-		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyPauseLayer::onYAQOLMODGarage));
+		CCMenuItemSpriteExtra* button = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyPauseLayer::onYAMMGarage));
 		button->setID("garage-button"_spr);
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
 	#ifdef GEODE_IS_ANDROID
-	void onYAQOLMODSettings(CCObject*) { Utils::openSettings(); }
+	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 	#endif
-	void onYAQOLMODGarage(CCObject*) {
+	void onYAMMGarage(CCObject*) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
 		#ifdef GEODE_IS_ANDROID64
 		const auto dummyScene = GJGarageLayer::scene();
