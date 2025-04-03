@@ -1,13 +1,14 @@
 {
-	"geode": "4.0.1",
+	"geode": "4.3.1",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
+		"ios": "2.2074",
 		"android": "2.2074"
 	},
 	"id": "raydeeux.yetanotherqolmod",
 	"name": "YetAnotherModMenu",
-	"version": "v1.0.1",
+	"version": "v1.0.2",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
