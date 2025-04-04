@@ -142,7 +142,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	bool init() {
 		if (!MenuLayer::init()) return false;
 
-		#ifdef GEODE_IS_ANDROID
+		#ifdef GEODE_IS_MOBILE
 		if (CCNode* bottomMenu = this->getChildByID("bottom-menu")) Utils::addButtonToNode(bottomMenu, this, menu_selector(MyMenuLayer::onYAMMSettings));
 		#endif
 
@@ -166,12 +166,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		return true;
 	}
-	#ifdef GEODE_IS_ANDROID
+	#ifdef GEODE_IS_MOBILE
 	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 	#endif
 };
 
-#ifdef GEODE_IS_ANDROID
+#ifdef GEODE_IS_MOBILE
 #include <Geode/modify/EditorPauseLayer.hpp>
 #include <Geode/modify/EditLevelLayer.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>

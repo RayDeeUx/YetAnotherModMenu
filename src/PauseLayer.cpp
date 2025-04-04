@@ -16,7 +16,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		PauseLayer::customSetup();
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
-		#ifdef GEODE_IS_ANDROID
+		#ifdef GEODE_IS_MOBILE
 		Utils::addButtonToNode(leftButtonMenu, this, menu_selector(MyPauseLayer::onYAMMSettings));
 		#endif
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
@@ -27,7 +27,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 		leftButtonMenu->addChild(button);
 		leftButtonMenu->updateLayout();
 	}
-	#ifdef GEODE_IS_ANDROID
+	#ifdef GEODE_IS_MOBILE
 	void onYAMMSettings(CCObject*) { Utils::openSettings(); }
 	#endif
 	void onYAMMGarage(CCObject*) {

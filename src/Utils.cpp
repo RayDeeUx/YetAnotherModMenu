@@ -57,7 +57,7 @@ namespace Utils {
 		#endif
 	}
 
-	#ifdef GEODE_IS_ANDROID
+	#ifdef GEODE_IS_MOBILE
 	void openSettings(CCObject*) {
 		openSettingsPopup(Mod::get());
 	}
