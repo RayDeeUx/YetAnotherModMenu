@@ -281,18 +281,14 @@
 			]
 		}
 	},
-	"dependencies": [
-		{
-			"id": "geode.node-ids",
-			"version": ">=1.19.0",
-			"importance": "required"
-		},
-		{
-			"id": "geode.custom-keybinds",
+	"dependencies": {
+		"geode.node-ids": ">=1.19.0",
+		"geode.custom-keybinds": {
 			"version": ">=1.10.2",
-			"importance": "required"
+			"importance": "required",
+			"platforms": ["win", "mac", "android"]
 		}
-	],
+	},
 	"resources": {
 		"sprites": [
 			"resources/*.png"

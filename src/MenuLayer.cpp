@@ -1,11 +1,15 @@
+#ifndef GEODE_IS_IOS
 #include <geode.custom-keybinds/include/Keybinds.hpp>
+#endif
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
 using namespace geode::prelude;
+#ifndef GEODE_IS_IOS
 using namespace keybinds;
+#endif
 
 $on_mod(Loaded) {
 	Manager::load();
@@ -78,6 +82,7 @@ $on_mod(Loaded) {
 	listenForSettingChanges("filthyPath", [](std::filesystem::path filthyPath) {
 		Manager::getSharedInstance()->filthyPath = std::move(filthyPath);
 	});
+	#ifndef GEODE_IS_IOS
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
 		"Open Settings",
@@ -95,6 +100,7 @@ $on_mod(Loaded) {
 		openSettingsPopup(Mod::get());
 		return ListenerResult::Propagate;
 	}, InvokeBindFilter(nullptr, "open-settings"_spr));
+	#endif
 }
 
 class PulsingNode final : public CCNode {
