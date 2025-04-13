@@ -263,7 +263,8 @@
 		"filthyGameplay": {
 			"name": "FiL/tH During Gameplay",
 			"type": "bool",
-			"default": true
+			"default": true,
+			"platforms": ["win", "macos", "android"]
 		},
 		"filthyPath": {
 			"name": "FiL/tH File",
@@ -278,7 +279,8 @@
 					"files": [ "*.mp3", "*.ogg", "*.oga", "*.wav", "*.flac" ],
 					"description": "Audio files"
 				}
-			]
+			],
+			"platforms": ["win", "macos", "android"]
 		}
 	},
 	"dependencies": {
@@ -286,7 +288,7 @@
 		"geode.custom-keybinds": {
 			"version": ">=1.10.2",
 			"importance": "required",
-			"platforms": ["win", "mac", "android"]
+			"platforms": ["win", "macos", "android"]
 		}
 	},
 	"resources": {
