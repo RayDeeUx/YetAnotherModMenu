@@ -290,7 +290,7 @@
 		"geode.custom-keybinds": {
 			"version": ">=1.10.2",
 			"importance": "required",
-			"platforms": ["win", "macos", "android"]
+			"platforms": ["win", "mac", "android"]
 		}
 	},
 	"resources": {
