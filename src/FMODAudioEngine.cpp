@@ -8,7 +8,7 @@ class $modify (MyFMODAudioEngine, FMODAudioEngine) {
 	static void onModify(auto& self) {
 		(void) self.setHookPriority("FMODAudioEngine::playEffect", -1999);
 	}
-	void playEffect(gd::string p0, float p1, float p2, float p3) {
+	int playEffect(gd::string p0, float p1, float p2, float p3) {
 		const auto manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->filth) return FMODAudioEngine::playEffect(p0, p1, p2, p3);
 		std::string desiredPath = manager->filthyPath.string();
