@@ -1,4 +1,6 @@
 # YetAnotherModMenu Changelog
+## v1.0.2
+- Experimental iOS support.
 ## v1.0.1
 - Renamed due to political concerns.
 ## v1.0.0
