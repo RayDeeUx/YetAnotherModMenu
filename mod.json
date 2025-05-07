@@ -257,9 +257,9 @@
 		},
 		"pulsePulseFactor": {
 			"name": "Non-Smooth Node Pulsing Factor",
-			"description": "<cp>DISABLED \"Smooth Node Pulsing\" TO USE THIS SETTING.</c>\n\nThe higher the number, the lower the extent of the pulsing. Adjust as needed depending on the Node ID you chose.",
+			"description": "<cp>DISABLE \"Smooth Node Pulsing\" TO USE THIS SETTING.</c>\n\nThe higher the number, the lower the extent of the pulsing. Adjust as needed depending on the Node ID you chose.",
 			"type": "float",
-			"default": 1.00,
+			"default": 3.60,
 			"min": 1.00,
 			"max": 20.00,
 			"control": {
