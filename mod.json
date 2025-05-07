@@ -249,6 +249,12 @@
 				"big-arrow-step": 0.1
 			}
 		},
+		"pulseUseSTDLerp": {
+			"name": "Smooth Node Pulsing",
+			"description": "Smoothly pulses the node of your choice, like QOLMod. If disabled, switch to a more \"impactful\" pulsing/scaling effect.",
+			"type": "bool",
+			"default": true
+		},
 		"filthy-header": {
 			"name": "Fire in the Hoie",
 			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",

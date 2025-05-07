@@ -16,6 +16,7 @@ public:
 	bool previouslyCollectedModifier = false;
 	bool coinTracingDisabledCoin = false;
 	bool garageInPauseMenu = false;
+	bool pulseUseSTDLerp = false;
 	bool showBestPercent = false;
 	bool addMinumumWidth = false;
 	bool filthyGameplay = false;
@@ -64,6 +65,7 @@ public:
 		instance->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		instance->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		instance->showBestPercent = Utils::getBool("showBestPercent");
+		instance->pulseUseSTDLerp = Utils::getBool("pulseUseSTDLerp");
 		instance->customSeparator = Utils::getString("customSeparator").at(0);
 		instance->pulseMenuTitle = Utils::getBool("pulseMenuTitle");
 		instance->filthyGameplay = Utils::getBool("filthyGameplay");
