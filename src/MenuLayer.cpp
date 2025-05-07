@@ -16,6 +16,9 @@ $on_mod(Loaded) {
 	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
 		Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 	});
+	listenForSettingChanges("pulsePulseFactor", [](double pulsePulseFactor) {
+		Manager::getSharedInstance()->pulsePulseFactor = pulsePulseFactor;
+	});
 	listenForSettingChanges("coinTracingThickness", [](double coinTracingThickness) {
 		Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
 	});
@@ -135,7 +138,7 @@ protected:
 		Manager* manager = Manager::getSharedInstance();
 		if (GameManager::sharedState()->getGameVariable("0122") || !Utils::modEnabled() || !manager->pulseMenuTitle) return this->nodeToModify->setScale(this->originalScale);
 		this->engine->update(dt);
-		this->forSTDLerp = manager->pulseUseSTDLerp ? std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt) : PulsingNode::lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt);
+		this->forSTDLerp = manager->pulseUseSTDLerp ? std::lerp(this->forSTDLerp, this->engine->m_pulse1, dt) : PulsingNode::lerpingAround(this->forSTDLerp, this->engine->m_pulse1, dt) / manager->pulsePulseFactor;
 		const float clamped = std::clamp<float>(static_cast<float>(this->forSTDLerp), 0.f, 1.f);
 		const float lerpCalculation = .85f + clamped;
 		const auto finalScale = static_cast<float>(manager->pulseScaleFactor * lerpCalculation);

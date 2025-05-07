@@ -34,6 +34,7 @@ public:
 	double coinOpacityModifier = 0.0;
 	double trailLengthModifier = 0.0;
 	double pulseScaleFactor = 0.0;
+	double pulsePulseFactor = 0.0;
 	double wavePulseSize = 0.0;
 
 	char customSeparator = '/';
@@ -62,6 +63,7 @@ public:
 		instance->colorFromSettings = Utils::getColorAlpha("colorFromSettings");
 		instance->garageInPauseMenu = Utils::getBool("garageInPauseMenu");
 		instance->pulseScaleFactor = Utils::getDouble("pulseScaleFactor");
+		instance->pulsePulseFactor = Utils::getDouble("pulsePulseFactor");
 		instance->coinTraceOpacity = Utils::getInt("coinTraceOpacity");
 		instance->addMinumumWidth = Utils::getBool("addMinumumWidth");
 		instance->showBestPercent = Utils::getBool("showBestPercent");
