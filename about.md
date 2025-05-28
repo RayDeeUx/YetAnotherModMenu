@@ -1,4 +1,7 @@
 # YetAnotherModMenu
+
+### <c-ffff55>As seen on</c> <c-ff0000>You</c>Tube<c-ffff55>...for some reason!</c> ([EVW](https://www.youtube.com/watch?v=l2weYay_xNQ&t=207))
+
 Use **Shift + Tab** to open its settings!
 
 Features:
@@ -15,6 +18,6 @@ Features:
 
 ## Disclaimer
 
-When Geode v5 releases (so a *very* distant time from now), many of this mod's features ***_<c-FF0000>may</c>_*** be removed from this mod and merged into [Eclipse Menu](mod:eclipse.eclipse-menu). When this process is complete, this mod will exclusively become a <c-FFD700>coinfinder mod</c>.
+When Geode v5 releases (so a *very* distant time from now), many of this mod's features ***_<c-FF0000>may</c>_*** be removed from this mod and merged into [Eclipse Menu](mod:eclipse.eclipse-menu). When this process is complete, this mod will exclusively become a <c-FFD700>coinfinder mod</c> and a <co>"pulse node to the main menu music" mod</c>.
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2.

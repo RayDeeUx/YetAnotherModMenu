@@ -1,5 +1,7 @@
 # YetAnotherModMenu
 
+### <c-ffff55>As seen on</c> <c-ff0000>You</c>Tube<c-ffff55>...for some reason!</c> ([EVW](https://www.youtube.com/watch?v=l2weYay_xNQ&t=207))
+
 Features:
 - Change your trail blending and trail length
 - Change the thickness of your wave trail <c-00FFFF>(requested by CatXus)</c>

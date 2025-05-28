@@ -8,7 +8,7 @@
 	},
 	"id": "raydeeux.yetanotherqolmod",
 	"name": "YetAnotherModMenu",
-	"version": "v1.0.2",
+	"version": "v1.0.3",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
@@ -147,13 +147,14 @@
 			}
 		},
 		"coinTracingDisabledCoin": {
-			"name": "Red Coin Path if Coin is Toggled Off (READ!)",
-			"description": "If <cg>enabled</c>:\n\nPaths for currently disabled coins will be colored <c_>red</c>, overriding your preferences.",
+			"name": "Color Path Red if Coin is Toggled Off (READ!)",
+			"description": "If <cg>enabled</c>, the path for a <c_>***__disabled__***</c> coin will be colored <c_>***__RED__***</c>, overriding your preferences.",
 			"type": "bool",
 			"default": true
 		},
 		"colorMode": {
 			"name": "Coin Path Color Mode",
+			"description": "Options:\n\n- Custom: Choose a color of your own choice for all coin paths, regardless of the coin's traits.\n- Match Coin Status: the path of the coin will reflect the coin's traits: <c-ffd700>gold</c> for coins in official levels, <c-bbbbbb>silver</c> for verified coins or coins in editor levels, or <c-ff0000>red</c> if the \"Color Path Red if Coin is Toggled Off\" setting is <cg>enabled</c> ***__regardless of the coin type__***.",
 			"type": "string",
 			"default": "Match Coin Status",
 			"one-of": [
@@ -163,12 +164,12 @@
 		},
 		"coinTracingOpacityModifiers": {
 			"name": "Conditional Coin Path Opacity Modifiers (READ!)",
-			"description": "If <cg>enabled</c>, the opacities of paths to the following kinds of coins are reduced:\n\n- previously collected coins\n- coins you missed in levels with directional changes.\n\n<cy>Unfortunately, this does not apply to</c> <co>bronze/unverified</c> <cy>coins.</c>\n<cy>Opacity modifiers stack.</c>",
+			"description": "If <cg>enabled</c>, the opacities of paths to the following kinds of coins are reduced:\n\n- previously collected coins\n- coins you missed in levels with directional changes.\n\n<cy>Unfortunately, this does not apply to</c> <c-A56E32>bronze/unverified</c> <cy>coins.</c>\n<cy>Opacity modifiers stack.</c>",
 			"type": "bool",
 			"default": true
 		},
 		"previouslyCollectedModifier": {
-			"name": "Modifier for Previously Collected Coins",
+			"name": "Opacity Modifier for Previously Collected Coins",
 			"description": "Since this detection is only 95% accurate, this modifier is disabled by default.",
 			"type": "bool",
 			"default": false
@@ -189,7 +190,7 @@
 			}
 		},
 		"coinTraceOpacity": {
-			"name": "Coin Path Opacity (For \"Match Coin Status\" Color Mode)",
+			"name": "Coin Path Opacity (For \"Match Coin Status\" Coin Path Color Mode)",
 			"type": "int",
 			"default": 255,
 			"min": 0,
@@ -204,7 +205,7 @@
 			}
 		},
 		"colorFromSettings": {
-			"name": "Color (For \"Custom\" Color Mode)",
+			"name": "Color + Opacity (For \"Custom\" Coin Path Color Mode)",
 			"type": "rgba",
 			"default": [0, 255, 0, 255]
 		},
