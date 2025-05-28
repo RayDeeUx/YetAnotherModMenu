@@ -128,6 +128,7 @@
 		},
 		"traceCoins": {
 			"name": "Coin Pathfinder",
+			"description": "Draws a straight line from the player's position to all the coins in the current level.",
 			"type": "bool",
 			"default": false
 		},
@@ -147,14 +148,14 @@
 			}
 		},
 		"coinTracingDisabledCoin": {
-			"name": "Color Path Red if Coin is Toggled Off (READ!)",
+			"name": "Color a Path Red if Its Coin is Toggled Off (READ!)",
 			"description": "If <cg>enabled</c>, the path for a <c_>***__disabled__***</c> coin will be colored <c_>***__RED__***</c>, overriding your preferences.",
 			"type": "bool",
 			"default": true
 		},
 		"colorMode": {
 			"name": "Coin Path Color Mode",
-			"description": "Options:\n\n- Custom: Choose a color of your own choice for all coin paths, regardless of the coin's traits.\n- Match Coin Status: the path of the coin will reflect the coin's traits: <c-ffd700>gold</c> for coins in official levels, <c-bbbbbb>silver</c> for verified coins or coins in editor levels, or <c-ff0000>red</c> if the \"Color Path Red if Coin is Toggled Off\" setting is <cg>enabled</c> ***__regardless of the coin type__***.",
+			"description": "Options:\n\n- Custom: Choose a color of your own choice for all coin paths, regardless of the coin's traits.\n- Match Coin Status (default): The path of the coin will reflect the coin's traits: <c-ffd700>gold</c> for coins in official levels, <c-bbbbbb>silver</c> for verified coins or coins in editor levels, or <c-ff0000>red</c> if the \"Color Path Red if Coin is Toggled Off\" setting is <cg>enabled</c> ***__regardless of the type of coin being tracked.__***.",
 			"type": "string",
 			"default": "Match Coin Status",
 			"one-of": [
