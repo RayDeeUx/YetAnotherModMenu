@@ -1,4 +1,7 @@
 # YetAnotherModMenu Changelog
+## v1.0.4
+- Added settings related to FiL/tH (F\*r\* \*n th\* H\*l\*) for iOS devices.
+  - This emergency update was made possible by hiimjasmine00 and slideglide.
 ## v1.0.3
 - Added `Smooth Node Pulsing` (enabled by default to keep current behavior) for the 1% of people who prefer a different pulsing method.
 - Added `Non-Smooth Node Pulsing Factor` (set to `3.6` by default per suggestion of Vinster, the setting's primary target audience) for those who want to mess with the pulsing even further.
