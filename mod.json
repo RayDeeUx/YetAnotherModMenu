@@ -276,37 +276,29 @@
 		"filthy-header": {
 			"name": "Fire in the Hoie",
 			"description": "You are responsible for all problems if you enable this while similar features from other mod menus are enabled.",
-			"type": "title",
-			"platforms": ["win", "mac", "android"]
+			"type": "title"
 		},
 		"filth": {
 			"name": "Fire in Lava/the Hole (FiL/tH)",
 			"description": "Replaces all SFX with (by default) that \"Fire in the HoIe\" SFX that totally won't age poorly 10 years from now. (Or any SFX of your choice.)",
 			"type": "bool",
-			"default": false,
-			"platforms": ["win", "mac", "android"]
+			"default": false
 		},
 		"filthyGameplay": {
 			"name": "FiL/tH During Gameplay",
 			"type": "bool",
-			"default": true,
-			"platforms": ["win", "mac", "android"]
+			"default": true
 		},
 		"filthyPath": {
 			"name": "FiL/tH File",
 			"type": "file",
-			"default": {
-				"win": "{gd_dir}/resources/sfx/s4451.ogg",
-				"mac": "{gd_dir}/Resources/sfx/s4451.ogg",
-				"android": "file:///android_asset/sfx/s4451.ogg"
-			},
+			"default": "{gd_resources_dir}/sfx/s4451.ogg",
 			"filters": [
 				{
 					"files": [ "*.mp3", "*.ogg", "*.oga", "*.wav", "*.flac" ],
 					"description": "Audio files"
 				}
-			],
-			"platforms": ["win", "mac", "android"]
+			]
 		}
 	},
 	"dependencies": {

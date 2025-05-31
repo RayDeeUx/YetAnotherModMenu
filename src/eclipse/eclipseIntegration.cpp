@@ -93,8 +93,6 @@ $on_mod(Loaded) {
 			eclipse::config::setInternal<float>("pulseScaleFactor"_spr, pulseScaleFactor);
 		});
 
-		#ifndef GEODE_IS_IOS
 		createToggleSettingInTab("filth", tab, "USE_MOD_JSON");
-		#endif
 	});
 }
