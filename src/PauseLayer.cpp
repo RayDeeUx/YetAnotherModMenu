@@ -105,10 +105,6 @@ class $modify(MyPauseLayer, PauseLayer) {
             FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
         }
 	}
-	// could not figure out disabling the specific keybind for the life of me
-	// void onResume(CCObject* sender) {
-	// 	if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || (!CCScene::get()->getChildByType<GJGarageLayer>(0) && !CCScene::get()->getChildByType<GJShopLayer>(0))) return PauseLayer::onResume(sender);
-	// }
 };
 
 class $modify(MyGJGarageLayer, GJGarageLayer) {
