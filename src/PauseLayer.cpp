@@ -8,6 +8,71 @@
 
 using namespace geode::prelude;
 
+
+class GaragePopup : public Popup<> {
+    protected:
+        bool setup() override {
+            #ifdef GEODE_IS_ANDROID64
+            const auto dummyScene = GJGarageLayer::scene();
+            m_garageLayer = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
+            if (!m_garageLayer) return false;
+            dummyScene->removeChild(m_garageLayer);
+            dummyScene->release();
+            #else
+            m_garageLayer = GJGarageLayer::node();
+            if (!m_garageLayer) return false;
+            #endif
+            m_garageLayer->setUserObject("from-pauselayer"_spr, CCBool::create(true));
+
+            addChild(m_garageLayer);
+            setID("GaragePopup"_spr);
+            setOpacity(0);
+            m_mainLayer->setVisible(false);
+
+            auto exitMenu = m_garageLayer->getChildByID("back-menu");
+            if (!exitMenu) return false;
+            if (auto closeBtn = static_cast<CCMenuItemSpriteExtra*>(exitMenu->getChildByID("back-button"))) {
+                closeBtn->m_pfnSelector = menu_selector(GaragePopup::onClose);
+                closeBtn->m_pListener = this;
+            } else {
+                return false;
+            }
+
+            return true;
+        }
+        void transitionFinished() {
+            removeFromParent();
+        }
+    public:
+        static GaragePopup* create() {
+            auto ret = new GaragePopup;
+            auto ws = CCDirector::get()->getWinSize();
+            if (ret && ret->initAnchored(ws.width, ws.height)) {
+                ret->autorelease();
+                return ret;
+            }
+            delete ret;
+            return nullptr;
+        }
+        void onClose(CCObject* sender) override {
+            m_garageLayer->stopAllActions();
+            m_garageLayer->runAction(CCSequence::createWithTwoActions(CCMoveTo::create(0.25, {0, CCDirector::sharedDirector()->getWinSize().height + 5}), CCCallFunc::create(this, callfunc_selector(GaragePopup::transitionFinished))));
+        }
+        void show() override {
+            if (m_noElasticity) return Popup::show();
+            auto dir = CCDirector::sharedDirector();
+            m_noElasticity = true;
+            Popup::show();
+            m_mainLayer->setVisible(false);
+            m_noElasticity = false;
+            m_garageLayer->setPosition({0, dir->getWinSize().height + 5});
+            m_garageLayer->stopAllActions();
+            m_garageLayer->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5, {0, 0})));
+        }
+
+        GJGarageLayer* m_garageLayer;
+};
+
 class $modify(MyPauseLayer, PauseLayer) {
 	static void onModify(auto& self) {
 		(void) self.setHookPriority("PauseLayer::onResume", -3999);
@@ -32,36 +97,13 @@ class $modify(MyPauseLayer, PauseLayer) {
 	#endif
 	void onYAMMGarage(CCObject*) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
-		#ifdef GEODE_IS_ANDROID64
-		const auto dummyScene = GJGarageLayer::scene();
-		GJGarageLayer* garage = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
-		if (!garage) return FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
-		dummyScene->removeChild(garage);
-		dummyScene->release();
-		#else
-		GJGarageLayer* garage = GJGarageLayer::node();
-		if (!garage) return FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
-		#endif
-		
-		// fake bounce in transition
-		garage->stopAllActions();
-		garage->setPosition({0, CCDirector::get()->getWinSize().height});
-		garage->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 0})));
-
-		garage->setUserObject("from-pauselayer"_spr, CCBool::create(true));
-		CCScene* currScene = CCScene::get();
-		currScene->addChild(garage);
-
-		this->stopAllActions();
-		this->setUserObject("inside-backrooms"_spr, CCBool::create(true));
-		this->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 1000}))); // move it to the backrooms for hacky touch prio fix
-		// this->setPosition({0, 1000}); // original function call from km7
-
-		garage->setZOrder(currScene->getHighestChildZ() + 2);
-	}
-	// could not figure out disabling the specific keybind for the life of me
-	void onResume(CCObject* sender) {
-		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || (!CCScene::get()->getChildByType<GJGarageLayer>(0) && !CCScene::get()->getChildByType<GJShopLayer>(0))) return PauseLayer::onResume(sender);
+        if (auto garage = GaragePopup::create()) {
+            garage->show();
+            setKeyboardEnabled(false);
+            setKeypadEnabled(false);
+        } else {
+            FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
+        }
 	}
 };
 
@@ -70,21 +112,6 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		(void) self.setHookPriority("GJGarageLayer::onBack", -3999);
 		(void) self.setHookPriority("GJGarageLayer::onShop", -3999);
 		(void) self.setHookPriority("GJGarageLayer::onSelect", -3999);
-	}
-	void onBack(CCObject* sender) {
-		const auto pl = PlayLayer::get();
-		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
-		if (pl->getParent() && this->getParent() != pl->getParent()) return GJGarageLayer::onBack(sender);
-		// fake move up transition
-		if (auto* pause = typeinfo_cast<PauseLayer*>(this->getParent()->getChildByID("PauseLayer")); pause && pause->getUserObject("inside-backrooms"_spr)) {
-			pause->stopAllActions();
-			pause->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.25f, {0, 0})));
-		}
-		this->stopAllActions();
-		this->runAction(CCSequence::createWithTwoActions(
-			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
-			CCCallFunc::create(this, callfunc_selector(GJGarageLayer::removeFromParent)))
-		);
 	}
 	void onShop(CCObject *sender) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onShop(sender);
@@ -132,7 +159,6 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				return;
 			case IconType::Spider:
 				if (playerToModify->m_isSpider) playerToModify->updatePlayerSpiderFrame(iconID);
-
 				return;
 			case IconType::Swing:
 				if (playerToModify->m_isSwing) playerToModify->updatePlayerSwingFrame(iconID);
@@ -186,7 +212,7 @@ class $modify(MyGJShopLayer, GJShopLayer) {
 		// fake move up transition
 		this->stopAllActions();
 		this->runAction(CCSequence::createWithTwoActions(
-			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height}),
+			CCMoveTo::create(0.25f, {0, CCDirector::get()->getWinSize().height + 5}),
 			CCCallFunc::create(this, callfunc_selector(GJShopLayer::removeFromParent)))
 		);
 	}
