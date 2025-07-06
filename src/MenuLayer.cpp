@@ -101,6 +101,7 @@ $on_mod(Loaded) {
 		// permission granted by dankmeme01 to run the superscary code:
 		// https://discord.com/channels/911701438269386882/911702535373475870/1337522714205753426
 		for (CCNode* node : CCArrayExt<CCNode*>(CCScene::get()->getChildren())) if (Utils::getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
+		if (LevelEditorLayer::get()) return ListenerResult::Propagate;
 		const auto pl = PlayLayer::get();
 		if (pl && pl->getParent() && (!pl->getParent()->getChildByType<PauseLayer>(0) || !pl->m_isPaused) && (!pl->getChildByType<EndLevelLayer>(0) && !pl->getChildByType<RetryLevelLayer>(0))) return ListenerResult::Propagate;
 		openSettingsPopup(Mod::get());
