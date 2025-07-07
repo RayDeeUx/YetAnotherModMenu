@@ -1,4 +1,7 @@
 # YetAnotherModMenu Changelog
+## v1.0.5
+- Refactor `Icon Kit In Pause Menu` to solve touch priority issues.
+  - Also add warning about probably being kicked out of a level if opening the Soggy Mod screen from an Icon Kit screen opened from the pause menu.
 ## v1.0.4
 - Added settings related to FiL/tH (F\*r\* \*n th\* H\*l\*) for iOS devices.
   - This emergency update was made possible by hiimjasmine00 and slideglide.

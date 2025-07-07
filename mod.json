@@ -8,7 +8,7 @@
 	},
 	"id": "raydeeux.yetanotherqolmod",
 	"name": "YetAnotherModMenu",
-	"version": "v1.0.4",
+	"version": "v1.0.5",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
@@ -117,7 +117,7 @@
 		},
 		"garageInPauseMenu": {
 			"name": "Icon Kit In Pause Menu",
-			"description": "<cl>Made with <3 and massive help from km7.</c>",
+			"description": "<cl>Made with <3 and massive help from km7.</c>\n\n## <cy>If you click on the Soggy Mod button from the icon kit in the pause menu,</c> <c-ff0000>__you can *very likely* be kicked out of the level you paused on!__</c>",
 			"type": "bool",
 			"default": false
 		},
