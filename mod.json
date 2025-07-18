@@ -117,7 +117,7 @@
 		},
 		"garageInPauseMenu": {
 			"name": "Icon Kit In Pause Menu",
-			"description": "<cl>Made with <3 and massive help from km7.</c>\n<cp>- Can break the ESC keybind for fully exit a level after opening the icon kit.</c>\n<cp>- Speaking of the ESC key, __bugs caused by spamming/holding the ESC key to exit the icon kit__ ***__will be ignored__***.</c>\n\n## <cy>If you click on the Soggy Mod button from the icon kit in the pause menu,</c> <c-ff0000>__you can *very likely* be kicked out of the level you paused on!__</c>",
+			"description": "<cl>Made with <3 and massive help from km7.</c>\n<cp>- Can break the ESC keybind for fully exiting a level after opening the icon kit.</c>\n<cp>- __Bugs caused by spamming/holding the ESC key to exit the icon kit ***will be ignored***__.</c>\n\n## <cy>If you click on the Soggy Mod button from the icon kit in the pause menu,</c> <c-ff0000>__you can *very likely* be kicked out of the level you paused on!__</c>",
 			"type": "bool",
 			"default": false
 		},
