@@ -3,6 +3,8 @@
 - Refactor `Icon Kit In Pause Menu` to solve touch priority issues.
   - Also add warning to its description about probably being kicked out of a level if opening the Soggy Mod screen from an Icon Kit screen opened from the pause menu, along with other warnings.
   - Currently this implementation could stop you from using the Escape key to fully exit a level, but seeing as the point of opening the icon kit from the pause menu was to change icons without exiting a level, let's consider it as a feature(TM) for now.
+- Disabled the keybind in the level editor.
+  - To restore this previous behavior, don't bother. Simply curl up in a fetal position and contemplate your life decisions instead.
 ## v1.0.4
 - Added settings related to FiL/tH (F\*r\* \*n th\* H\*l\*) for iOS devices.
   - This emergency update was made possible by hiimjasmine00 and slideglide.
