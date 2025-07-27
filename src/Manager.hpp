@@ -47,6 +47,8 @@ public:
 
 	GLubyte coinTraceOpacity;
 
+	int originalSceneEnumValue = -1;
+
 	static Manager* getSharedInstance() {
 		if (!instance) instance = new Manager();
 		return instance;
