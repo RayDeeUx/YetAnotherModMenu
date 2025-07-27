@@ -12,12 +12,14 @@ Features:
 - Access the Icon Kit/Garage from the pause menu (with help from [km7](https://github.com/Kingminer7))
 - Trace a direct path to the secret/user coins of a level, and color it based on its status
 
-<cy>Feature requests for this mod</c> ***<c-FF0000>will NOT</c>*** <cy>be accepted.</c> <c-FF0000>Bug reports ***__MUST__*** be filed through Discord (see one of my other mods on the index for the invite link), unless if you're willing to wait anywhere from 6 days to 19 years for a response back. *You know who you are.*</c>
+<cy>Feature requests for this mod</c> ***<c-FF0000>will NOT</c>*** <cy>be accepted.</c>
+
+<c-FF0000>Bug reports ***__MUST__*** be filed through Discord (see one of my other mods on the index for the invite link), unless if you're willing to wait anywhere from 6 days to 19 years for a response back. *You know who you are.*</c>
 
 <c-888888>*For a mod that uses GD 2.1's percentage calculation, see [Percentage Toggle by ZSA](mod:zsa.percentage-toggle).*</c>
 
 ## <cy>Disclaimer</c>
 
-When Geode v5 releases (so a *very* distant time from now), many of this mod's features ***_<c-FF0000>may</c>_*** be removed from this mod and merged into [Eclipse Menu](mod:eclipse.eclipse-menu). When this process is complete, this mod will exclusively become a <c-FFD700>coinfinder mod</c> and a <co>"pulse node to the main menu music" mod</c>.
+When Geode v5 releases (so a *very* distant time from now), some of this mod's features ***_<c-FF0000>may</c>_*** be removed from this mod and merged into [Eclipse Menu](mod:eclipse.eclipse-menu).
 
 This [Geode mod](https://geode-sdk.org) is licensed under LGPLv2.
