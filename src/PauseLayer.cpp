@@ -11,18 +11,10 @@ using namespace geode::prelude;
 class GaragePopup final : public Popup<> {
     protected:
         bool setup() override {
-            #ifdef GEODE_IS_ANDROID64
-            const auto dummyScene = GJGarageLayer::scene();
-            m_garageLayer = typeinfo_cast<GJGarageLayer*>(dummyScene->getChildByID("GJGarageLayer"));
-            if (!m_garageLayer) return false;
-            dummyScene->removeChild(m_garageLayer);
-            dummyScene->release();
-            #else
+        	GameManager::get()->m_ropeGarageEnter = true;
             m_garageLayer = GJGarageLayer::node();
             if (!m_garageLayer) return false;
-            #endif
             m_garageLayer->setUserObject("from-pauselayer"_spr, CCBool::create(true));
-
 
             this->addChild(m_garageLayer);
             this->setID("GaragePopup"_spr);
@@ -41,7 +33,11 @@ class GaragePopup final : public Popup<> {
             return true;
         }
         void transitionFinished() {
-            this->removeMeAndCleanup();
+            this->onExit();
+        	PauseLayer* pause = CCScene::get()->getChildByType<PauseLayer>(0);
+        	if (!pause) return;
+        	pause->setKeyboardEnabled(true);
+        	pause->setKeypadEnabled(true);
         }
     public:
         static GaragePopup* create() {
@@ -55,6 +51,7 @@ class GaragePopup final : public Popup<> {
             return nullptr;
         }
         void onClose(CCObject* sender) override {
+        	GameManager::get()->m_ropeGarageEnter = true;
             m_garageLayer->stopAllActions();
             m_garageLayer->runAction(CCSequence::createWithTwoActions(
             	CCMoveTo::create(0.25, {0, CCDirector::sharedDirector()->getWinSize().height + 5}),
@@ -81,6 +78,7 @@ class $modify(MyPauseLayer, PauseLayer) {
 	}
 	void customSetup() {
 		PauseLayer::customSetup();
+		GameManager::get()->m_ropeGarageEnter = true;
 		CCNode* leftButtonMenu = this->getChildByID("left-button-menu");
 		if (!leftButtonMenu) return;
 		#ifdef GEODE_IS_MOBILE
