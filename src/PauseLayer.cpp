@@ -56,18 +56,17 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 	}
 	void onBack(CCObject* sender) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get() || !this->getUserObject("from-pauselayer"_spr)) return GJGarageLayer::onBack(sender);
-		const auto plParent = PlayLayer::get()->getParent();
-		if (!plParent) return GJGarageLayer::onBack(sender);
-		const auto pause = plParent->getChildByType<PauseLayer>(0);
-		if (!pause) return GJGarageLayer::onBack(sender);
-		const auto play = pause->getChildByIDRecursive("play-button");
-		if (!play) return GJGarageLayer::onBack(sender);
-		const bool originalState = GameManager::get()->m_ropeGarageEnter;
 		GameManager::get()->m_ropeGarageEnter = true;
-		GJGarageLayer::onBack(sender);
-		GameManager::get()->m_ropeGarageEnter = originalState;
-		Loader::get()->queueInMainThread([play] {
-			Loader::get()->queueInMainThread([play] {
+		CCDirector::get()->popScene();
+		Loader::get()->queueInMainThread([] {
+			Loader::get()->queueInMainThread([] {
+				GameManager::get()->m_ropeGarageEnter = true;
+				const auto plParent = PlayLayer::get()->getParent();
+				if (!plParent) return;
+				const auto pause = plParent->getChildByType<PauseLayer>(0);
+				if (!pause) return;
+				const auto play = pause->getChildByIDRecursive("play-button");
+				if (!play) return;
 				static_cast<CCMenuItemSpriteExtra*>(play)->activate();
 				PlayLayer::get()->m_uiLayer->m_pauseBtn->activate();
 			});
