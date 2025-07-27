@@ -33,6 +33,10 @@ class GaragePopup final : public Popup<> {
 		}
 		void transitionFinished() {
 			this->removeMeAndCleanup();
+			if (PauseLayer* pause = CCScene::get()->getChildByType<PauseLayer>(0)) {
+				pause->setKeyboardEnabled(true);
+				pause->setKeypadEnabled(true);
+			}
 		}
 	public:
 		static GaragePopup* create() {
@@ -46,6 +50,8 @@ class GaragePopup final : public Popup<> {
 			return nullptr;
 		}
 		void onClose(CCObject* sender) override {
+			this->setKeyboardEnabled(false);
+			this->setKeypadEnabled(false);
 			m_garageLayer->stopAllActions();
 			m_garageLayer->runAction(CCSequence::createWithTwoActions(
 				CCMoveTo::create(0.25, {0, CCDirector::sharedDirector()->getWinSize().height + 5}),
@@ -127,14 +133,16 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		GJGarageLayer::onSelect(sender);
 		const auto pl = PlayLayer::get();
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
+		const bool isPlat = pl->m_level->isPlatformer();
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModify();
 		if (!playerToModify) return;
 		playerToModify->updateGlowColor();
+		GameManager* gm = GameManager::get();
 		const int iconID = sender->getTag();
 		switch (m_selectedIconType) {
 			default: return;
 			case IconType::Ship:
-				if (playerToModify->m_isShip && !pl->m_level->isPlatformer()) playerToModify->updatePlayerShipFrame(iconID);
+				if (playerToModify->m_isShip && !isPlat) playerToModify->updatePlayerShipFrame(iconID);
 				return;
 			case IconType::Ball:
 				if (playerToModify->m_isBall) playerToModify->updatePlayerRollFrame(iconID);
@@ -155,13 +163,29 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (playerToModify->m_isSwing) playerToModify->updatePlayerSwingFrame(iconID);
 				return;
 			case IconType::Jetpack:
-				if (playerToModify->m_isShip && pl->m_level->isPlatformer()) playerToModify->updatePlayerJetpackFrame(iconID);
+				if (playerToModify->m_isShip && isPlat) playerToModify->updatePlayerJetpackFrame(iconID);
 				return;
 			case IconType::Cube:
 				if (playerToModify->m_isBall || playerToModify->m_isDart || playerToModify->m_isRobot || playerToModify->m_isSpider || playerToModify->m_isSwing) return;
 				return playerToModify->updatePlayerFrame(iconID);
 			case IconType::DeathEffect:
-				return GameManager::get()->loadDeathEffect(iconID);
+				return gm->loadDeathEffect(iconID);
+			case IconType::ShipFire:
+				if (playerToModify->m_isShip && !isPlat) playerToModify->m_shipStreakType = static_cast<ShipStreak>(iconID);
+				return;
+			case IconType::Special:
+				const bool isAlwaysShow = iconID == 5 || iconID == 6;
+				const bool isImage = iconID == 2 || iconID == 7;
+				playerToModify->resetStreak();
+				playerToModify->m_playerStreak = iconID;
+				playerToModify->setupStreak();
+				playerToModify->m_alwaysShowStreak = isAlwaysShow;
+				if (!isImage) {
+					playerToModify->m_regularTrail->setColor(gm->colorForIdx(gm->m_playerColor2.value()));
+				}
+				if (isAlwaysShow) {
+					playerToModify->m_regularTrail->resumeStroke();
+				}
 		}
 	}
 };
@@ -180,7 +204,9 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 		switch (m_colorMode) {
 			default: return;
 			case 0: return playerToModify->setColor(color);
-			case 1: return playerToModify->setSecondColor(color);
+			case 1:
+				if (playerToModify->m_playerStreak == 5 || playerToModify->m_playerStreak == 6) playerToModify->m_regularTrail->setColor(color);
+				return playerToModify->setSecondColor(color);
 			case 2:
 				playerToModify->enableCustomGlowColor(color);
 				return playerToModify->updateGlowColor();

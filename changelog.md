@@ -1,4 +1,8 @@
 # YetAnotherModMenu Changelog
+## v1.0.6
+- Added support for applying changes to trails from the `Icon Kit In Pause Menu` in (almost) real-time. No more re-entering the level to see your new trail!
+- Fix a pretty nasty crash when changing death effects from using the `Icon Kit In Pause Menu` feature without [Texture Loader](mod:geode.texture-loader) loaded.
+- Fix a pretty nasty bug that sends all people back to the main menu from using `Icon Kit In Pause Menu`.
 ## v1.0.5
 - Refactor `Icon Kit In Pause Menu` to solve touch priority issues.
   - Also add warning to its description about probably being kicked out of a level if opening the Soggy Mod screen from an Icon Kit screen opened from the pause menu, along with other warnings.
