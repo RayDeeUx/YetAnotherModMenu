@@ -18,7 +18,7 @@ namespace Utils {
 	Mod* getMod(const std::string& modID);
 	std::string getModVersion(Mod* mod);
 
-	PlayerObject* getSelectedPlayerObjectToModfy(const PlayLayer* pl = PlayLayer::get());
+	PlayerObject* getSelectedPlayerObjectToModify(const PlayLayer* pl = PlayLayer::get());
 
 	std::string getNodeName(CCObject* node);
 	#ifdef GEODE_IS_MOBILE

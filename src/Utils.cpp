@@ -34,7 +34,7 @@ namespace Utils {
 
 	std::string getModVersion(Mod* mod) { return mod->getVersion().toNonVString(); }
 
-	PlayerObject* getSelectedPlayerObjectToModfy(const PlayLayer *pl) {
+	PlayerObject* getSelectedPlayerObjectToModify(const PlayLayer *pl) {
 		if (!pl) return nullptr;
 		if (Manager::getSharedInstance()->hasLoadedSDI && Utils::getMod(SDI)->getSavedValue<bool>("2pselected")) return pl->m_player2;
 		return pl->m_player1;

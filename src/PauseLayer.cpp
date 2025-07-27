@@ -8,8 +8,7 @@
 
 using namespace geode::prelude;
 
-
-class GaragePopup : public Popup<> {
+class GaragePopup final : public Popup<> {
     protected:
         bool setup() override {
             #ifdef GEODE_IS_ANDROID64
@@ -24,10 +23,11 @@ class GaragePopup : public Popup<> {
             #endif
             m_garageLayer->setUserObject("from-pauselayer"_spr, CCBool::create(true));
 
-            addChild(m_garageLayer);
-            setID("GaragePopup"_spr);
-            setOpacity(0);
-            m_mainLayer->setVisible(false);
+
+            this->addChild(m_garageLayer);
+            this->setID("GaragePopup"_spr);
+            this->setOpacity(0);
+            this->m_mainLayer->setVisible(false);
 
             auto exitMenu = m_garageLayer->getChildByID("back-menu");
             if (!exitMenu) return false;
@@ -41,12 +41,12 @@ class GaragePopup : public Popup<> {
             return true;
         }
         void transitionFinished() {
-            removeFromParent();
+            this->removeMeAndCleanup();
         }
     public:
         static GaragePopup* create() {
-            auto ret = new GaragePopup;
-            auto ws = CCDirector::get()->getWinSize();
+            auto ret = new GaragePopup();
+            const CCSize ws = CCDirector::get()->getWinSize();
             if (ret && ret->initAnchored(ws.width, ws.height)) {
                 ret->autorelease();
                 return ret;
@@ -56,21 +56,23 @@ class GaragePopup : public Popup<> {
         }
         void onClose(CCObject* sender) override {
             m_garageLayer->stopAllActions();
-            m_garageLayer->runAction(CCSequence::createWithTwoActions(CCMoveTo::create(0.25, {0, CCDirector::sharedDirector()->getWinSize().height + 5}), CCCallFunc::create(this, callfunc_selector(GaragePopup::transitionFinished))));
+            m_garageLayer->runAction(CCSequence::createWithTwoActions(
+            	CCMoveTo::create(0.25, {0, CCDirector::sharedDirector()->getWinSize().height + 5}),
+            	CCCallFunc::create(this, callfunc_selector(GaragePopup::transitionFinished))
+            ));
         }
         void show() override {
             if (m_noElasticity) return Popup::show();
-            auto dir = CCDirector::sharedDirector();
             m_noElasticity = true;
             Popup::show();
             m_mainLayer->setVisible(false);
             m_noElasticity = false;
-            m_garageLayer->setPosition({0, dir->getWinSize().height + 5});
+            m_garageLayer->setPosition({0, CCDirector::sharedDirector()->getWinSize().height + 5});
             m_garageLayer->stopAllActions();
             m_garageLayer->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5, {0, 0})));
         }
 
-        GJGarageLayer* m_garageLayer;
+        GJGarageLayer* m_garageLayer {};
 };
 
 class $modify(MyPauseLayer, PauseLayer) {
@@ -97,11 +99,13 @@ class $modify(MyPauseLayer, PauseLayer) {
 	#endif
 	void onYAMMGarage(CCObject*) {
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu) return;
-        if (auto garage = GaragePopup::create()) {
+		GameManager::get()->m_ropeGarageEnter = true;
+        if (GaragePopup* garage = GaragePopup::create()) {
             garage->show();
             setKeyboardEnabled(false);
             setKeypadEnabled(false);
         } else {
+        	GameManager::get()->m_ropeGarageEnter = false;
             FLAlertLayer::create("Oh no!", "You're unable to access the Icon Kit!", "Close")->show();
         }
 	}
@@ -136,7 +140,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		GJGarageLayer::onSelect(sender);
 		const auto pl = PlayLayer::get();
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
-		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
+		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModify();
 		if (!playerToModify) return;
 		playerToModify->updateGlowColor();
 		const int iconID = sender->getTag();
@@ -169,6 +173,8 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 			case IconType::Cube:
 				if (playerToModify->m_isBall || playerToModify->m_isDart || playerToModify->m_isRobot || playerToModify->m_isSpider || playerToModify->m_isSwing) return;
 				return playerToModify->updatePlayerFrame(iconID);
+			case IconType::DeathEffect:
+				return GameManager::get()->loadDeathEffect(iconID);
 		}
 	}
 };
@@ -181,7 +187,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 	void onPlayerColor(CCObject* sender) {
 		CharacterColorPage::onPlayerColor(sender);
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get()) return;
-		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
+		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModify();
 		if (!playerToModify) return;
 		const auto color = GameManager::get()->colorForIdx(sender->getTag());
 		switch (m_colorMode) {
@@ -196,7 +202,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 	void toggleGlow(CCObject* sender) {
 		CharacterColorPage::toggleGlow(sender);
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !PlayLayer::get()) return;
-		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModfy();
+		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModify();
 		if (!playerToModify) return;
 		playerToModify->m_hasGlow = static_cast<CCMenuItemToggler*>(sender)->isToggled();
 		playerToModify->updatePlayerGlow();
