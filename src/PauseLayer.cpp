@@ -183,7 +183,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (!isImage) {
 					playerToModify->m_regularTrail->setColor(gm->colorForIdx(gm->m_playerColor2.value()));
 				}
-				if (isAlwaysShow) {
+				if (isAlwaysShow || playerToModify->isFlying()) {
 					playerToModify->m_regularTrail->resumeStroke();
 				}
 		}
