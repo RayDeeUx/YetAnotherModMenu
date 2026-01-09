@@ -145,7 +145,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 	}
 	void resetLevel() {
-		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::resetLevel();
 			return;
 		}
@@ -153,7 +153,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::resetLevel();
 	}
 	void resetLevelFromStart() {
-		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::resetLevelFromStart();
 			return;
 		}
@@ -161,7 +161,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::resetLevelFromStart();
 	}
 	void fullReset() {
-		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::fullReset();
 			return;
 		}
