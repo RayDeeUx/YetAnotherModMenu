@@ -27,8 +27,8 @@ class $modify(MyPlayLayer, PlayLayer) {
 		(void) self.setHookPriority("PlayLayer::fullReset", -3999);
 	}
 	struct Fields {
-		std::vector<GameObject*> coins;
-		std::vector<bool> coinCollected;
+		std::vector<GameObject*> coins {};
+		std::vector<bool> coinCollected = {};
 		std::vector<bool> coinActivatedDuringAttempt = {false, false, false};
 		cocos2d::CCDrawNode* coinLines = nullptr;
 		const std::unordered_map<std::string, ColorMode> colorModeSettingToEnum = {
@@ -51,7 +51,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		const auto manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->traceCoins) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
-		if (!fields) return;
+		if (!fields) return {0, 0, 0, 255};
 		const ColorMode currentMode = fields->currentColorMode;
 		GLubyte opacity = manager->coinTraceOpacity;
 		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
@@ -88,7 +88,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		if (!mapToFind.contains(colorModeFromSettings)) fields->currentColorMode = ColorMode::Unknown;
 		else fields->currentColorMode = mapToFind.find(colorModeFromSettings)->second;
 
-		if (m_level->m_levelType == GJLevelType::Local) fields->coinStatus = CoinsStatus::RobTop;
+		if (m_level->m_levelType == GJLevelType::Main) fields->coinStatus = CoinsStatus::RobTop;
 		else if (m_level->m_levelID.value() == 0) fields->coinStatus = CoinsStatus::Editor;
 		else if (m_level->m_coinsVerified.value() == 0) fields->coinStatus = CoinsStatus::CustomUnverified;
 		else fields->coinStatus = CoinsStatus::CustomVerified;
@@ -145,7 +145,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 	}
 	void resetLevel() {
-		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::resetLevel();
 			return;
 		}
@@ -153,7 +153,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::resetLevel();
 	}
 	void resetLevelFromStart() {
-		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::resetLevelFromStart();
 			return;
 		}
@@ -161,7 +161,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::resetLevelFromStart();
 	}
 	void fullReset() {
-		if (!m_fields || m_fields->coinActivatedDuringAttempt.empty()) {
+		if (m_fields->coinActivatedDuringAttempt.empty()) {
 			PlayLayer::fullReset();
 			return;
 		}
