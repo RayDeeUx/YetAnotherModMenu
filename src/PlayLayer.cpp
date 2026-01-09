@@ -51,6 +51,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		const auto manager = Manager::getSharedInstance();
 		if (!Utils::modEnabled() || !manager->traceCoins) return {0, 0, 0, 255};
 		const auto fields = m_fields.self();
+		if (!fields) return;
 		const ColorMode currentMode = fields->currentColorMode;
 		GLubyte opacity = manager->coinTraceOpacity;
 		if (currentMode == ColorMode::Custom) opacity = manager->colorFromSettings.a;
@@ -76,6 +77,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::setupHasCompleted();
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins || !m_objectLayer || !m_level) return;
 		const auto fields = m_fields.self();
+		if (!fields) return;
 		fields->coinLines = CCDrawNode::create();
 		fields->coinLines->setID("coin-tracing-node"_spr);
 		fields->coinLines->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
@@ -97,6 +99,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		PlayLayer::addObject(object);
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins) return;
 		const auto fields = m_fields.self();
+		if (!fields) return;
 		if (!fields->playerCanProbablyRecoverCoin && m_level->isPlatformer()) fields->playerCanProbablyRecoverCoin = true;
 		if (object->m_objectType != GameObjectType::UserCoin && object->m_objectType != GameObjectType::SecretCoin) {
 			if (fields->playerCanProbablyRecoverCoin) return;
@@ -120,6 +123,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 	void postUpdate(float dt) {
 		PlayLayer::postUpdate(dt);
 		const auto fields = m_fields.self();
+		if (!fields) return;
 		if (fields->coinLines) fields->coinLines->clear();
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->traceCoins || fields->coins.empty() || fields->coinCollected.empty() || fields->coinActivatedDuringAttempt.empty()) return;
 		const CCPoint positionPlayer = m_player1->getPosition();
@@ -141,17 +145,26 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 	}
 	void resetLevel() {
-		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::resetLevel();
+		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+			PlayLayer::resetLevel();
+			return;
+		}
 		m_fields->coinActivatedDuringAttempt = {false, false, false};
 		PlayLayer::resetLevel();
 	}
 	void resetLevelFromStart() {
-		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::resetLevelFromStart();
+		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+			PlayLayer::resetLevelFromStart();
+			return;
+		}
 		m_fields->coinActivatedDuringAttempt = {false, false, false};
 		PlayLayer::resetLevelFromStart();
 	}
 	void fullReset() {
-		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::fullReset();
+		if (!m_fields || !m_fields->coinActivatedDuringAttempt || m_fields->coinActivatedDuringAttempt.empty()) {
+			PlayLayer::fullReset();
+			return;
+		}
 		m_fields->coinActivatedDuringAttempt = {false, false, false};
 		PlayLayer::fullReset();
 	}
