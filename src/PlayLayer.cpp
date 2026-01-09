@@ -24,6 +24,7 @@ class $modify(MyPlayLayer, PlayLayer) {
 		(void) self.setHookPriority("PlayLayer::resetLevelFromStart", -3999);
 		(void) self.setHookPriority("PlayLayer::setupHasCompleted", -3999);
 		(void) self.setHookPriority("PlayLayer::resetLevel", -3999);
+		(void) self.setHookPriority("PlayLayer::fullReset", -3999);
 	}
 	struct Fields {
 		std::vector<GameObject*> coins;
@@ -140,12 +141,19 @@ class $modify(MyPlayLayer, PlayLayer) {
 		}
 	}
 	void resetLevel() {
+		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::resetLevel();
 		m_fields->coinActivatedDuringAttempt = {false, false, false};
 		PlayLayer::resetLevel();
 	}
 	void resetLevelFromStart() {
+		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::resetLevelFromStart();
 		m_fields->coinActivatedDuringAttempt = {false, false, false};
 		PlayLayer::resetLevelFromStart();
+	}
+	void fullReset() {
+		if (!m_fields || ! m_fields->coinActivatedDuringAttempt) return PlayLayer::fullReset();
+		m_fields->coinActivatedDuringAttempt = {false, false, false};
+		PlayLayer::fullReset();
 	}
 	void updateProgressbar() {
 		PlayLayer::updateProgressbar();

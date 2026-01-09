@@ -1,4 +1,7 @@
 # YetAnotherModMenu Changelog
+## v1.0.7
+- Someone had the bright idea to make levels use a different set of logic when restarting from Practice Mode.
+  - Now we all have to suffer the consequences.
 ## v1.0.6
 - Added support for applying changes to trails from the `Icon Kit In Pause Menu` in (almost) real-time. No more re-entering the level to see your new trail!
 - Fix a pretty nasty crash when changing death effects from using the `Icon Kit In Pause Menu` feature without [Texture Loader](mod:geode.texture-loader) loaded.
