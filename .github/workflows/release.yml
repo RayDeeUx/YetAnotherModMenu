@@ -41,8 +41,9 @@ jobs:
         with:
           # build-config: RelWithDebInfo
           # export-pdb: true
-          # bindings: RayDeeUx/bindings
-          # bindings-ref: "foobar"
+          # export-symbols: true
+          bindings: RayDeeUx/bindings
+          bindings-ref: "gjgaragelayer-node-is-kinda-fucking-buns"
           combine: true
           target: ${{ matrix.config.target }}
 
