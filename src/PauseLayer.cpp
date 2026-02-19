@@ -8,9 +8,12 @@
 
 using namespace geode::prelude;
 
-class GaragePopup final : public Popup<> {
+class GaragePopup final : public Popup {
 	protected:
-		bool setup() override {
+		bool init() override {
+			const CCSize ws = CCDirector::get()->getWinSize();
+			if (!geode::Popup::init(ws.width, ws.height)) return false;
+
 			m_garageLayer = GJGarageLayer::node();
 			if (!m_garageLayer) return false;
 			m_garageLayer->setUserObject("from-pauselayer"_spr, CCBool::create(true));
@@ -41,8 +44,7 @@ class GaragePopup final : public Popup<> {
 	public:
 		static GaragePopup* create() {
 			auto ret = new GaragePopup();
-			const CCSize ws = CCDirector::get()->getWinSize();
-			if (ret && ret->initAnchored(ws.width, ws.height)) {
+			if (ret && ret->init()) {
 				ret->autorelease();
 				return ret;
 			}
