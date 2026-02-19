@@ -1,4 +1,6 @@
 # YetAnotherModMenu Changelog
+## v1.0.8
+- Port to GD 2.2081.
 ## v1.0.7
 - Someone had the bright idea to make levels use a different set of logic when restarting from Practice Mode.
   - Now we all have to suffer the consequences.

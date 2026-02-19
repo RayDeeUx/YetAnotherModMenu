@@ -17,12 +17,12 @@ add_library(${PROJECT_NAME} SHARED
     src/Utils.cpp
     src/Utils.hpp
 
-    src/eclipse/config.hpp
-    src/eclipse/eclipse.hpp
-    src/eclipse/labels.hpp
-    src/eclipse/modules.hpp
-    src/eclipse/components.hpp
-    src/eclipse/eclipseIntegration.cpp
+    # src/eclipse/config.hpp
+    # src/eclipse/eclipse.hpp
+    # src/eclipse/labels.hpp
+    # src/eclipse/modules.hpp
+    # src/eclipse/components.hpp
+    # src/eclipse/eclipseIntegration.cpp
 
     src/MusicDownloadManager.cpp
     src/FMODAudioEngine.cpp

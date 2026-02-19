@@ -12,11 +12,7 @@ class $modify (MyMusicDownloadManager, MusicDownloadManager) {
 		const auto manager = Manager::getSharedInstance();
 		const std::string& originalPath = MusicDownloadManager::pathForSFX(p0);
 		if (!Utils::modEnabled() || !manager->filth) return originalPath;
-		const std::string& desiredPath = manager->filthyPath.string();
-		// T0D0: IOS FILE PATH SUPPORT (HARDCODED MAYBE?)
-		#ifdef GEODE_IS_ANDROID
-		if (desiredPath == "file:///android_asset/sfx/s4451.ogg") return "sfx/s4451.ogg";
-		#endif
+		const std::string& desiredPath = geode::utils::string::pathToString(manager->filthyPath);
 		if (!Utils::isSupportedFMODExtension(desiredPath)) return originalPath;
 		return desiredPath;
 		// return "sfx/s4451.ogg";

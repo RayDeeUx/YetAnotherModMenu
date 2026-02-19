@@ -1,15 +1,19 @@
+/*
 #ifndef GEODE_IS_IOS
 #include <geode.custom-keybinds/include/Keybinds.hpp>
 #endif
+*/
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Manager.hpp"
 #include "Utils.hpp"
 
 using namespace geode::prelude;
+/*
 #ifndef GEODE_IS_IOS
 using namespace keybinds;
 #endif
+*/
 
 $on_mod(Loaded) {
 	Manager::load();
@@ -88,6 +92,7 @@ $on_mod(Loaded) {
 	listenForSettingChanges("filthyPath", [](std::filesystem::path filthyPath) {
 		Manager::getSharedInstance()->filthyPath = std::move(filthyPath);
 	});
+	/*
 	#ifndef GEODE_IS_IOS
 	BindManager::get()->registerBindable({
 		"open-settings"_spr,
@@ -108,6 +113,18 @@ $on_mod(Loaded) {
 		return ListenerResult::Propagate;
 	}, InvokeBindFilter(nullptr, "open-settings"_spr));
 	#endif
+	*/
+	listenForKeybindSettingPresses("open-settings", [](Keybind const& keybind, bool down, bool repeat, double timestamp) {
+        if (!down || repeat) return  ListenerResult::Propagate;
+		// permission granted by dankmeme01 to run the superscary code:
+		// https://discord.com/channels/911701438269386882/911702535373475870/1337522714205753426
+		for (CCNode* node : CCArrayExt<CCNode*>(CCScene::get()->getChildren())) if (Utils::getNodeName(node) == "ModSettingsPopup") return ListenerResult::Propagate;
+		if (LevelEditorLayer::get()) return ListenerResult::Propagate;
+		const auto pl = PlayLayer::get();
+		if (pl && pl->getParent() && (!pl->getParent()->getChildByType<PauseLayer>(0) || !pl->m_isPaused) && (!pl->getChildByType<EndLevelLayer>(0) && !pl->getChildByType<RetryLevelLayer>(0))) return ListenerResult::Propagate;
+		openSettingsPopup(Mod::get());
+		return ListenerResult::Propagate;
+    });
 }
 
 class PulsingNode final : public CCNode {

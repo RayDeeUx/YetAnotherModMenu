@@ -1,5 +1,5 @@
 {
-	"geode": "4.10.0",
+	"geode": "5.0.0-beta.3",
 	"gd": {
 		"win": "2.2074",
 		"mac": "2.2074",
@@ -8,7 +8,7 @@
 	},
 	"id": "raydeeux.yetanotherqolmod",
 	"name": "YetAnotherModMenu",
-	"version": "v1.0.7",
+	"version": "v1.0.8",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
@@ -23,6 +23,14 @@
 			"description": "Toggles the mod.",
 			"type": "bool",
 			"default": true
+		},
+		"open-settings": {
+			"name": "Open Settings",
+			"description": "Opens the YetAnotherModMenu settings.",
+			"type": "keybind",
+			"default": ["Shift+Tab", "F9"],
+			"category": "universal",
+			"migrate-from": "raydeeux.yetanotherqolmod/open-settings"
 		},
 		"best-percent-header": {
 			"name": "Best Percent in Percentage Label",
@@ -302,12 +310,7 @@
 		}
 	},
 	"dependencies": {
-		"geode.node-ids": ">=1.19.0",
-		"geode.custom-keybinds": {
-			"version": ">=1.10.2",
-			"importance": "required",
-			"platforms": ["win", "mac", "android"]
-		}
+		"geode.node-ids": ">=1.22.0"
 	},
 	"resources": {
 		"sprites": [
