@@ -17,79 +17,79 @@ using namespace keybinds;
 
 $on_mod(Loaded) {
 	Manager::load();
-	listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
+	listenForSettingChanges<double>("pulseScaleFactor", [](double pulseScaleFactor) {
 		Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 	});
-	listenForSettingChanges("pulsePulseFactor", [](double pulsePulseFactor) {
+	listenForSettingChanges<double>("pulsePulseFactor", [](double pulsePulseFactor) {
 		Manager::getSharedInstance()->pulsePulseFactor = pulsePulseFactor;
 	});
-	listenForSettingChanges("coinTracingThickness", [](double coinTracingThickness) {
+	listenForSettingChanges<double>("coinTracingThickness", [](double coinTracingThickness) {
 		Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
 	});
-	listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
+	listenForSettingChanges<double>("trailLengthModifier", [](double trailLengthModifier) {
 		Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
 	});
-	listenForSettingChanges("coinOpacityModifier", [](double coinOpacityModifier) {
+	listenForSettingChanges<double>("coinOpacityModifier", [](double coinOpacityModifier) {
 		Manager::getSharedInstance()->coinOpacityModifier = coinOpacityModifier;
 	});
-	listenForSettingChanges("wavePulseSize", [](double wavePulseSize) {
+	listenForSettingChanges<double>("wavePulseSize", [](double wavePulseSize) {
 		Manager::getSharedInstance()->wavePulseSize = wavePulseSize;
 	});
-	listenForSettingChanges("customSeparator", [](std::string customSeparator) {
+	listenForSettingChanges<std::string>("customSeparator", [](std::string customSeparator) {
 		Manager::getSharedInstance()->customSeparator = std::move(customSeparator).at(0);
 	});
-	listenForSettingChanges("colorMode", [](std::string colorMode) {
+	listenForSettingChanges<std::string>("colorMode", [](std::string colorMode) {
 		Manager::getSharedInstance()->colorMode = std::move(colorMode);
 	});
-	listenForSettingChanges("colorFromSettings", [](ccColor4B colorFromSettings) {
+	listenForSettingChanges<ccColor4B>("colorFromSettings", [](ccColor4B colorFromSettings) {
 		Manager::getSharedInstance()->colorFromSettings = colorFromSettings;
 	});
-	listenForSettingChanges("coinTraceOpacity", [](int64_t coinTraceOpacity) {
+	listenForSettingChanges<int64_t>("coinTraceOpacity", [](int64_t coinTraceOpacity) {
 		Manager::getSharedInstance()->coinTraceOpacity = coinTraceOpacity;
 	});
-	listenForSettingChanges("coinTracingOpacityModifiers", [](bool coinTracingOpacityModifiers) {
+	listenForSettingChanges<bool>("coinTracingOpacityModifiers", [](bool coinTracingOpacityModifiers) {
 		Manager::getSharedInstance()->coinTracingOpacityModifiers = coinTracingOpacityModifiers;
 	});
-	listenForSettingChanges("coinTracingDisabledCoin", [](bool coinTracingDisabledCoin) {
+	listenForSettingChanges<bool>("coinTracingDisabledCoin", [](bool coinTracingDisabledCoin) {
 		Manager::getSharedInstance()->coinTracingDisabledCoin = coinTracingDisabledCoin;
 	});
-	listenForSettingChanges("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
+	listenForSettingChanges<bool>("previouslyCollectedModifier", [](bool previouslyCollectedModifier) {
 		Manager::getSharedInstance()->previouslyCollectedModifier = previouslyCollectedModifier;
 	});
-	listenForSettingChanges("garageInPauseMenu", [](bool garageInPauseMenu) {
+	listenForSettingChanges<bool>("garageInPauseMenu", [](bool garageInPauseMenu) {
 		Manager::getSharedInstance()->garageInPauseMenu = garageInPauseMenu;
 	});
-	listenForSettingChanges("pulseUseSTDLerp", [](bool pulseUseSTDLerp) {
+	listenForSettingChanges<bool>("pulseUseSTDLerp", [](bool pulseUseSTDLerp) {
 		Manager::getSharedInstance()->pulseUseSTDLerp = pulseUseSTDLerp;
 	});
-	listenForSettingChanges("pulseMenuTitle", [](bool pulseMenuTitle) {
+	listenForSettingChanges<bool>("pulseMenuTitle", [](bool pulseMenuTitle) {
 		Manager::getSharedInstance()->pulseMenuTitle = pulseMenuTitle;
 	});
-	listenForSettingChanges("showBestPercent", [](bool showBestPercent) {
+	listenForSettingChanges<bool>("showBestPercent", [](bool showBestPercent) {
 		Manager::getSharedInstance()->showBestPercent = showBestPercent;
 	});
-	listenForSettingChanges("filthyGameplay", [](bool filthyGameplay) {
+	listenForSettingChanges<bool>("filthyGameplay", [](bool filthyGameplay) {
 		Manager::getSharedInstance()->filthyGameplay = filthyGameplay;
 	});
-	listenForSettingChanges("addMinumumWidth", [](bool addMinumumWidth) {
+	listenForSettingChanges<bool>("addMinumumWidth", [](bool addMinumumWidth) {
 		Manager::getSharedInstance()->addMinumumWidth = addMinumumWidth;
 	});
-	listenForSettingChanges("trailLength", [](bool trailLength) {
+	listenForSettingChanges<bool>("trailLength", [](bool trailLength) {
 		Manager::getSharedInstance()->trailLength = trailLength;
 	});
-	listenForSettingChanges("noWavePulse", [](bool noWavePulse) {
+	listenForSettingChanges<bool>("noWavePulse", [](bool noWavePulse) {
 		Manager::getSharedInstance()->noWavePulse = noWavePulse;
 	});
-	listenForSettingChanges("traceCoins", [](bool traceCoins) {
+	listenForSettingChanges<bool>("traceCoins", [](bool traceCoins) {
 		Manager::getSharedInstance()->traceCoins = traceCoins;
 	});
-	listenForSettingChanges("enabled", [](bool enabled) {
+	listenForSettingChanges<bool>("enabled", [](bool enabled) {
 		Manager::getSharedInstance()->enabled = enabled;
 	});
-	listenForSettingChanges("filth", [](bool filth) {
+	listenForSettingChanges<bool>("filth", [](bool filth) {
 		Manager::getSharedInstance()->filth = filth;
 	});
-	listenForSettingChanges("filthyPath", [](std::filesystem::path filthyPath) {
+	listenForSettingChanges<std::filesystem::path>("filthyPath", [](std::filesystem::path filthyPath) {
 		Manager::getSharedInstance()->filthyPath = std::move(filthyPath);
 	});
 	/*
