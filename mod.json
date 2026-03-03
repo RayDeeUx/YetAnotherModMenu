@@ -8,7 +8,7 @@
 	},
 	"id": "raydeeux.yetanotherqolmod",
 	"name": "YetAnotherModMenu",
-	"version": "v1.0.8",
+	"version": "v1.0.9",
 	"developer": "RayDeeUx",
 	"description": "The Smallest Free Geode Mod Menu!",
 	"repository": "https://github.com/RayDeeUx/YetAnotherModMenu",
@@ -310,7 +310,11 @@
 		}
 	},
 	"dependencies": {
-		"geode.node-ids": ">=1.22.0"
+		"geode.node-ids": ">=1.22.0",
+		"eclipse.eclipse-menu": {
+			"version": ">=1.8.1",
+			"required": false
+		}
 	},
 	"resources": {
 		"sprites": [

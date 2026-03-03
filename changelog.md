@@ -1,4 +1,6 @@
 # YetAnotherModMenu Changelog
+## v1.0.9
+- Restore Eclipse Menu integrations that were removed in v1.0.8.
 ## v1.0.8
 - Port to GD 2.2081.
 ## v1.0.7

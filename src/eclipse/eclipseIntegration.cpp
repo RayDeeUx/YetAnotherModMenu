@@ -1,5 +1,5 @@
-/*
-#include "eclipse.hpp"
+#define ECLIPSE_MODULES_HPP
+#include <eclipse.eclipse-menu/include/eclipse.hpp>
 #include "../Manager.hpp"
 
 using namespace eclipse;
@@ -16,7 +16,7 @@ void createToggleSettingInTab(const char* settingID, MenuTab& tab, std::string d
 
 	eclipse::config::set<bool>(Mod::get()->expandSpriteName(settingID).data(), Mod::get()->getSettingValue<bool>(settingID));
 
-	listenForSettingChanges(settingID, [settingID](bool boolValue) {
+	listenForSettingChanges<bool>(settingID, [settingID](bool boolValue) {
 		eclipse::config::set<bool>(Mod::get()->expandSpriteName(settingID).data(), Mod::get()->getSettingValue<bool>(settingID));
 	});
 }
@@ -39,7 +39,7 @@ $on_mod(Loaded) {
 
 		eclipse::config::setInternal<float>("wavePulseSize"_spr, Mod::get()->getSettingValue<double>("wavePulseSize"));
 
-		listenForSettingChanges("wavePulseSize", [](double wavePulseSize) {
+		listenForSettingChanges<double>("wavePulseSize", [](double wavePulseSize) {
 			Manager::getSharedInstance()->wavePulseSize = wavePulseSize;
 			eclipse::config::setInternal<float>("wavePulseSize"_spr, wavePulseSize);
 		});
@@ -55,7 +55,7 @@ $on_mod(Loaded) {
 
 		eclipse::config::setInternal<float>("trailLengthModifier"_spr, Mod::get()->getSettingValue<double>("trailLengthModifier"));
 
-		listenForSettingChanges("trailLengthModifier", [](double trailLengthModifier) {
+		listenForSettingChanges<double>("trailLengthModifier", [](double trailLengthModifier) {
 			Manager::getSharedInstance()->trailLengthModifier = trailLengthModifier;
 			eclipse::config::setInternal<float>("trailLengthModifier"_spr, trailLengthModifier);
 		});
@@ -73,7 +73,7 @@ $on_mod(Loaded) {
 
 		eclipse::config::setInternal<float>("coinTracingThickness"_spr, Mod::get()->getSettingValue<double>("coinTracingThickness"));
 
-		listenForSettingChanges("coinTracingThickness", [](double coinTracingThickness) {
+		listenForSettingChanges<double>("coinTracingThickness", [](double coinTracingThickness) {
 			Manager::getSharedInstance()->coinTracingThickness = coinTracingThickness;
 			eclipse::config::setInternal<float>("coinTracingThickness"_spr, coinTracingThickness);
 		});
@@ -89,7 +89,7 @@ $on_mod(Loaded) {
 
 		eclipse::config::setInternal<float>("pulseScaleFactor"_spr, Mod::get()->getSettingValue<double>("pulseScaleFactor"));
 
-		listenForSettingChanges("pulseScaleFactor", [](double pulseScaleFactor) {
+		listenForSettingChanges<double>("pulseScaleFactor", [](double pulseScaleFactor) {
 			Manager::getSharedInstance()->pulseScaleFactor = pulseScaleFactor;
 			eclipse::config::setInternal<float>("pulseScaleFactor"_spr, pulseScaleFactor);
 		});
@@ -97,4 +97,3 @@ $on_mod(Loaded) {
 		createToggleSettingInTab("filth", tab, "USE_MOD_JSON");
 	});
 }
-*/
