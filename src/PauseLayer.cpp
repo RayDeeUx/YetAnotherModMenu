@@ -17,6 +17,7 @@ class GaragePopup final : public Popup {
 			m_garageLayer = GJGarageLayer::node();
 			if (!m_garageLayer) return false;
 			m_garageLayer->setUserObject("from-pauselayer"_spr, CCBool::create(true));
+			m_garageLayer->setUserFlag("from-pauselayer"_spr, true);
 
 			this->addChild(m_garageLayer);
 			this->setID("GaragePopup"_spr);
@@ -31,6 +32,9 @@ class GaragePopup final : public Popup {
 			} else {
 				return false;
 			}
+
+			this->setUserFlag("undefined0.draggable-popups/undraggable-popup", true);
+			this->setUserFlag("chs000.customizepopupanimation/dont-animate", true);
 
 			return true;
 		}
@@ -127,6 +131,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		shop->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.5f, {0, 0})));
 
 		shop->setUserObject("from-pauselayer"_spr, CCBool::create(true));
+		shop->setUserFlag("from-pauselayer"_spr, true);
 		CCScene* currScene = CCScene::get();
 		currScene->addChild(shop);
 		shop->setZOrder(currScene->getHighestChildZ() + 2);
@@ -135,16 +140,19 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		GJGarageLayer::onSelect(sender);
 		const auto pl = PlayLayer::get();
 		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
-		const bool isPlat = pl->m_level->isPlatformer();
 		PlayerObject* playerToModify = Utils::getSelectedPlayerObjectToModify();
 		if (!playerToModify) return;
+		// sure, playerToModify->m_iconSprite->getScale() could be .6f in other scenarios,
+		// but the only time it's used is if playerToModify->m_isShip is true at all, so this is fine
+		// thank you alphalaneous for the decomp insight
+		const bool isJetpack = playerToModify->isPlatformer() || (playerToModify->m_iconSprite && playerToModify->m_iconSprite->getScale() == .6f);
 		playerToModify->updateGlowColor();
 		GameManager* gm = GameManager::get();
 		const int iconID = sender->getTag();
 		switch (m_selectedIconType) {
 			default: return;
 			case IconType::Ship:
-				if (playerToModify->m_isShip && !isPlat) playerToModify->updatePlayerShipFrame(iconID);
+				if (playerToModify->m_isShip && !isJetpack) playerToModify->updatePlayerShipFrame(iconID);
 				return;
 			case IconType::Ball:
 				if (playerToModify->m_isBall) playerToModify->updatePlayerRollFrame(iconID);
@@ -165,7 +173,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (playerToModify->m_isSwing) playerToModify->updatePlayerSwingFrame(iconID);
 				return;
 			case IconType::Jetpack:
-				if (playerToModify->m_isShip && isPlat) playerToModify->updatePlayerJetpackFrame(iconID);
+				if (playerToModify->m_isShip && isJetpack) playerToModify->updatePlayerJetpackFrame(iconID);
 				return;
 			case IconType::Cube:
 				if (playerToModify->m_isBall || playerToModify->m_isDart || playerToModify->m_isRobot || playerToModify->m_isSpider || playerToModify->m_isSwing) return;
@@ -173,8 +181,10 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 			case IconType::DeathEffect:
 				return gm->loadDeathEffect(iconID);
 			case IconType::ShipFire:
-				if (playerToModify->m_isShip && !isPlat) playerToModify->m_shipStreakType = static_cast<ShipStreak>(iconID);
+				if (playerToModify->m_isShip && !isJetpack) playerToModify->m_shipStreakType = static_cast<ShipStreak>(iconID);
 				return;
+			// can i be real with yall for a second here? i lowk dont know what the fuck i was (and/or am) doing here, but it seems to work i guess?
+			// [pretty sure part of this was me re-reading how jasmine did it for more icons]
 			case IconType::Special:
 				const bool isAlwaysShow = iconID == 5 || iconID == 6;
 				const bool isImage = iconID == 2 || iconID == 7;
@@ -188,6 +198,38 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 				if (isAlwaysShow || playerToModify->isFlying()) {
 					playerToModify->m_regularTrail->resumeStroke();
 				}
+				return;
+		}
+	}
+	// it just dawned on me i should've been hooking this all along ;-; im such a fraud
+	void onToggleItem(CCObject* sender) {
+		GJGarageLayer::onToggleItem(sender);
+		const auto pl = PlayLayer::get();
+		if (!Utils::modEnabled() || !Manager::getSharedInstance()->garageInPauseMenu || !pl || !this->getUserObject("from-pauselayer"_spr)) return;
+		// i have no idea if separate dual icons ever tracks animations separately for robot/spider animations and i'm not taking the risk of finding out the hard way
+		PlayerObject* playerOne = pl->m_player1;
+		PlayerObject* playerTwo = pl->m_player2;
+		if (!playerOne || !playerTwo) return;
+		const int animationID = sender->getTag();
+		if (animationID < 18 || animationID > 20) return; // focus on the three anims for now
+		const bool wasAnimationIDEnabled = GameStatsManager::get()->isItemEnabled(UnlockType::Item, animationID);
+		switch (animationID) {
+			default: return;
+			case 18: {
+				playerOne->m_robotAnimation1Enabled = wasAnimationIDEnabled;
+				playerTwo->m_robotAnimation1Enabled = wasAnimationIDEnabled;
+				return;
+			}
+			case 19: {
+				playerOne->m_robotAnimation2Enabled = wasAnimationIDEnabled;
+				playerTwo->m_robotAnimation2Enabled = wasAnimationIDEnabled;
+				return;
+			}
+			case 20: {
+				playerOne->m_spiderAnimationEnabled = wasAnimationIDEnabled;
+				playerTwo->m_spiderAnimationEnabled = wasAnimationIDEnabled;
+				return;
+			}
 		}
 	}
 };
