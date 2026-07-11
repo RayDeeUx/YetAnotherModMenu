@@ -145,7 +145,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		// sure, playerToModify->m_iconSprite->getScale() could be .6f in other scenarios,
 		// but the only time it's used is if playerToModify->m_isShip is true at all, so this is fine
 		// thank you alphalaneous for the decomp insight
-		const bool isJetpack = playerToModify->isPlatformer() || (playerToModify->m_iconSprite && playerToModify->m_iconSprite->getScale() == .6f);
+		const bool isJetpack = playerToModify->m_isPlatformer || (playerToModify->m_iconSprite && playerToModify->m_iconSprite->getScale() == .6f);
 		playerToModify->updateGlowColor();
 		GameManager* gm = GameManager::get();
 		const int iconID = sender->getTag();
