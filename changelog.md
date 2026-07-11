@@ -1,4 +1,7 @@
 # YetAnotherModMenu Changelog
+## v1.0.11
+- Add support for toggling robot/spider animations from the `Icon Kit In Pause Menu`.
+- Rewrite how jetpack mode is detected when selecting icons in the `Icon Kit In Pause Menu`.
 ## v1.0.10
 - Properly port to GD 2.2081.
 ## v1.0.9
