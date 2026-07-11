@@ -212,7 +212,7 @@ class $modify(MyGJGarageLayer, GJGarageLayer) {
 		if (!playerOne || !playerTwo) return;
 		const int animationID = sender->getTag();
 		if (animationID < 18 || animationID > 20) return; // focus on the three anims for now
-		const bool wasAnimationIDEnabled = GameStatsManager::get()->isItemEnabled(UnlockType::Item, animationID);
+		const bool wasAnimationIDEnabled = GameStatsManager::get()->isItemEnabled(UnlockType::GJItem, animationID);
 		switch (animationID) {
 			default: return;
 			case 18: {
